@@ -1,0 +1,148 @@
+# - try to find CPPDOM library
+# Optionally uses Flagpoll and FindFlagpoll.cmake
+#
+#  CPPDOM_LIBRARY_DIR, library search path
+#  CPPDOM_INCLUDE_DIR, include search path
+#  CPPDOM_LIBRARY, the library to link against
+#  CPPDOM_CXX_FLAGS
+#  CPPDOM_FOUND, If false, do not try to use this library.
+#
+# Useful configuration variables you might want to add to your cache:
+#  CPPDOM_ROOT_DIR - A directory prefix to search
+#                    (a path that contains include/ as a subdirectory)
+#  CPPDOM_ADDITIONAL_VERSIONS - Additional versions (outside of 0.7.8 to 1.0.0)
+#                               to use when constructing search names and paths
+#
+# This script will use Flagpoll, if found, to provide hints to the location
+# of this library, but does not use the compiler flags returned by Flagpoll
+# directly.
+#
+# VR Juggler requires this package, so this Find script takes that into
+# account when determining where to search for the desired files.
+# The VJ_BASE_DIR environment variable is searched (preferentially)
+# when searching for this package, so most sane VR Juggler build environments
+# should "just work."  Note that you need to manually re-run CMake if you
+# change this environment variable, because it cannot auto-detect this change
+# and trigger an automatic re-run.
+#
+# Original Author:
+# 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+# http://academic.cleardefinition.com
+# Iowa State University HCI Graduate Program/VRAC
+
+set(_HUMAN "cppdom")
+set(_HEADER cppdom/cppdom.h)
+set(_FP_PKG_NAME cppdom)
+
+set(CPPDOM_VERSIONS
+	0.7.8
+	0.7.9
+	0.7.10
+	1.0.0
+	1.0.1
+	1.0.2
+	${CPPDOM_ADDITIONAL_VERSIONS})
+set(CPPDOM_DIRS)
+set(CPPDOM_RELEASE_LIB_NAMES)
+set(CPPDOM_DEBUG_LIB_NAMES)
+foreach(_version ${CPPDOM_VERSIONS})
+	string(REGEX REPLACE "[-\\.]" "_" _versionclean ${_version})
+	list(APPEND CPPDOM_DIRS cppdom-${_version})
+	list(APPEND CPPDOM_HEADER_DIRS include/cppdom-${_version})
+	list(APPEND CPPDOM_RELEASE_LIB_NAMES cppdom-${_versionclean})
+	list(APPEND CPPDOM_DEBUG_LIB_NAMES cppdom_d-${_versionclean})
+endforeach()
+
+include(SelectLibraryConfigurations)
+include(CreateImportedTarget)
+include(CleanLibraryList)
+include(CleanDirectoryList)
+
+if(CPPDOM_INCLUDE_DIRS AND CPPDOM_LIBRARIES)
+	# in cache already
+	set(CPPDOM_FIND_QUIETLY TRUE)
+endif()
+
+# Try flagpoll.
+find_package(Flagpoll QUIET)
+
+if(FLAGPOLL)
+	flagpoll_get_include_dirs(${_FP_PKG_NAME} NO_DEPS)
+	flagpoll_get_library_dirs(${_FP_PKG_NAME} NO_DEPS)
+	flagpoll_get_library_names(${_FP_PKG_NAME} NO_DEPS)
+endif()
+
+set(CPPDOM_ROOT_DIR
+	"${CPPDOM_ROOT_DIR}"
+	CACHE
+	PATH
+	"Root directory to search for CPPDOM")
+if(DEFINED VRJUGGLER22_ROOT_DIR)
+	mark_as_advanced(CPPDOM_ROOT_DIR)
+endif()
+if(NOT CPPDOM_ROOT_DIR)
+	set(CPPDOM_ROOT_DIR "${VRJUGGLER22_ROOT_DIR}")
+endif()
+
+set(_ROOT_DIR "${CPPDOM_ROOT_DIR}")
+
+find_path(CPPDOM_INCLUDE_DIR
+	${_HEADER}
+	HINTS
+	${${_FP_PKG_NAME}_FLAGPOLL_INCLUDE_DIRS}
+	PATHS
+	${_ROOT_DIR}
+	PATH_SUFFIXES
+	${CPPDOM_DIRS}
+	${CPPDOM_HEADER_DIRS}
+	include
+	DOC
+	"Path to ${_HUMAN} includes root")
+
+find_library(CPPDOM_LIBRARY_RELEASE
+	NAMES
+	${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_NAMES}
+	${CPPDOM_RELEASE_LIB_NAMES}
+	HINTS
+	${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
+	${_ROOT_DIR}
+	PATH_SUFFIXES
+	${_VRJ_LIBSUFFIXES}
+	DOC
+	"${_HUMAN} library full path")
+
+find_library(CPPDOM_LIBRARY_DEBUG
+	NAMES
+	${CPPDOM_DEBUG_LIB_NAMES}
+	HINTS
+	${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
+	${_ROOT_DIR}
+	PATH_SUFFIXES
+	${_VRJ_LIBDSUFFIXES}
+	DOC
+	"${_HUMAN} debug library full path")
+
+if(CPPDOM_LIBRARY_RELEASE OR CPPDOM_LIBRARY_DEBUG)
+	select_library_configurations(CPPDOM)
+endif()
+
+# handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
+# all listed variables are TRUE
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(CPPDOM
+	DEFAULT_MSG
+	CPPDOM_LIBRARY
+	CPPDOM_INCLUDE_DIR)
+
+if(CPPDOM_FOUND)
+	set(CPPDOM_INCLUDE_DIRS ${CPPDOM_INCLUDE_DIR})
+	if(MSVC)
+		set(CPPDOM_CXX_FLAGS "/wd4290")
+	endif()
+
+	mark_as_advanced(CPPDOM_ROOT_DIR)
+endif()
+
+mark_as_advanced(CPPDOM_LIBRARY_RELEASE
+	CPPDOM_LIBRARY_DEBUG
+	CPPDOM_INCLUDE_DIR)
