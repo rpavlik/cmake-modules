@@ -64,6 +64,7 @@ else()
 	get_filename_component(WIIUSE_RUNTIME_LIBRARY_DIRS
 		"${WIIUSE_LIBRARY}"
 		PATH)
+	set(WIIUSE_RUNTIME_LIBRARY "${WIIUSE_LIBRARY}")
 endif()
 
 include(FindPackageHandleStandardArgs)
