@@ -1,0 +1,4 @@
+# Root directories to search for dependencies
+set(OPENSCENEGRAPH_ROOT_DIR "@OPENSCENEGRAPH_ROOT_DIR@" CACHE PATH "")
+set(VPS_ROOT_DIR "@VPS_ROOT_DIR@" CACHE PATH "")
+set(JTTK_ROOT_DIR "@JTTK_ROOT_DIR@" CACHE PATH "")
