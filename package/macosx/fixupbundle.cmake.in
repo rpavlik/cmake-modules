@@ -1,0 +1,23 @@
+
+function(gp_resolve_item_override _context _item _exepath _dirs _resolved_item _resolved)
+	if(NOT ${_resolved})
+		set(ri "ri-NOTFOUND")
+		if(IS_ABSOLUTE "${_item}")
+			get_filename_component(itemname "${_item}" NAME)
+			#message(STATUS "Was absolute, now looking for ${itemname}")
+			find_file(ri "${itemname}" ${_exepath} ${_dirs} NO_DEFAULT_PATH)
+			find_file(ri "${itemname}" ${_exepath} ${_dirs} /usr/lib)
+			if(ri)
+				#message(STATUS "override info: 'find_file' on filename '${itemname} in exepath/dirs (${ri})")
+				set(${_resolved} 1 PARENT_SCOPE)
+				set(${_resolved_item} "${ri}" PARENT_SCOPE)
+				set(ri "ri-NOTFOUND")
+			endif()
+		endif()
+	endif()
+
+endfunction()
+
+
+include(BundleUtilities)
+fixup_bundle("$ENV{TARGET_BUILD_DIR}/@_target@.app" "@BUNDLE_LIBS@" "@BUNDLE_LIB_DIRS@")
