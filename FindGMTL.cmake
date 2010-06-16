@@ -42,6 +42,7 @@ set(GMTL_VERSIONS
 	0.5.4
 	0.6.0
 	0.6.1
+	0.6.2
 	${GMTL_ADDITIONAL_VERSIONS})
 set(GMTL_DIRS)
 foreach(_version ${GMTL_VERSIONS})
