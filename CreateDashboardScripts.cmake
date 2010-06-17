@@ -147,7 +147,7 @@ function(create_dashboard_scripts)
 		set(_Nightly_cron "15 0 * * * ")
 		set(_Experimental_cron
 			"\nor run this command for an one-off experimental test build:\n")
-		set(_Experimental_flags "-V")
+		set(_Experimental_flags "-VV")
 
 		message(STATUS
 			"\nDashboard scripts have been generated for automatic nightly and continuous builds.")
@@ -159,6 +159,8 @@ function(create_dashboard_scripts)
 		else()
 			message(STATUS "You can add these sample lines to your crontab:")
 		endif()
+		
+		set(_msg)
 
 		foreach(DASHBOARDSCRIPT_DASH_TYPE Nightly Continuous Experimental)
 			# If given a cache template, configure it
@@ -173,10 +175,11 @@ function(create_dashboard_scripts)
 				"${DASHBOARDSCRIPT_BASE_DIRECTORY}/run${DASHBOARDSCRIPT_DASH_TYPE}.cmake"
 				@ONLY)
 
-			message(STATUS
-				"${_${DASHBOARDSCRIPT_DASH_TYPE}_cron}\"${DASHBOARDSCRIPT_CTEST_EXECUTABLE}\" -S \"${DASHBOARDSCRIPT_BASE_DIRECTORY}/run${DASHBOARDSCRIPT_DASH_TYPE}.cmake\" ${_${DASHBOARDSCRIPT_DASH_TYPE}_flags}")
+			set(_msg
+				"${_msg}\n${_${DASHBOARDSCRIPT_DASH_TYPE}_cron}\"${DASHBOARDSCRIPT_CTEST_EXECUTABLE}\" -S \"${DASHBOARDSCRIPT_BASE_DIRECTORY}/run${DASHBOARDSCRIPT_DASH_TYPE}.cmake\" ${_${DASHBOARDSCRIPT_DASH_TYPE}_flags}")
 
 		endforeach()
+		message(STATUS "\n\n${_msg}\n\n")
 		message(STATUS "")
 
 	endif()
