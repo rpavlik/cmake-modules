@@ -63,6 +63,7 @@ include(CleanDirectoryList)
 include(CleanLibraryList)
 include(ProgramFilesGlob)
 
+set(_nest_targets)
 set(_incsearchdirs)
 set(_libsearchdirs)
 set(OPENHAPTICS_ENVIRONMENT)
@@ -207,30 +208,7 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
 		"${HDAPI_HDU_INCLUDE_DIR}/..")
 	if(HDAPI_HDU_SOURCE_DIR)
 		mark_as_advanced(HDAPI_HDU_SOURCE_DIR)
-		include_directories("${HDAPI_HDU_INCLUDE_DIR}")
-		add_library(openhaptics_hdu_nested_target
-			STATIC
-			EXCLUDE_FROM_ALL
-			"${HDAPI_HDU_SOURCE_DIR}/src/hdu.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduAfx.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduAfx.h"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduDecompose.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduDecompose.h"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduError.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduHapticDevice.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduLine.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduLineSegment.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduMatrix.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduPlane.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduQuaternion.cpp"
-			"${HDAPI_HDU_SOURCE_DIR}/src/hduRecord.cpp")
-
-		set_property(TARGET
-			openhaptics_hdu_nested_target
-			PROPERTY
-			PROJECT_LABEL
-			"OpenHaptics HDU Library")
-
+		set(_nest_targets YES)
 		set(HDAPI_HDU_LIBRARY
 			"openhaptics_hdu_nested_target"
 			CACHE
@@ -307,20 +285,7 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
 		"${HLAPI_HLU_INCLUDE_DIR}/..")
 	if(HLAPI_HLU_SOURCE_DIR)
 		mark_as_advanced(HLAPI_HLU_SOURCE_DIR)
-		include_directories("${HLAPI_HLU_INCLUDE_DIR}")
-		add_library(openhaptics_hlu_nested_target
-			STATIC
-			EXCLUDE_FROM_ALL
-			"${HLAPI_HLU_SOURCE_DIR}/src/hlu.cpp"
-			"${HLAPI_HLU_SOURCE_DIR}/src/hluAfx.cpp"
-			"${HLAPI_HLU_SOURCE_DIR}/src/hluAfx.h")
-
-		set_property(TARGET
-			openhaptics_hlu_nested_target
-			PROPERTY
-			PROJECT_LABEL
-			"OpenHaptics HLU Library")
-
+		set(_nest_targets YES)
 		set(HLAPI_HLU_LIBRARY
 			"openhaptics_hlu_nested_target"
 			CACHE
@@ -421,8 +386,6 @@ if(HDAPI_INCLUDE_DIR)
 	endif()
 endif()
 
-
-
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
@@ -439,6 +402,12 @@ find_package_handle_standard_args(OpenHaptics
 	${_deps_check})
 
 if(OPENHAPTICS_FOUND)
+	# Recurse into the nested targets subdirectory if needed
+	if(_nest_targets)
+		get_filename_component(_moddir "${CMAKE_CURRENT_LIST_FILE}" PATH)
+		add_subdirectory("${_moddir}/nested_targets/OpenHaptics")
+	endif()
+
 	set(OPENHAPTICS_LIBRARIES
 		${HDAPI_LIBRARY}
 		${HDAPI_HDU_LIBRARY}
