@@ -147,7 +147,7 @@ function(create_dashboard_scripts)
 		set(_Nightly_cron "15 0 * * * ")
 		set(_Experimental_cron
 			"\nor run this command for an one-off experimental test build:\n")
-		set(_Experimental_flags "-VV")
+		set(_Experimental_flags "-V")
 
 		message(STATUS
 			"\nDashboard scripts have been generated for automatic nightly and continuous builds.")
@@ -174,7 +174,7 @@ function(create_dashboard_scripts)
 				@ONLY)
 
 			message(STATUS
-				"${_${DASHBOARDSCRIPT_DASH_TYPE}_cron} \"${DASHBOARDSCRIPT_CTEST_EXECUTABLE}\" -S \"${DASHBOARDSCRIPT_BASE_DIRECTORY}/run${DASHBOARDSCRIPT_DASH_TYPE}.cmake\" ${_${DASHBOARDSCRIPT_DASH_TYPE}_flags}")
+				"${_${DASHBOARDSCRIPT_DASH_TYPE}_cron}\"${DASHBOARDSCRIPT_CTEST_EXECUTABLE}\" -S \"${DASHBOARDSCRIPT_BASE_DIRECTORY}/run${DASHBOARDSCRIPT_DASH_TYPE}.cmake\" ${_${DASHBOARDSCRIPT_DASH_TYPE}_flags}")
 
 		endforeach()
 		message(STATUS "")
