@@ -198,14 +198,21 @@ find_library(HDAPI_HDU_LIBRARY_DEBUG
 select_library_configurations(HDAPI_HDU)
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
+    if(HDAPI_HDU_SOURCE_DIR AND NOT EXISTS "${HDAPI_HDU_SOURCE_DIR}/hdu.cpp")
+        set(HDAPI_HDU_SOURCE_DIR)
+    endif()
 	find_path(HDAPI_HDU_SOURCE_DIR
 		NAMES
-		src/hdu.cpp
+		hdu.cpp
 		PATH_SUFFIXES
 		src
 		src/HDU
+		src/HDU/src
+		libsrc/HDU
 		HINTS
-		"${HDAPI_HDU_INCLUDE_DIR}/..")
+		"${HDAPI_HDU_INCLUDE_DIR}/.."
+		"${HDAPI_HDU_INCLUDE_DIR}/../share/3DTouch")
+	list(APPEND _deps_check HDAPI_HDU_SOURCE_DIR)
 	if(HDAPI_HDU_SOURCE_DIR)
 		mark_as_advanced(HDAPI_HDU_SOURCE_DIR)
 		set(_nest_targets YES)
@@ -275,14 +282,21 @@ find_library(HLAPI_HLU_LIBRARY_DEBUG
 select_library_configurations(HLAPI_HLU)
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
+    if(HLAPI_HLU_SOURCE_DIR AND NOT EXISTS "${HLAPI_HLU_SOURCE_DIR}/hlu.cpp")
+        set(HLAPI_HLU_SOURCE_DIR)
+    endif()
 	find_path(HLAPI_HLU_SOURCE_DIR
 		NAMES
-		src/hlu.cpp
+		hlu.cpp
 		PATH_SUFFIXES
 		src
 		src/HLU
+		src/HLU/src
+		libsrc/HLU
 		HINTS
-		"${HLAPI_HLU_INCLUDE_DIR}/..")
+		"${HLAPI_HLU_INCLUDE_DIR}/.."
+		"${HLAPI_HLU_INCLUDE_DIR}/../share/3DTouch")
+	list(APPEND _deps_check HLAPI_HLU_SOURCE_DIR)
 	if(HLAPI_HLU_SOURCE_DIR)
 		mark_as_advanced(HLAPI_HLU_SOURCE_DIR)
 		set(_nest_targets YES)
