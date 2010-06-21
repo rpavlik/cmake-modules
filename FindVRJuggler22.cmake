@@ -3,6 +3,7 @@
 #  VRJUGGLER22_INCLUDE_DIRS, include search paths
 #  VRJUGGLER22_LIBRARIES, the libraries to link against
 #  VRJUGGLER22_ENVIRONMENT
+#  VRJUGGLER22_RUNTIME_LIBRARY_DIRS
 #  VRJUGGLER22_CXX_FLAGS
 #  VRJUGGLER22_DEFINITIONS
 #  VRJUGGLER22_FOUND, If false, do not try to use VR Juggler 2.2.
@@ -197,11 +198,6 @@ if(VRJUGGLER22_FOUND)
 		list(APPEND _vjbase "${_abspath}")
 	endforeach()
 
-	#foreach(_inc ${VRJUGGLER22_INCLUDE_DIRS})
-	#	get_filename_component(_abspath "${_inc}/.." ABSOLUTE)
-	#	list(APPEND _vjbase "${_abspath}")
-	#endforeach()
-
 	clean_directory_list(_vjbase)
 
 	list(LENGTH _vjbase _vjbaselen)
@@ -231,6 +227,10 @@ if(VRJUGGLER22_FOUND)
 		"SONIX_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}"
 		"TWEEK_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}")
 
+    include(GetDirectoryList)
+    
+    get_directory_list(VRJUGGLER22_RUNTIME_LIBRARY_DIRS ${VRJUGGLER22_LIBRARIES})
+    
 	if(MSVC)
 		# Needed to make linking against boost work with 2.2.1 binaries - rp20091022
 		# BOOST_ALL_DYN_LINK
