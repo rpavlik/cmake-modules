@@ -51,10 +51,9 @@ if(HDAPI_HDU_LIBRARY STREQUAL "openhaptics_hdu_nested_target")
 		# Disable warnings - no sense in warning about Sensable's potential bugs.
 		set_property(TARGET
 			openhaptics_hdu_nested_target
-			APPEND
 			PROPERTY
 			COMPILE_FLAGS
-			/wd4189)
+			"/wd4189 /wd4701")
 	endif()
 endif()
 
