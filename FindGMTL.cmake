@@ -8,11 +8,8 @@
 # Useful configuration variables you might want to add to your cache:
 #  GMTL_ROOT_DIR - A directory prefix to search
 #                  (a path that contains include/ as a subdirectory)
-#  GMTL_ADDITIONAL_VERSIONS - Additional versions (outside of 0.5.1 to 0.6.0)
+#  GMTL_ADDITIONAL_VERSIONS - Additional versions (outside of 0.5.1 to 0.6.2)
 #                             to use when constructing search names and paths
-#  GMTL_PEER_VER - If you are using a version other than 0.6.0 as a peer lib
-#  PEER_ROOT - Root dir for all peer (within-source-tree) libraries:
-#  				will look in sourcetree/$PEER_ROOT/gmtl-${GMTL_PEER_VER}/include
 #
 # This script will use Flagpoll, if found, to provide hints to the location
 # of this library, but does not use the compiler flags returned by Flagpoll
@@ -35,6 +32,8 @@ set(_HUMAN "GMTL")
 set(_HEADER gmtl/gmtl.h)
 set(_FP_PKG_NAME gmtl)
 
+include(CheckVersion)
+
 set(GMTL_VERSIONS
 	${GMTL_ADDITIONAL_VERSIONS}
 	0.6.2
@@ -46,8 +45,11 @@ set(GMTL_VERSIONS
 	0.5.1)
 set(GMTL_DIRS)
 foreach(_version ${GMTL_VERSIONS})
-	list(APPEND GMTL_DIRS gmtl-${_version})
-	list(APPEND GMTL_HEADER_DIRS include/gmtl-${_version})
+    check_version(_ver_ok GMTL ${_version})
+    if(_ver_ok)
+    	list(APPEND GMTL_DIRS gmtl-${_version})
+    	list(APPEND GMTL_HEADER_DIRS include/gmtl-${_version})
+	endif()
 endforeach()
 
 include(SelectLibraryConfigurations)
