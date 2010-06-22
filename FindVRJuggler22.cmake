@@ -237,7 +237,13 @@ if(VRJUGGLER22_FOUND)
 		set(VRJUGGLER22_DEFINITIONS "-DBOOST_ALL_DYN_LINK" "-DCPPDOM_DYN_LINK" "-DCPPDOM_AUTO_LINK")
 
 		# Disable these annoying warnings
-		set(VRJUGGLER22_CXX_FLAGS "/wd4275 /wd4251 /wd4127 /wd4100 /wd4512")
+		# 4275: non dll-interface class used as base for dll-interface class
+		# 4251: needs to have dll-interface to be used by clients of class
+		# 4100: unused parameter
+		# 4512: assignment operator could not be generated
+		# 4127: (Not currently disabled) conditional expression in loop evaluates to constant
+		
+		set(VRJUGGLER22_CXX_FLAGS "/wd4275 /wd4251 /wd4100 /wd4512")
 	elseif(CMAKE_COMPILER_IS_GNUCXX)
 		# Silence annoying warnings about deprecated hash_map.
 		set(VRJUGGLER22_CXX_FLAGS "-Wno-deprecated")
