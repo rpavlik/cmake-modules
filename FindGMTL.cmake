@@ -36,14 +36,14 @@ set(_HEADER gmtl/gmtl.h)
 set(_FP_PKG_NAME gmtl)
 
 set(GMTL_VERSIONS
-	0.5.1
-	0.5.2
-	0.5.3
-	0.5.4
-	0.6.0
-	0.6.1
+	${GMTL_ADDITIONAL_VERSIONS}
 	0.6.2
-	${GMTL_ADDITIONAL_VERSIONS})
+	0.6.1
+	0.6.0
+	0.5.4
+	0.5.3
+	0.5.2
+	0.5.1)
 set(GMTL_DIRS)
 foreach(_version ${GMTL_VERSIONS})
 	list(APPEND GMTL_DIRS gmtl-${_version})
