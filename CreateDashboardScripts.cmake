@@ -150,7 +150,7 @@ function(create_dashboard_scripts)
 		set(_Experimental_flags "-VV")
 
 		message(STATUS
-			"\nDashboard scripts have been generated for automatic nightly and continuous builds.")
+			"Dashboard scripts have been generated for automatic nightly and continuous builds.")
 		if(WIN32)
 			set(_Continuous_cron)
 			set(_Nightly_cron)
@@ -179,7 +179,7 @@ function(create_dashboard_scripts)
 				"${_msg}\n${_${DASHBOARDSCRIPT_DASH_TYPE}_cron}\"${DASHBOARDSCRIPT_CTEST_EXECUTABLE}\" -S \"${DASHBOARDSCRIPT_BASE_DIRECTORY}/run${DASHBOARDSCRIPT_DASH_TYPE}.cmake\" ${_${DASHBOARDSCRIPT_DASH_TYPE}_flags}")
 
 		endforeach()
-		message(STATUS "\n\n${_msg}\n\n")
+		message(STATUS "\n${_msg}\n")
 		message(STATUS "")
 
 	endif()

@@ -125,7 +125,7 @@ endif()
 if((NOT "${Boost_FOUND}")
 	OR (NOT "${Boost_FILESYSTEM_FOUND}")
 	OR (NOT "${Boost_SIGNALS_FOUND}")
-	OR (Boost_VERSION GREATER "103401" AND NOT Boost_SYSTEM_FOUND))
+	OR (Boost_VERSION GREATER 103401 AND NOT Boost_SYSTEM_FOUND))
 	if(VPR20_LIBRARY_RELEASE)
 		# Find Boost in the same place as VPR
 		get_filename_component(VPR20_LIBRARY_DIR
@@ -162,7 +162,7 @@ if((NOT "${Boost_FOUND}")
 				signals)
 		endif()
 
-		if("${Boost_VERSION}" GREATER "103401")
+		if(Boost_VERSION GREATER 103401)
 			find_package(Boost ${_FIND_FLAGS} COMPONENTS filesystem system signals)
 		endif()
 	endif()
