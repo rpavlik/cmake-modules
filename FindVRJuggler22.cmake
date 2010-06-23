@@ -3,6 +3,7 @@
 #  VRJUGGLER22_INCLUDE_DIRS, include search paths
 #  VRJUGGLER22_LIBRARIES, the libraries to link against
 #  VRJUGGLER22_ENVIRONMENT
+#  VRJUGGLER22_RUNTIME_LIBRARY_DIRS
 #  VRJUGGLER22_CXX_FLAGS
 #  VRJUGGLER22_DEFINITIONS
 #  VRJUGGLER22_FOUND, If false, do not try to use VR Juggler 2.2.
@@ -197,11 +198,6 @@ if(VRJUGGLER22_FOUND)
 		list(APPEND _vjbase "${_abspath}")
 	endforeach()
 
-	#foreach(_inc ${VRJUGGLER22_INCLUDE_DIRS})
-	#	get_filename_component(_abspath "${_inc}/.." ABSOLUTE)
-	#	list(APPEND _vjbase "${_abspath}")
-	#endforeach()
-
 	clean_directory_list(_vjbase)
 
 	list(LENGTH _vjbase _vjbaselen)
@@ -231,13 +227,23 @@ if(VRJUGGLER22_FOUND)
 		"SONIX_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}"
 		"TWEEK_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}")
 
+    include(GetDirectoryList)
+    
+    get_directory_list(VRJUGGLER22_RUNTIME_LIBRARY_DIRS ${VRJUGGLER22_LIBRARIES})
+    
 	if(MSVC)
 		# Needed to make linking against boost work with 2.2.1 binaries - rp20091022
 		# BOOST_ALL_DYN_LINK
-		set(VRJUGGLER22_DEFINITIONS "-DBOOST_ALL_DYN_LINK")
+		set(VRJUGGLER22_DEFINITIONS "-DBOOST_ALL_DYN_LINK" "-DCPPDOM_DYN_LINK" "-DCPPDOM_AUTO_LINK")
 
 		# Disable these annoying warnings
-		set(VRJUGGLER22_CXX_FLAGS "/wd4275 /wd4251 /wd4127 /wd4100 /wd4512")
+		# 4275: non dll-interface class used as base for dll-interface class
+		# 4251: needs to have dll-interface to be used by clients of class
+		# 4100: unused parameter
+		# 4512: assignment operator could not be generated
+		# 4127: (Not currently disabled) conditional expression in loop evaluates to constant
+		
+		set(VRJUGGLER22_CXX_FLAGS "/wd4275 /wd4251 /wd4100 /wd4512")
 	elseif(CMAKE_COMPILER_IS_GNUCXX)
 		# Silence annoying warnings about deprecated hash_map.
 		set(VRJUGGLER22_CXX_FLAGS "-Wno-deprecated")
@@ -248,7 +254,7 @@ if(VRJUGGLER22_FOUND)
 		"${VRJUGGLER22_CXX_FLAGS} ${CPPDOM_CXX_FLAGS}")
 
 	set(VRJUGGLER22_DEFINITIONS
-		"${VRJUGGLER22_DEFINITIONS} -DJUGGLER_DEBUG")
+		"${VRJUGGLER22_DEFINITIONS}" "-DJUGGLER_DEBUG")
 
 	set(_VRJUGGLER22_SEARCH_COMPONENTS
 		"${VRJUGGLER22_REQUESTED_COMPONENTS}"

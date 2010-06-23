@@ -28,13 +28,14 @@ mark_as_advanced(VRJUGGLERRUNTIME_BUNDLE VRJUGGLERRUNTIME_BUNDLE_DEBUG)
 
 if(VRJUGGLERRUNTIME_BUNDLE AND VRJUGGLER22_FOUND)
 	if(WIN32)
-		get_filename_component(_vrjroot ${VRJ22_LIBRARY_DIR}/../ ABSOLUTE)
+		get_filename_component(_vrjlibdir "${VRJ22_LIBRARY_RELEASE}" PATH)
+		get_filename_component(_vrjroot "${_vrjlibdir}/../" ABSOLUTE)
 
 		# TODO - make sure gadgeteer and sonix can find their DSO's at runtime...
 
 		foreach(_dir bin lib)
 			if(VRJUGGLERRUNTIME_BUNDLE_DEBUG)
-				install(DIRECTORY ${_vrjroot}/${_dir}/
+				install(DIRECTORY "${_vrjroot}/${_dir}/"
 						DESTINATION bin
 						PATTERN "*.lib" EXCLUDE		# exclude static and link libraries
 						PATTERN "*.exe" EXCLUDE		# exclude unneeded executables

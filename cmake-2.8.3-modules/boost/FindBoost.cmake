@@ -332,7 +332,7 @@ IF(Boost_INCLUDE_DIR)
   # On versions < 1.35, remove the System library from the considered list
   # since it wasn't added until 1.35.
   if(Boost_VERSION AND Boost_FIND_COMPONENTS)
-     if(${Boost_VERSION} LESS 1035)
+     if(Boost_VERSION LESS 103500)
        list(REMOVE_ITEM Boost_FIND_COMPONENTS system)
      endif()
   endif()

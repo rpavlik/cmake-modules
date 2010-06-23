@@ -26,13 +26,9 @@ set(WIIUSE_ROOT_DIR
 	"Directory to search for WiiUse")
 
 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
-	set(_LIBSUFFIXES lib64 lib)
+	set(_LIBSUFFIXES /lib64 /lib)
 else()
-	set(_LIBSUFFIXES lib)
-endif()
-
-if(WIN32)
-	list(APPEND _LIBSUFFIXES bin)
+	set(_LIBSUFFIXES /lib)
 endif()
 
 find_library(WIIUSE_LIBRARY
@@ -41,7 +37,7 @@ find_library(WIIUSE_LIBRARY
 	PATHS
 	"${WIIUSE_ROOT_DIR}"
 	PATH_SUFFIXES
-	${_LIBSUFFIXES})
+	"${_LIBSUFFIXES}")
 
 get_filename_component(_libdir "${WIIUSE_LIBRARY}" PATH)
 
@@ -58,13 +54,7 @@ find_path(WIIUSE_INCLUDE_DIR
 
 set(_deps_check)
 if(WIN32)
-	find_file(WIIUSE_RUNTIME_LIBRARY
-		NAMES wiiuse.dll
-		HINTS "${_libdir}"
-		PATHS
-		"${WIIUSE_ROOT_DIR}"
-		PATH_SUFFIXES
-		${_LIBSUFFIXES})
+	find_file(WIIUSE_RUNTIME_LIBRARY NAMES wiiuse.dll HINTS "${_libdir}")
 	set(WIIUSE_RUNTIME_LIBRARIES "${WIIUSE_RUNTIME_LIBRARY}")
 	get_filename_component(WIIUSE_RUNTIME_LIBRARY_DIRS
 		"${WIIUSE_RUNTIME_LIBRARY}"
@@ -74,7 +64,6 @@ else()
 	get_filename_component(WIIUSE_RUNTIME_LIBRARY_DIRS
 		"${WIIUSE_LIBRARY}"
 		PATH)
-	set(WIIUSE_RUNTIME_LIBRARY "${WIIUSE_LIBRARY}")
 endif()
 
 include(FindPackageHandleStandardArgs)

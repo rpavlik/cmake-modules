@@ -81,8 +81,8 @@ set(_ROOT_DIR "${VPR20_ROOT_DIR}")
 find_path(VPR20_INCLUDE_DIR
 	${_HEADER}
 	HINTS
-	${${_FP_PKG_NAME}_FLAGPOLL_INCLUDE_DIRS}
 	"${_ROOT_DIR}"
+	${${_FP_PKG_NAME}_FLAGPOLL_INCLUDE_DIRS}
 	PATH_SUFFIXES
 	${_DIR}
 	include/${_DIR}
@@ -94,8 +94,8 @@ find_library(VPR20_LIBRARY_RELEASE
 	NAMES
 	${_RELEASE_NAMES}
 	HINTS
-	${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
 	"${_ROOT_DIR}"
+	${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
 	PATH_SUFFIXES
 	${_VRJ_LIBSUFFIXES}
 	DOC
@@ -105,8 +105,8 @@ find_library(VPR20_LIBRARY_DEBUG
 	NAMES
 	${_DEBUG_NAMES}
 	HINTS
-	${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
 	"${_ROOT_DIR}"
+	${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
 	PATH_SUFFIXES
 	${_VRJ_LIBDSUFFIXES}
 	DOC
@@ -125,7 +125,7 @@ endif()
 if((NOT "${Boost_FOUND}")
 	OR (NOT "${Boost_FILESYSTEM_FOUND}")
 	OR (NOT "${Boost_SIGNALS_FOUND}")
-	OR ("${Boost_VERSION}" GREATER "103401" AND NOT "${Boost_SYSTEM_FOUND}"))
+	OR (Boost_VERSION GREATER 103401 AND NOT Boost_SYSTEM_FOUND))
 	if(VPR20_LIBRARY_RELEASE)
 		# Find Boost in the same place as VPR
 		get_filename_component(VPR20_LIBRARY_DIR
@@ -139,15 +139,11 @@ if((NOT "${Boost_FOUND}")
 			#set(Boost_USE_MULTITHREADED OFF)
 		endif()
 
-		# Versions of boost released since the update of FindBoost in cmake 2.8.0
-		set(Boost_ADDITIONAL_VERSION "1.41.0" "1.41")
-
 		find_package(Boost
 			1.33.1
 			${_FIND_FLAGS}
 			COMPONENTS
 			filesystem
-			system
 			signals)
 
 		mark_as_advanced(Boost_LIB_DIAGNOSTIC_DEFINITIONS)
@@ -163,8 +159,11 @@ if((NOT "${Boost_FOUND}")
 				${_FIND_FLAGS}
 				COMPONENTS
 				filesystem
-				system
 				signals)
+		endif()
+
+		if(Boost_VERSION GREATER 103401)
+			find_package(Boost ${_FIND_FLAGS} COMPONENTS filesystem system signals)
 		endif()
 	endif()
 

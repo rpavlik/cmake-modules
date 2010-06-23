@@ -2,5 +2,6 @@
 // include AFTER #define BOOST_TEST_MODULE whatever
 // but before any other boost test includes.
 
-#include <boost/test/unit_test.hpp>
+// Using the Boost UTF static library
 
+#include <boost/test/unit_test.hpp>
