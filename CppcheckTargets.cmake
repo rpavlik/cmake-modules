@@ -117,6 +117,9 @@ function(add_cppcheck_sources _targetname)
 endfunction()
 
 function(add_cppcheck _name)
+	if(NOT TARGET ${_name})
+		message(FATAL_ERROR "add_cppcheck given a target name that does not exist: '${_name}' !")
+	endif()
 	if(CPPCHECK_FOUND)
 		set(_cppcheck_args)
 
@@ -135,13 +138,7 @@ function(add_cppcheck _name)
 			list(APPEND _cppcheck_args ${CPPCHECK_POSSIBLEERROR_ARG})
 		endif()
 
-		#get_directory_property(_cppcheck_include_dirs INCLUDE_DIRECTORIES)
-		#set(_includeflags)
-		#foreach(_dir ${_cppcheck_include_dirs})
-		#	list(APPEND _cppcheck_args "${CPPCHECK_INCLUDEPATH_ARG}${_dir}")
-		#endforeach()
-
-		get_target_property(_cppcheck_sources "${_targetname}" SOURCES)
+		get_target_property(_cppcheck_sources "${_name}" SOURCES)
 		set(_files)
 		foreach(_source ${_cppcheck_sources})
 			get_source_file_property(_cppcheck_lang "${_source}" LANGUAGE)
@@ -153,7 +150,7 @@ function(add_cppcheck _name)
 
 		if("1.${CMAKE_VERSION}" VERSION_LESS "1.2.8.0")
 			# Older than CMake 2.8.0
-			add_test(${_targetname}_cppcheck_test
+			add_test(${_name}_cppcheck_test
 				"${CPPCHECK_EXECUTABLE}"
 				${CPPCHECK_TEMPLATE_ARG}
 				${_cppcheck_args}
@@ -161,7 +158,7 @@ function(add_cppcheck _name)
 		else()
 			# CMake 2.8.0 and newer
 			add_test(NAME
-				${_targetname}_cppcheck_test
+				${_name}_cppcheck_test
 				COMMAND
 				"${CPPCHECK_EXECUTABLE}"
 				${CPPCHECK_TEMPLATE_ARG}
@@ -169,7 +166,7 @@ function(add_cppcheck _name)
 				${_files})
 		endif()
 
-		set_tests_properties(${_targetname}_cppcheck_test
+		set_tests_properties(${_name}_cppcheck_test
 			PROPERTIES
 			FAIL_REGULAR_EXPRESSION
 			"[(]error[)]")
@@ -186,7 +183,7 @@ function(add_cppcheck _name)
 			WORKING_DIRECTORY
 			"${CMAKE_CURRENT_SOURCE_DIR}"
 			COMMENT
-			"${_targetname}_cppcheck: Running cppcheck on target ${_targetname}..."
+			"${_name}_cppcheck: Running cppcheck on target ${_name}..."
 			VERBATIM)
 	endif()
 
