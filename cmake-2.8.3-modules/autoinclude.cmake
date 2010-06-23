@@ -6,3 +6,4 @@
 # Iowa State University HCI Graduate Program/VRAC
 
 include(ImproveEclipseGCCErrors)
+include(FixWinInstallPrefix)
