@@ -28,6 +28,12 @@ set(VPS_ROOT_DIR
 	PATH
 	"Root directory to search for VPS")
 
+# Try the config file mode.
+find_package(VPS QUIET NO_MODULE)
+if(VPS_FOUND)
+	return()
+endif()
+
 if(NOT BITS)
 	if(CMAKE_SIZEOF_VOID_P MATCHES "8")
 		set(BITS 64)
