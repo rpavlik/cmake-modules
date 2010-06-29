@@ -4,12 +4,14 @@
 #  guess_runtime_library_dirs(<outputvarname> [<extralibrary> ...])
 #  create_default_target_launcher(<targetname>
 #    [ARGS <args...>]
+#    [FORWARD_ARGS]
 #    [RUNTIME_LIBRARY_DIRS <dir...>]
 #    [WORKING_DIRECTORY <dir>]
 #    [ENVIRONMENT <VAR=value> [<VAR=value>...]])
 #
 #  create_target_launcher(<targetname>
 #    [ARGS <args...>]
+#    [FORWARD_ARGS]
 #    [RUNTIME_LIBRARY_DIRS <dir...>]
 #    [WORKING_DIRECTORY <dir>]
 #    [ENVIRONMENT <VAR=value> [<VAR=value>...]])
@@ -91,7 +93,7 @@ macro(_launcher_process_args)
 		RUNTIME_LIBRARY_DIRS
 		WORKING_DIRECTORY
 		ENVIRONMENT)
-	set(_bool_args)
+	set(_bool_args FORWARD_ARGS)
 	foreach(_arg ${_val_args} ${_bool_args})
 		set(${_arg})
 	endforeach()
@@ -121,6 +123,14 @@ macro(_launcher_process_args)
 	
 	if(NOT WORKING_DIRECTORY)
 		set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+	endif()
+	
+	if(FORWARD_ARGS)
+		if(WIN32)
+			list(APPEND ARGS %*)
+		else()
+			list(APPEND ARGS $*)
+		endif()
 	endif()
 	
 	set(USERFILE_WORKING_DIRECTORY "${WORKING_DIRECTORY}")
