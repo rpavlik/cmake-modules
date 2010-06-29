@@ -20,7 +20,7 @@
 #    [RUNTIME_LIBRARY_DIRS <dir...>]
 #    [WORKING_DIRECTORY <dir>]
 #    [ENVIRONMENT <VAR=value> [<VAR=value>...]])
-#    - sets GENERIC_LAUNCHER_COMMAND
+#    - sets GENERIC_LAUNCHER_COMMAND amd GENERIC_LAUNCHER_FAIL_REGULAR_EXPRESSION
 #
 # Requires these CMake modules:
 #  ListFilter
@@ -250,8 +250,11 @@ function(create_generic_launcher _launchername)
 	endif()
 	if(WIN32)
 		set(GENERIC_LAUNCHER_COMMAND "${_launchername}" PARENT_SCOPE)
+		set(GENERIC_LAUNCHER_FAIL_REGULAR_EXPRESSION)
 	else()
 		set(GENERIC_LAUNCHER_COMMAND sh "${_launchername}" PARENT_SCOPE)
+		set(GENERIC_LAUNCHER_FAIL_REGULAR_EXPRESSION
+		    "Program terminated with signal")
 	endif()
 	
 	configure_file("${_launchermoddir}/genericlauncher.${_suffix}.in"

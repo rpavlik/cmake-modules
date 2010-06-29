@@ -10,6 +10,7 @@
 #
 #  include(BoostTestTargets)
 #  add_boost_test(<testdriver_name> SOURCES <source1> [<more sources...>]
+#   [FAIL_REGULAR_EXPRESSION <additional fail regex>]
 #   [LAUNCHER <generic launcher script>]
 #   [LIBRARIES <library> [<library>...]]
 #   [RESOURCES <resource> [<resource>...]]
@@ -94,6 +95,7 @@ function(add_boost_test _name)
 	set(_curdest _nowhere)
 	set(_val_args
 		SOURCES
+		FAIL_REGULAR_EXPRESSION
 		LAUNCHER
 		LIBRARIES
 		RESOURCES
@@ -206,12 +208,24 @@ function(add_boost_test _name)
 				    ${_test_command}
 				    --run_test=${_test}
 				    ${Boost_TEST_FLAGS})
+				if(FAIL_REGULAR_EXPRESSION)
+    				set_tests_properties(${_name}-${_test}
+            			PROPERTIES
+            			FAIL_REGULAR_EXPRESSION
+            			"${FAIL_REGULAR_EXPRESSION}")
+				endif()
 			endforeach()
 		else()
 			add_test(NAME ${_name}-boost::test
 				COMMAND
 			    ${_test_command}
 			    ${Boost_TEST_FLAGS})
+			if(FAIL_REGULAR_EXPRESSION)
+    			set_tests_properties(${_name}-${_test}
+        			PROPERTIES
+        			FAIL_REGULAR_EXPRESSION
+        			"${FAIL_REGULAR_EXPRESSION}")
+			endif()
 		endif()
 
 		# CppCheck the test if we can.
