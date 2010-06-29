@@ -10,6 +10,7 @@
 #
 #  include(BoostTestTargets)
 #  add_boost_test(<testdriver_name> SOURCES <source1> [<more sources...>]
+#   [LAUNCHER <generic launcher script>]
 #   [LIBRARIES <library> [<library>...]]
 #   [RESOURCES <resource> [<resource>...]]
 #   [TESTS <testcasename> [<testcasename>...]])
@@ -80,11 +81,20 @@ function(add_boost_test _name)
 	if(NOT BUILD_TESTING)
 		return()
 	endif()
+	if("${CMAKE_VERSION}" VERSION_LESS "2.8.0")
+		if(NOT "${_boost_test_cmakever_pestered}x" EQUALS "${CMAKE_VERSION}x")
+			message(STATUS "Not adding boost::test targets - CMake 2.8.0 or newer required, using ${CMAKE_VERSION}")
+			set(_boost_test_cmakever_pestered "${CMAKE_VERSION}" CACHE INTERNAL "" FORCE)
+		endif()
+		return()
+	endif()
+	
 	# parse arguments
 	set(_nowhere)
 	set(_curdest _nowhere)
 	set(_val_args
 		SOURCES
+		LAUNCHER
 		LIBRARIES
 		RESOURCES
 		TESTS)
@@ -157,22 +167,23 @@ function(add_boost_test _name)
 			list(APPEND SOURCES ${RESOURCES})
 		endif()
 
-		add_executable(${BOOST_TEST_TARGET_PREFIX}${_name} ${SOURCES})
+		set(_target_name ${BOOST_TEST_TARGET_PREFIX}${_name})
+		add_executable(${_target_name} ${SOURCES})
 
 		#if(USE_COMPILED_LIBRARY)
 			list(APPEND LIBRARIES ${_boosttesttargets_libs})
 		#endif()
 		if(LIBRARIES)
-			target_link_libraries(${BOOST_TEST_TARGET_PREFIX}${_name} ${LIBRARIES})
+			target_link_libraries(${_target_name} ${LIBRARIES})
 		endif()
 
 		if(RESOURCES)
 			set_property(TARGET
-				${BOOST_TEST_TARGET_PREFIX}${_name}
+				${_target_name}
 				PROPERTY
 				RESOURCE
 				${RESOURCES})
-			copy_resources_to_build_tree(${BOOST_TEST_TARGET_PREFIX}${_name})
+			copy_resources_to_build_tree(${_target_name})
 		endif()
 
 		if(NOT Boost_TEST_FLAGS)
@@ -181,17 +192,31 @@ function(add_boost_test _name)
 		endif()
 
 		# TODO: Figure out why only recent boost handles individual test running properly
-		if(TESTS AND ("${Boost_VERSION}" VERSION_GREATER "103799"))
+		
+		if(LAUNCHER)
+			set(_test_command ${LAUNCHER} "\$<TARGET_FILE:${_target_name}>")
+		else()
+			set(_test_command ${_target_name})
+		endif()
+		
+	    if(TESTS AND ("${Boost_VERSION}" VERSION_GREATER "103799"))
 			foreach(_test ${TESTS})
-				add_test(${_name}-${_test} ${BOOST_TEST_TARGET_PREFIX}${_name} --run_test=${_test} ${Boost_TEST_FLAGS})
+				add_test(NAME ${_name}-${_test}
+					COMMAND
+				    ${_test_command}
+				    --run_test=${_test}
+				    ${Boost_TEST_FLAGS})
 			endforeach()
 		else()
-			add_test(${_name}-boost::test ${BOOST_TEST_TARGET_PREFIX}${_name} ${Boost_TEST_FLAGS})
+			add_test(NAME ${_name}-boost::test
+				COMMAND
+			    ${_test_command}
+			    ${Boost_TEST_FLAGS})
 		endif()
 
 		# CppCheck the test if we can.
 		if(COMMAND add_cppcheck)
-			add_cppcheck(${BOOST_TEST_TARGET_PREFIX}${_name} STYLE UNUSED_FUNCTIONS)
+			add_cppcheck(${_target_name} STYLE UNUSED_FUNCTIONS)
 		endif()
 
 	endif()
