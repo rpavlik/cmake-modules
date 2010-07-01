@@ -1,4 +1,4 @@
-# - Remove the Debug and MinSizeRel configurations
+# - Re-set the available configurations to just RelWithDebInfo and Release
 #
 # Requires these CMake modules:
 #  no additional modules required
@@ -10,14 +10,13 @@
 #
 
 
-if(__remove_configurations)
+if(__reset_configurations)
 	return()
 endif()
-set(__remove_configurations YES)
+set(__reset_configurations YES)
 
-if(CMAKE_CONFIGURATION_TYPES AND NOT __CONFIGURATIONS_REMOVED)
-    set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo")
+if(CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_CONFIGURATION_TYPES "RelWithDebInfo;Release")
 	set(CMAKE_CONFIGURATION_TYPES "${CMAKE_CONFIGURATION_TYPES}" CACHE STRING
         "Reset the configurations to what we need" FORCE)
-	set(__CONFIGURATIONS_REMOVED YES CACHE INTERNAL "" FORCE)
 endif()
