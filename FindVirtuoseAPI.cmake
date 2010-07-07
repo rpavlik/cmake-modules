@@ -4,6 +4,7 @@
 #  VIRTUOSEAPI_LIBRARIES, the libraries to link against
 #  VIRTUOSEAPI_FOUND, If false, do not try to use this library
 #  VIRTUOSEAPI_RUNTIME_LIBRARY_DIRS, path to DLL/SO for runtime use.
+#  VIRTUOSEAPI_RUNTIME_LIBRARIES, runtime libraries you might want to install
 
 set(VIRTUOSEAPI_ROOT_DIR
 	"${VIRTUOSEAPI_ROOT_DIR}"
@@ -75,6 +76,7 @@ find_package_handle_standard_args(VirtuoseAPI
 
 if(VIRTUOSEAPI_FOUND)
 	set(VIRTUOSEAPI_LIBRARIES "${VIRTUOSEAPI_LIBRARY}")
+	set(VIRTUOSEAPI_RUNTIME_LIBRARIES "${VIRTUOSEAPI_RUNTIME_LIBRARY}")
 	set(VIRTUOSEAPI_INCLUDE_DIRS "${VIRTUOSEAPI_INCLUDE_DIR}")
 	get_filename_component(VIRTUOSEAPI_RUNTIME_LIBRARY_DIRS "${VIRTUOSEAPI_RUNTIME_LIBRARY}" PATH)
 
