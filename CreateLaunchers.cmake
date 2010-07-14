@@ -140,23 +140,24 @@ macro(_launcher_process_args)
 	set(LAUNCHERSCRIPT_COMMAND_ARGUMENTS "${ARGS} ${FWD_ARGS}")
 	
 	if(WIN32)
-		set(USERFILE_ENVIRONMENT "PATH=${_runtime_lib_dirs};%PATH%")
+		set(RUNTIME_LIBRARIES_ENVIRONMENT "PATH=${_runtime_lib_dirs};%PATH%")
 		file(READ
 			"${_launchermoddir}/launcher.env.cmd.in"
 			_cmdenv)
 	else()
 		if(APPLE)
-			set(USERFILE_ENVIRONMENT "DYLD_LIBRARY_PATH=${_runtime_lib_dirs}:$DYLD_LIBRARY_PATH")
+			set(RUNTIME_LIBRARIES_ENVIRONMENT "DYLD_LIBRARY_PATH=${_runtime_lib_dirs}:$DYLD_LIBRARY_PATH")
 		else()
-			set(USERFILE_ENVIRONMENT "LD_LIBRARY_PATH=${_runtime_lib_dirs}:$LD_LIBRARY_PATH")
+			set(RUNTIME_LIBRARIES_ENVIRONMENT "LD_LIBRARY_PATH=${_runtime_lib_dirs}:$LD_LIBRARY_PATH")
 		endif()
 		file(READ
 			"${_launchermoddir}/launcher.env.sh.in"
 			_cmdenv)
 	endif()
+	set(USERFILE_ENVIRONMENT "${RUNTIME_LIBRARIES_ENVIRONMENT}")
 
 	set(USERFILE_ENV_COMMANDS)
-	foreach(_arg ${ENVIRONMENT})
+	foreach(_arg "${RUNTIME_LIBRARIES_ENVIRONMENT}" ${ENVIRONMENT})
 		string(CONFIGURE
 			"@USERFILE_ENVIRONMENT@&#x0A;@_arg@"
 			USERFILE_ENVIRONMENT

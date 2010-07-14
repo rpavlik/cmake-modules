@@ -1,5 +1,7 @@
 cd @USERFILE_WORKING_DIRECTORY@
 @USERFILE_ENV_COMMANDS@
 
-if "%1"=="--debugger" shift
+if [%1]==[--debugger] (
+	SHIFT
+)
 %*
