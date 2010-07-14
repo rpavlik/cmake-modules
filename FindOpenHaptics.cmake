@@ -37,11 +37,14 @@
 #  ProgramFilesGlob
 #  SelectLibraryConfigurations (included with CMake >=2.8.0)
 #  FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+#  CMake 2.6.3 (uses "unset")
 #
 # Original Author:
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
+
+cmake_minimum_required(VERSION 2.6.3)
 
 set(OPENHAPTICS_ROOT_DIR
 	"${OPENHAPTICS_ROOT_DIR}"
@@ -199,7 +202,7 @@ select_library_configurations(HDAPI_HDU)
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
     if(HDAPI_HDU_SOURCE_DIR AND NOT EXISTS "${HDAPI_HDU_SOURCE_DIR}/hdu.cpp")
-        set(HDAPI_HDU_SOURCE_DIR)
+        unset(HDAPI_HDU_SOURCE_DIR)
     endif()
 	find_path(HDAPI_HDU_SOURCE_DIR
 		NAMES
@@ -283,7 +286,7 @@ select_library_configurations(HLAPI_HLU)
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
     if(HLAPI_HLU_SOURCE_DIR AND NOT EXISTS "${HLAPI_HLU_SOURCE_DIR}/hlu.cpp")
-        set(HLAPI_HLU_SOURCE_DIR)
+        unset(HLAPI_HLU_SOURCE_DIR)
     endif()
 	find_path(HLAPI_HLU_SOURCE_DIR
 		NAMES

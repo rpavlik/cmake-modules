@@ -50,6 +50,8 @@ set(PARASOLID_NESTED_TARGETS
 	"Whether we should compile fg and frustrum as a part of the solution")
 mark_as_advanced(PARASOLID_NESTED_TARGETS)
 
+set(_nest_targets)
+
 ###
 # Configure Parasolid
 ###
@@ -176,32 +178,8 @@ if(PARASOLID_pskernel_LIBRARY OR PARASOLID_INCLUDE_DIR)
 			"${_libdir}/.."
 			"${_incdir}")
 		if(PARASOLID_FG_C)
-			get_filename_component(_fgdir "${PARASOLID_FG_C}" PATH)
-			include_directories("${_fgdir}")
-			add_library(parasolid_fg_nested_target
-				STATIC
-				EXCLUDE_FROM_ALL
-				"${PARASOLID_FG_C}")
-
-			set_property(TARGET
-				parasolid_fg_nested_target
-				PROPERTY
-				COMPILE_DEFINITIONS
-				_CRT_SECURE_NO_DEPRECATE)
-			if(MSVC)
-				set_property(TARGET
-					parasolid_fg_nested_target
-					PROPERTY
-					COMPILE_FLAGS
-					"/Gs /GF /GS- /fp:fast")
-			endif()
-
-			set_property(TARGET
-				parasolid_fg_nested_target
-				PROPERTY
-				PROJECT_LABEL
-				"Parasolid Foreign Geometry Example Library")
-
+			mark_as_advanced(PARASOLID_FG_C)
+			set(_nest_targets YES)
 			set(PARASOLID_fg_LIBRARY
 				"parasolid_fg_nested_target"
 				CACHE
@@ -220,32 +198,8 @@ if(PARASOLID_pskernel_LIBRARY OR PARASOLID_INCLUDE_DIR)
 			"${_libdir}/.."
 			"${_incdir}")
 		if(PARASOLID_FRUSTRUM_C)
-			get_filename_component(_frustrumdir "${PARASOLID_FRUSTRUM_C}" PATH)
-			include_directories("${_frustrumdir}")
-			add_library(parasolid_frustrum_nested_target
-				STATIC
-				EXCLUDE_FROM_ALL
-				"${PARASOLID_FRUSTRUM_C}")
-
-			set_property(TARGET
-				parasolid_frustrum_nested_target
-				PROPERTY
-				COMPILE_DEFINITIONS
-				_CRT_SECURE_NO_DEPRECATE)
-			if(MSVC)
-				set_property(TARGET
-					parasolid_frustrum_nested_target
-					PROPERTY
-					COMPILE_FLAGS
-					"/Gs /GF /GS- /fp:fast")
-			endif()
-
-			set_property(TARGET
-				parasolid_frustrum_nested_target
-				PROPERTY
-				PROJECT_LABEL
-				"Parasolid Frustrum Example Library")
-
+			mark_as_advanced(PARASOLID_FRUSTRUM_C)
+			set(_nest_targets YES)
 			set(PARASOLID_frustrum_LIBRARY
 				"parasolid_frustrum_nested_target"
 				CACHE
@@ -308,6 +262,12 @@ find_package_handle_standard_args(Parasolid
 	PARASOLID_INCLUDE_DIR)
 
 if(PARASOLID_FOUND)
+	# Recurse into the nested targets subdirectory if needed
+	if(_nest_targets)
+		get_filename_component(_moddir "${CMAKE_CURRENT_LIST_FILE}" PATH)
+		add_subdirectory("${_moddir}/nested_targets/Parasolid")
+	endif()
+	
 	set(PARASOLID_INCLUDE_DIRS "${PARASOLID_INCLUDE_DIR}")
 	set(PARASOLID_LIBRARIES
 		"${PARASOLID_pskernel_LIBRARY}"
