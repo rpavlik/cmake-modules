@@ -124,15 +124,25 @@ if(VRJUGGLER22_COMPONENTS_FOUND)
 endif()
 
 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
-	set(_VRJ_LIBSUFFIXES /lib64 /lib)
+	set(_VRJ_LIBSUFFIXES lib64 lib)
 	set(_VRJ_LIBDSUFFIXES
-		/lib64/x86_64/debug
-		/lib64
-		/lib/x86_64/debug
-		/lib)
+		debug
+		lib64/x86_64/debug
+		lib64/debug
+		lib64
+		lib/x86_64/debug
+		lib/debug
+		lib)
+	set(_VRJ_LIBDSUFFIXES_ONLY
+		debug
+		lib64/x86_64/debug
+		lib64/debug
+		lib/x86_64/debug
+		lib/debug)
 else()
-	set(_VRJ_LIBSUFFIXES /lib)
-	set(_VRJ_LIBDSUFFIXES /lib/i686/debug /lib)
+	set(_VRJ_LIBSUFFIXES lib)
+	set(_VRJ_LIBDSUFFIXES debug lib/i686/debug lib/debug lib)
+	set(_VRJ_LIBDSUFFIXES_ONLY debug lib/i686/debug lib/debug)
 endif()
 
 if(NOT VRJuggler22_FIND_QUIETLY
