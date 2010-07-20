@@ -19,50 +19,53 @@ if(WIN32)
 endif()
 
 find_path(VIRTUOSEAPI_INCLUDE_DIR
+	virtuoseAPI.h
 	VirtuoseAPI.h
 	PATHS
 	${_dirs}
 	HINTS
 	"${VIRTUOSEAPI_ROOT_DIR}")
 
+set(_suffixes)
 if(WIN32)
-	find_library(VIRTUOSEAPI_LIBRARY
-		NAMES
-		virtuoseDLL
-		PATHS
-		${_dirs}
-		HINTS
-		"${VIRTUOSEAPI_ROOT_DIR}"
-		PATH_SUFFIXES
-		win32)
-	find_file(VIRTUOSEAPI_RUNTIME_LIBRARY
-		NAMES
-		virtuoseAPI.dll
-		PATHS
-		${_dirs}
-		HINTS
-		"${VIRTUOSEAPI_ROOT_DIR}"
-		PATH_SUFFIXES
-		win32)
+	set(_lib_name virtuoseDLL)
+	set(_runtime_name virtuoseAPI.dll)
+
+	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+		set(_suffixes win64)
+	else()
+		set(_suffixes win32)
+	endif()
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+	set(_lib_name virtuose)
+	set(_runtime_name virtuoseAPI.so)
+
+	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+		set(_suffixes linux-64b)
+	else()
+		set(_suffixes linux linux-2.6)
+	endif()
+endif()
+
+if(_suffixes)
 	find_library(VIRTUOSEAPI_LIBRARY
 		NAMES
-		virtuose
+		${_lib_name}
 		PATHS
 		${_dirs}
 		HINTS
 		"${VIRTUOSEAPI_ROOT_DIR}"
 		PATH_SUFFIXES
-		linux-2.6)
+		${_suffixes})
 	find_file(VIRTUOSEAPI_RUNTIME_LIBRARY
 		NAMES
-		virtuoseAPI.so
+		${_runtime_name}
 		PATHS
 		${_dirs}
 		HINTS
 		"${VIRTUOSEAPI_ROOT_DIR}"
 		PATH_SUFFIXES
-		linux-2.6)
+		${_suffixes})
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
