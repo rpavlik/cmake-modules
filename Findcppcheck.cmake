@@ -10,6 +10,8 @@
 #  CPPCHECK_STYLE_ARG
 #  CPPCHECK_QUIET_ARG
 #  CPPCHECK_INCLUDEPATH_ARG
+#  CPPCHECK_FAIL_REGULAR_EXPRESSION
+#  CPPCHECK_WARN_REGULAR_EXPRESSION
 #  CPPCHECK_MARK_AS_ADVANCED - whether to mark our vars as advanced even
 #    if we don't find this program.
 #
@@ -83,8 +85,17 @@ if(CPPCHECK_EXECUTABLE)
 		set(CPPCHECK_INCLUDEPATH_ARG "-I")
 		if(MSVC)
 			set(CPPCHECK_TEMPLATE_ARG --template vs)
+			set(CPPCHECK_FAIL_REGULAR_EXPRESSION "[(]error[)]")
+			set(CPPCHECK_WARN_REGULAR_EXPRESSION "[(]style[)]")
 		elseif(CMAKE_COMPILER_IS_GNUCXX)
 			set(CPPCHECK_TEMPLATE_ARG --template gcc)
+			set(CPPCHECK_FAIL_REGULAR_EXPRESSION " error: ")
+			set(CPPCHECK_WARN_REGULAR_EXPRESSION " style: ")
+		else()
+			message(STATUS "Warning: FindCppcheck doesn't know how to format error messages for your compiler!")
+			set(CPPCHECK_TEMPLATE_ARG --template gcc)
+			set(CPPCHECK_FAIL_REGULAR_EXPRESSION " error: ")
+			set(CPPCHECK_WARN_REGULAR_EXPRESSION " style: ")
 		endif()
 	elseif("${_cppcheck_old_result}" EQUAL 0)
 		# Old arguments
@@ -93,7 +104,8 @@ if(CPPCHECK_EXECUTABLE)
 		set(CPPCHECK_STYLE_ARG "--style")
 		set(CPPCHECK_QUIET_ARG "--quiet")
 		set(CPPCHECK_INCLUDEPATH_ARG "-I")
-
+		set(CPPCHECK_FAIL_REGULAR_EXPRESSION "error:")
+		set(CPPCHECK_WARN_REGULAR_EXPRESSION "[(]style[)]")
 	else()
 		# No idea - some other issue must be getting in the way
 		message(STATUS

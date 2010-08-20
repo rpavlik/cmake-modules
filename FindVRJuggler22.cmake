@@ -124,15 +124,25 @@ if(VRJUGGLER22_COMPONENTS_FOUND)
 endif()
 
 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
-	set(_VRJ_LIBSUFFIXES /lib64 /lib)
+	set(_VRJ_LIBSUFFIXES lib64 lib)
 	set(_VRJ_LIBDSUFFIXES
-		/lib64/x86_64/debug
-		/lib64
-		/lib/x86_64/debug
-		/lib)
+		debug
+		lib64/x86_64/debug
+		lib64/debug
+		lib64
+		lib/x86_64/debug
+		lib/debug
+		lib)
+	set(_VRJ_LIBDSUFFIXES_ONLY
+		debug
+		lib64/x86_64/debug
+		lib64/debug
+		lib/x86_64/debug
+		lib/debug)
 else()
-	set(_VRJ_LIBSUFFIXES /lib)
-	set(_VRJ_LIBDSUFFIXES /lib/i686/debug /lib)
+	set(_VRJ_LIBSUFFIXES lib)
+	set(_VRJ_LIBDSUFFIXES debug lib/i686/debug lib/debug lib)
+	set(_VRJ_LIBDSUFFIXES_ONLY debug lib/i686/debug lib/debug)
 endif()
 
 if(NOT VRJuggler22_FIND_QUIETLY
@@ -200,10 +210,15 @@ if(VRJUGGLER22_FOUND)
 
 	clean_directory_list(_vjbase)
 
+	set(_vrj22_have_base_dir NO)
 	list(LENGTH _vjbase _vjbaselen)
 	if("${_vjbaselen}" EQUAL 1 AND NOT VRJUGGLER22_VJ_BASE_DIR)
 		list(GET _vjbase 0 VRJUGGLER22_VJ_BASE_DIR)
 		mark_as_advanced(VRJUGGLER22_VJ_BASE_DIR)
+		if(NOT VRJUGGLER22_VJ_BASE_DIR STREQUAL _vrj22_base_dir)
+			unset(VRJUGGLER22_VJ_CFG_DIR)
+		endif()
+		set(_vrj22_have_base_dir YES)
 	else()
 		list(GET _vjbase 0 _calculated_base_dir)
 		if(NOT
@@ -213,8 +228,27 @@ if(VRJUGGLER22_FOUND)
 			message("It looks like you might be mixing VR Juggler versions... ${_vjbaselen} ${_vjbase}")
 			message("If you are, fix your libraries then remove the VRJUGGLER22_VJ_BASE_DIR variable in CMake, then configure again")
 			message("If you aren't, set the VRJUGGLER22_VJ_BASE_DIR variable to the desired VJ_BASE_DIR to use when running")
+		else()
+			if(NOT VRJUGGLER22_VJ_BASE_DIR STREQUAL _vrj22_base_dir)
+				unset(VRJUGGLER22_VJ_CFG_DIR)
+			endif()
+			set(_vrj22_have_base_dir YES)
 		endif()
 	endif()
+	
+	set(_vrj22_base_dir "${VRJUGGLER22_VJ_BASE_DIR}")
+	set(_vrj22_base_dir "${_vrj22_base_dir}" CACHE INTERNAL "" FORCE)
+	
+	if(_vrj22_have_base_dir)
+		file(GLOB _poss_dirs ${VRJUGGLER22_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
+		find_path(VRJUGGLER22_VJ_CFG_DIR
+			standalone.jconf
+			PATHS
+			${_poss_dirs}
+			NO_DEFAULT_PATH)
+		mark_as_advanced(VRJUGGLER22_VJ_CFG_DIR)
+	endif()
+		
 	set(VRJUGGLER22_VJ_BASE_DIR
 		"${VRJUGGLER22_VJ_BASE_DIR}"
 		CACHE
@@ -225,7 +259,8 @@ if(VRJUGGLER22_FOUND)
 		"VJ_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}"
 		"JCCL_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}"
 		"SONIX_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}"
-		"TWEEK_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}")
+		"TWEEK_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}"
+		"VJ_CFG_DIR=${VRJUGGLER22_VJ_CFG_DIR}")
 
     include(GetDirectoryList)
     

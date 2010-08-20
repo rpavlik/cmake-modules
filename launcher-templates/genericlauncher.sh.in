@@ -1,0 +1,14 @@
+#!/bin/sh
+bindir=$(pwd)
+cd @USERFILE_WORKING_DIRECTORY@
+@USERFILE_ENV_COMMANDS@
+if [ $1 == "--debugger" ]; then
+	shift
+	cmd="$1"
+	shift
+	echo "r $@" > $bindir/gdbscript
+	echo "bt" >> $bindir/gdbscript
+	gdb $cmd -command=$bindir/gdbscript -batch --return-child-result
+else
+	$@
+fi

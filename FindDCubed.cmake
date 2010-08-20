@@ -116,8 +116,8 @@ if(NOT DCUBED_ROOT_DIR)
 		FORCE)
 endif()
 
-file(TO_NATIVE_PATH "${DCUBED_ROOT_DIR}" _d3envdir)
-set(DCUBED_ENVIRONMENT "DCUBED=${_d3envdir}")
+#file(TO_NATIVE_PATH "${DCUBED_ROOT_DIR}" _d3envdir)
+set(DCUBED_ENVIRONMENT "DCUBED=${DCUBED_ROOT_DIR}")
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
