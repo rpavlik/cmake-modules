@@ -31,6 +31,7 @@ set(VPS_ROOT_DIR
 # Try the config file mode.
 find_package(VPS QUIET NO_MODULE)
 if(VPS_FOUND)
+	mark_as_advanced(VPS_DIR VPS_ROOT_DIR)
 	return()
 endif()
 
@@ -293,5 +294,5 @@ if(VPS_FOUND)
 		"${VPS_grviewer_INCLUDE_DIR}")
 	set(VPS_LIBRARIES "${VPS_vps_LIBRARY}")
 	set(VPS_grviewer_LIBRARIES "${VPS_vps_LIBRARY}" "${VPS_grviewer_LIBRARY}")
-	mark_as_advanced(VPS_ROOT_DIR)
+	mark_as_advanced(VPS_ROOT_DIR VPS_DIR)
 endif()
