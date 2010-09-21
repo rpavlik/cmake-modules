@@ -235,10 +235,10 @@ if(VRJUGGLER22_FOUND)
 			set(_vrj22_have_base_dir YES)
 		endif()
 	endif()
-	
+
 	set(_vrj22_base_dir "${VRJUGGLER22_VJ_BASE_DIR}")
 	set(_vrj22_base_dir "${_vrj22_base_dir}" CACHE INTERNAL "" FORCE)
-	
+
 	if(_vrj22_have_base_dir)
 		file(GLOB _poss_dirs ${VRJUGGLER22_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
 		find_path(VRJUGGLER22_VJ_CFG_DIR
@@ -248,7 +248,7 @@ if(VRJUGGLER22_FOUND)
 			NO_DEFAULT_PATH)
 		mark_as_advanced(VRJUGGLER22_VJ_CFG_DIR)
 	endif()
-		
+
 	set(VRJUGGLER22_VJ_BASE_DIR
 		"${VRJUGGLER22_VJ_BASE_DIR}"
 		CACHE
@@ -263,9 +263,9 @@ if(VRJUGGLER22_FOUND)
 		"VJ_CFG_DIR=${VRJUGGLER22_VJ_CFG_DIR}")
 
     include(GetDirectoryList)
-    
+
     get_directory_list(VRJUGGLER22_RUNTIME_LIBRARY_DIRS ${VRJUGGLER22_LIBRARIES})
-    
+
 	if(MSVC)
 		# Needed to make linking against boost work with 2.2.1 binaries - rp20091022
 		# BOOST_ALL_DYN_LINK
@@ -277,7 +277,7 @@ if(VRJUGGLER22_FOUND)
 		# 4100: unused parameter
 		# 4512: assignment operator could not be generated
 		# 4127: (Not currently disabled) conditional expression in loop evaluates to constant
-		
+
 		set(VRJUGGLER22_CXX_FLAGS "/wd4275 /wd4251 /wd4100 /wd4512")
 	elseif(CMAKE_COMPILER_IS_GNUCXX)
 		# Silence annoying warnings about deprecated hash_map.
