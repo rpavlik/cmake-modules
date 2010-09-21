@@ -2,7 +2,7 @@
 bindir=$(pwd)
 cd @USERFILE_WORKING_DIRECTORY@
 @USERFILE_ENV_COMMANDS@
-if [ $1 == "--debugger" ]; then
+if test "x$1" = "x--debugger"; then
 	shift
 	cmd="$1"
 	shift
