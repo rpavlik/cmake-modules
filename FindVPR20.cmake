@@ -248,7 +248,7 @@ find_package_handle_standard_args(VPR20
 
 if(VPR20_FOUND)
 
-	set(VPR20_INCLUDE_DIRS ${VPR20_INCLUDE_DIR} ${_deps_includes})
+	set(VPR20_INCLUDE_DIRS "${VPR20_INCLUDE_DIR}" ${_deps_includes})
 
 	clean_directory_list(VPR20_INCLUDE_DIRS)
 
