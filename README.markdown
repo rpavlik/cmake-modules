@@ -1,8 +1,11 @@
 VRAC CMake Modules
 ==================
 
-Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+Ryan Pavlik
+
+<rpavlik@iastate.edu> <abiryan@ryand.net>
 <http://academic.cleardefinition.com>
+
 Iowa State University HCI Graduate Program/VRAC
 
 Introduction
@@ -23,16 +26,21 @@ How to Integrate
 These modules are probably best placed wholesale into a "cmake" subdirectory
 of your project source.
 
-If you use Git, try installing [git-subtree]<http://github.com/apenwarr/git-subtree>,
+If you use Git, try installing [git-subtree][1],
 so you can easily use this repository for subtree merges, updating simply.
 
 For the initial checkout:
-* cd projectdir
-* git subtree add --squash --prefix=cmake git://github.com/rpavlik/cmake-modules.git master
+
+	cd projectdir
+
+	git subtree add --squash --prefix=cmake git://github.com/rpavlik/cmake-modules.git master
 
 For updates:
-* cd projectdir
-* git subtree pull --squash --prefix=cmake git://github.com/rpavlik/cmake-modules.git master
+
+	cd projectdir
+
+	git subtree pull --squash --prefix=cmake git://github.com/rpavlik/cmake-modules.git master
+
 
 How to Use
 ----------
@@ -40,12 +48,12 @@ How to Use
 At the minimum, all you have to do is add a line like this near the top
 of your root CMakeLists.txt file (but not before your project() call):
 
-* list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+	list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 You might also want the extra automatic features/fixes included with the
 modules, for that, just add another line following the first one:
 
-* include(UseBackportedModules)
+	include(UseBackportedModules)
 
 
 Licenses
@@ -53,13 +61,17 @@ Licenses
 
 The modules that I wrote myself are all subject to this license:
 
->          Copyright Iowa State University 2009-2010
+> Copyright Iowa State University 2009-2010
 >
 > Distributed under the Boost Software License, Version 1.0.
 >
->    (See accompanying file LICENSE_1_0.txt or copy at
->          http://www.boost.org/LICENSE_1_0.txt)
+>    (See accompanying file `LICENSE_1_0.txt` or copy at
+>          <http://www.boost.org/LICENSE_1_0.txt>)
 
 Modules based on those included with CMake are under the OSI-approved
 BSD license, which is included in each of those modules.  A few other modules
 are modified from other sources - when in doubt, look at the .cmake.
+
+
+
+[1]: http://github.com/apenwarr/git-subtree  "Git Subtree master - might also consider the fork from musixmatch"
