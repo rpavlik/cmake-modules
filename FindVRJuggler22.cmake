@@ -296,7 +296,177 @@ if(VRJUGGLER22_FOUND)
 		CACHE
 		INTERNAL
 		"Requested components, used as a flag.")
+	
+	set(VRJUGGLER22_BUNDLE_PLUGINS)
+	set(VRJUGGLER22_BUNDLE_LIBRARY_DIRS)
+	foreach(_libdir ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
+		if(EXISTS "${_libdir}/gadgeteer")
+			list(APPEND VRJUGGLER22_BUNDLE_LIBRARY_DIRS "${_libdir}/gadgeteer")
+			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${_libdir}/gadgeteer/drivers" "${_libdir}/gadgeteer/plugins")
+			file(GLOB _plugins "${_libdir}/gadgeteer/drivers/*${CMAKE_SHARED_LIBRARY_SUFFIX}" "${_libdir}/gadgeteer/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+			list(APPEND VRJUGGLER22_BUNDLE_PLUGINS ${_plugins})
+		elseif(EXISTS "${_libdir}/gadgeteer-1.2")
+			list(APPEND VRJUGGLER22_BUNDLE_LIBRARY_DIRS "${_libdir}/gadgeteer-1.2")
+			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${_libdir}/gadgeteer-1.2/drivers" "${_libdir}/gadgeteer-1.2/plugins")
+			file(GLOB _plugins "${_libdir}/gadgeteer-1.2/drivers/*${CMAKE_SHARED_LIBRARY_SUFFIX}" "${_libdir}/gadgeteer-1.2/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+			list(APPEND VRJUGGLER22_BUNDLE_PLUGINS ${_plugins})
+		endif()
+	endforeach()
+	
 	mark_as_advanced(VRJUGGLER22_ROOT_DIR)
 endif()
 
 mark_as_advanced(VRJUGGLER22_DEFINITIONS)
+
+function(install_vrjuggler22_data_files prefix)
+	set(base "${VRJUGGLER22_VJ_CFG_DIR}/..")
+	get_filename_component(base "${base}" ABSOLUTE)
+	file(RELATIVE_PATH reldest "${VRJUGGLER22_VJ_BASE_DIR}" "${base}")
+	if(prefix STREQUAL "" OR prefix STREQUAL "." OR prefix STREQUAL "./")
+		set(DEST "${reldest}")
+	else()
+		set(DEST "${prefix}/${reldest}")
+	endif()
+	
+	# configFiles *.jconf
+	file(GLOB
+		_vj_config_files
+		"${base}/configFiles/*.jconf")
+	install(FILES ${_vj_config_files} DESTINATION "${DEST}/configFiles/")
+
+	# definitions *.jdef
+	file(GLOB
+		_vj_defs_files
+		"${base}/definitions/*.jdef")
+	install(FILES ${_vj_defs_files} DESTINATION "${DEST}/definitions/")
+
+	# models *.flt
+	file(GLOB
+		_vj_model_files
+		"${base}/models/*.flt")
+	install(FILES ${_vj_model_files} DESTINATION "${DEST}/models/")
+
+	# sounds *.wav
+	file(GLOB
+		_vj_sound_files
+		"${base}/sounds/*.wav")
+	install(FILES ${_vj_sound_files} DESTINATION "${DEST}/sounds/")
+
+	# calibration.table - needed?
+	file(GLOB
+		_vj_config_files
+		"${base}/configFiles/*.jconf")
+	install(FILES "${base}/calibration.table" DESTINATION "${DEST}")
+endfunction()
+
+function(install_vrjuggler22_gadgeteer_drivers prefix varForFilenames)
+	list(SORT VRJUGGLER22_BUNDLE_LIBRARY_DIRS)
+	list(REMOVE_DUPLICATES VRJUGGLER22_BUNDLE_LIBRARY_DIRS)
+	list(LENGTH VRJUGGLER22_BUNDLE_LIBRARY_DIRS dirs)
+	if(dirs GREATER 1)
+		message(STATUS "WARNING: Can't install gadgeteer drivers - they're from more than one prefix!")
+		return()
+	endif()
+	
+	get_filename_component(base "${VRJUGGLER22_BUNDLE_LIBRARY_DIRS}" ABSOLUTE)
+	file(RELATIVE_PATH reldest "${VRJUGGLER22_VJ_BASE_DIR}" "${base}")
+	if(prefix STREQUAL "" OR prefix STREQUAL "." OR prefix STREQUAL "./")
+		set(DEST "${reldest}")
+	else()
+		set(DEST "${prefix}/${reldest}")
+	endif()
+
+	set(out)
+	foreach(plugin ${VRJUGGLER22_BUNDLE_PLUGINS})
+		file(RELATIVE_PATH relloc "${base}" "${plugin}")
+		set(filedest "${DEST}/${relloc}")
+		get_filename_component(path "${filedest}" PATH)
+		list(APPEND out "${filedest}")
+		install(FILES "${plugin}" DESTINATION "${path}")
+	endforeach()
+	
+	set(${varForFilenames} ${out} PARENT_SCOPE)
+
+endfunction()
+
+function(get_vrjuggler_bundle_sources _target_sources)
+	if(APPLE)
+		if(NOT MACOSX_PACKAGE_DIR)
+			set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
+		endif()
+
+		set(_vj_base_dir .)
+		set(_vj_data_dir ${vj_base_dir}/share/vrjuggler-2.2)
+
+		# Append Mac-specific sources to source list
+		set(_vj_bundle_src
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib)
+
+		message(STATUS "vjbundlesrc: ${_vj_bundle_src}")
+		set(${_target_sources}
+			${${_target_sources}}
+			${_vj_bundle_src}
+			PARENT_SCOPE)
+
+		# Set destination of nib files
+		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION
+			Resources/en.lproj/MainMenu.nib/)
+
+		# Set destination of Resources
+		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION
+			Resources/)
+	endif()
+endfunction()
+
+function(fixup_vrjuggler_app_bundle _target _targetInstallDest _extralibs _libdirs)
+	
+	if(NOT VRJUGGLER22_FOUND)
+		return()
+	endif()
+	
+	if(NOT MACOSX_PACKAGE_DIR)
+		set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
+	endif()
+	
+	set(TARGET_LOCATION "${_targetInstallDest}/${_target}${CMAKE_EXECUTABLE_SUFFIX}")
+	if(APPLE)
+		set(TARGET_LOCATION "${TARGET_LOCATION}.app")
+	endif()
+	
+	set_target_properties(${_target}
+		PROPERTIES
+		MACOSX_BUNDLE
+		true
+		MACOSX_BUNDLE_INFO_PLIST
+		${MACOSX_PACKAGE_DIR}/VRJuggler22BundleInfo.plist.in
+		MACOSX_BUNDLE_ICON_FILE
+		vrjuggler.icns
+		MACOSX_BUNDLE_INFO_STRING
+		"${PROJECT_NAME} (VR Juggler Application) version ${CPACK_PACKAGE_VERSION}, created by ${CPACK_PACKAGE_VENDOR}"
+		MACOSX_BUNDLE_GUI_IDENTIFIER
+		org.vrjuggler.${PROJECT_NAME}
+		MACOSX_BUNDLE_SHORT_VERSION_STRING
+		${CPACK_PACKAGE_VERSION}
+		MACOSX_BUNDLE_BUNDLE_VERSION
+		${CPACK_PACKAGE_VERSION})
+
+	set(BUNDLE_LIBS ${_extralibs})
+	set(BUNDLE_LIB_DIRS "${VRJUGGLER22_VJ_BASE_DIR}" ${_libdirs})
+
+	configure_file(${MACOSX_PACKAGE_DIR}/fixupbundle.cmake.in
+		${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake
+		@ONLY)
+	install(SCRIPT
+		"${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake")
+endfunction()
