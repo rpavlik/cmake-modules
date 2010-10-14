@@ -72,6 +72,14 @@ Modules based on those included with CMake are under the OSI-approved
 BSD license, which is included in each of those modules.  A few other modules
 are modified from other sources - when in doubt, look at the .cmake.
 
+Important License Note
+----------------------
+
+If you find this file inside of another project, rather at the top-level
+directory, you're in a separate project that is making use of these modules.
+That separate project can (and probably does) have its own license specifics.
+
+
 
 
 [1]: http://github.com/apenwarr/git-subtree  "Git Subtree master - might also consider the fork from musixmatch"
