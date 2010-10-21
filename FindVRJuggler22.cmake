@@ -270,6 +270,11 @@ if(VRJUGGLER22_FOUND)
     include(GetDirectoryList)
 
     get_directory_list(VRJUGGLER22_RUNTIME_LIBRARY_DIRS ${VRJUGGLER22_LIBRARIES})
+	if(WIN32)
+		foreach(dir ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
+			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${dir}/../bin")
+		endforeach()
+	endif()
 
 	if(MSVC)
 		# Needed to make linking against boost work with 2.2.1 binaries - rp20091022
