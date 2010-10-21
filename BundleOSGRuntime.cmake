@@ -90,7 +90,7 @@ endif()
 
 mark_as_advanced(OSGRUNTIME_BUNDLE)
 
-if(OSGRUNTIME_BUNDLE AND NOT OPENSCENEGRAPH_FOUND AND _osgbundle_caninstall)
+if(OSGRUNTIME_BUNDLE AND OPENSCENEGRAPH_FOUND AND _osgbundle_caninstall)
 	if(WIN32)
 		set(DESTINATION bin)
 		install(FILES "${OSGBUNDLE_zlib1dll}"
@@ -104,7 +104,7 @@ if(OSGRUNTIME_BUNDLE AND NOT OPENSCENEGRAPH_FOUND AND _osgbundle_caninstall)
 	else()
 		set(DESTINATION lib)
 	endif()
-	
+
 	install(DIRECTORY "${_osgroot}/bin/" "${_osgroot}/lib/"
 				DESTINATION ${DESTINATION}
 				FILES_MATCHING

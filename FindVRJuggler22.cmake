@@ -307,18 +307,32 @@ if(VRJUGGLER22_FOUND)
 		INTERNAL
 		"Requested components, used as a flag.")
 	
-	set(VRJUGGLER22_BUNDLE_PLUGINS)
-	set(VRJUGGLER22_BUNDLE_LIBRARY_DIRS)
+	
+	
+	set(_plugin_dirs)
 	foreach(_libdir ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
+		# Find directories of Gadgeteer plugins and drivers
 		if(EXISTS "${_libdir}/gadgeteer")
-			list(APPEND VRJUGGLER22_BUNDLE_LIBRARY_DIRS "${_libdir}/gadgeteer")
-			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${_libdir}/gadgeteer/drivers" "${_libdir}/gadgeteer/plugins")
-			file(GLOB _plugins "${_libdir}/gadgeteer/drivers/*${CMAKE_SHARED_LIBRARY_SUFFIX}" "${_libdir}/gadgeteer/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
-			list(APPEND VRJUGGLER22_BUNDLE_PLUGINS ${_plugins})
+			list(APPEND _plugin_dirs "${_libdir}/gadgeteer/drivers" "${_libdir}/gadgeteer/plugins")
 		elseif(EXISTS "${_libdir}/gadgeteer-1.2")
-			list(APPEND VRJUGGLER22_BUNDLE_LIBRARY_DIRS "${_libdir}/gadgeteer-1.2")
-			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${_libdir}/gadgeteer-1.2/drivers" "${_libdir}/gadgeteer-1.2/plugins")
-			file(GLOB _plugins "${_libdir}/gadgeteer-1.2/drivers/*${CMAKE_SHARED_LIBRARY_SUFFIX}" "${_libdir}/gadgeteer-1.2/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+			list(APPEND _plugin_dirs "${_libdir}/gadgeteer-1.2/drivers" "${_libdir}/gadgeteer-1.2/plugins")
+		endif()
+		
+		# Find directories of Sonix plugins
+		if(EXISTS "${_libdir}/sonix")
+			list(APPEND _plugin_dirs "${_libdir}/sonix/plugins/dbg")
+			list(APPEND _plugin_dirs "${_libdir}/sonix/plugins/opt")
+		elseif(EXISTS "${_libdir}/sonix-1.2")
+			list(APPEND _plugin_dirs "${_libdir}/sonix-1.2/plugins/dbg")
+			list(APPEND _plugin_dirs "${_libdir}/sonix-1.2/plugins/opt")
+		endif()
+	endforeach()
+	
+	# Grab the actual plugins
+	foreach(_libdir ${_plugin_dirs})
+		if(EXISTS "${_libdir}")
+			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${_libdir}")
+			file(GLOB _plugins "${_libdir}/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
 			list(APPEND VRJUGGLER22_BUNDLE_PLUGINS ${_plugins})
 		endif()
 	endforeach()
@@ -369,30 +383,17 @@ function(install_vrjuggler22_data_files prefix)
 	install(FILES "${base}/calibration.table" DESTINATION "${DEST}")
 endfunction()
 
-function(install_vrjuggler22_gadgeteer_drivers prefix varForFilenames)
-	list(SORT VRJUGGLER22_BUNDLE_LIBRARY_DIRS)
-	list(REMOVE_DUPLICATES VRJUGGLER22_BUNDLE_LIBRARY_DIRS)
-	list(LENGTH VRJUGGLER22_BUNDLE_LIBRARY_DIRS dirs)
-	if(dirs GREATER 1)
-		message(STATUS "WARNING: Can't install gadgeteer drivers - they're from more than one prefix!")
-		return()
-	endif()
-	
-	get_filename_component(base "${VRJUGGLER22_BUNDLE_LIBRARY_DIRS}" ABSOLUTE)
-	file(RELATIVE_PATH reldest "${VRJUGGLER22_VJ_BASE_DIR}" "${base}")
-	if(prefix STREQUAL "" OR prefix STREQUAL "." OR prefix STREQUAL "./")
-		set(DEST "${reldest}")
-	else()
-		set(DEST "${prefix}/${reldest}")
-	endif()
+function(install_vrjuggler22_plugins prefix varForFilenames)	
+	set(DEST "${prefix}")
 
 	set(out)
 	foreach(plugin ${VRJUGGLER22_BUNDLE_PLUGINS})
-		file(RELATIVE_PATH relloc "${base}" "${plugin}")
+		get_filename_component(full "${plugin}" ABSOLUTE)
+		file(RELATIVE_PATH relloc "${VRJUGGLER22_VJ_BASE_DIR}" "${full}")
 		set(filedest "${DEST}/${relloc}")
 		get_filename_component(path "${filedest}" PATH)
 		list(APPEND out "${filedest}")
-		install(FILES "${plugin}" DESTINATION "${path}")
+		install(FILES "${full}" DESTINATION "${path}")
 	endforeach()
 	
 	set(${varForFilenames} ${out} PARENT_SCOPE)
@@ -471,6 +472,10 @@ function(fixup_vrjuggler_app_bundle _target _targetInstallDest _extralibs _libdi
 		MACOSX_BUNDLE_BUNDLE_VERSION
 		${CPACK_PACKAGE_VERSION})
 
+	if(WIN32)
+		list(APPEND _libdirs "${VRJUGGLER22_VJ_BASE_DIR}/bin")
+	endif()
+	
 	set(BUNDLE_LIBS ${_extralibs})
 	set(BUNDLE_LIB_DIRS "${VRJUGGLER22_VJ_BASE_DIR}" ${_libdirs})
 
