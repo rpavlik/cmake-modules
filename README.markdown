@@ -41,6 +41,13 @@ For updates:
 
 	git subtree pull --squash --prefix=cmake git://github.com/rpavlik/cmake-modules.git master
 
+If you use some other version control, you can export a copy of this directory
+without the git metadata by calling:
+
+    ./export-to-directory yourprojectdir/cmake
+
+You might also consider exporting to a temp directory and merging changes, since
+this will not overwrite by default.  You can pass -f to overwrite existing files.
 
 How to Use
 ----------
