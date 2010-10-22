@@ -44,7 +44,7 @@ For updates:
 If you use some other version control, you can export a copy of this directory
 without the git metadata by calling:
 
-    ./export-to-directory yourprojectdir/cmake
+    ./export-to-directory.sh yourprojectdir/cmake
 
 You might also consider exporting to a temp directory and merging changes, since
 this will not overwrite by default.  You can pass -f to overwrite existing files.
