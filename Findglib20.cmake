@@ -39,7 +39,7 @@
 # Let's find the glib library
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_glib20_hint glib-2.0)
+	pkg_check_modules(_glib20_hint glib-2.0 QUIET)
 endif()
 
 find_library(GLIB20_LIBRARY

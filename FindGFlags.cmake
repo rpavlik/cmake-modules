@@ -46,7 +46,7 @@ endif()
 # Now let's find the gflags library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_gflags_hint gflags)
+	pkg_check_modules(_gflags_hint gflags QUIET)
 endif()
 
 find_library(GFLAGS_LIBRARY
