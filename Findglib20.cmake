@@ -100,19 +100,12 @@ if(GLIB20_FOUND)
 	# Always use the plural form for the variables defined by other find modules:
 	# they might have dependencies too!
 	set(GLIB20_LIBRARIES ${GLIB20_LIBRARY})
-	set(GLIB20_INCLUDE_DIRS
-		${GLIB20_INCLUDE_DIR}
-		${GLIB20_LIB_INCLUDE_DIR})
+	set(GLIB20_INCLUDE_DIRS ${GLIB20_INCLUDE_DIR} ${GLIB20_LIB_INCLUDE_DIR})
 	set(GLIB20_LINKER_FLAGS "")
 endif()
 
 if(GLIB20_FOUND OR GLIB20_MARK_AS_ADVANCED)
-	foreach(_cachevar
-		GLIB20_LIBRARY
-		GLIB20_INCLUDE_DIR
-		GLIB20_LIB_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(GLIB20_LIBRARY GLIB20_INCLUDE_DIR GLIB20_LIB_INCLUDE_DIR)
 endif()
 
 # End of Findglib20.cmake

@@ -119,15 +119,9 @@ endif()
 if(SIGCXX20_FOUND OR SIGCXX20_MARK_AS_ADVANCED)
 	foreach(_dependency LIST _sigcxx20_DEPENDENCIES)
 		string(TOUPPER ${_dependency} _DEPENDENCY)
-		mark_as_advanced(${_DEPENDENCY}_LIBRARY)
-		mark_as_advanced(${_DEPENDENCY}_INCLUDE_DIR)
+		mark_as_advanced(${_DEPENDENCY}_LIBRARY ${_DEPENDENCY}_INCLUDE_DIR)
 	endforeach()
-	foreach(_cachevar
-		SIGCXX20_LIBRARY
-		SIGCXX20_INCLUDE_DIR
-		SIGCXX20_LIB_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(SIGCXX20_LIBRARY SIGCXX20_INCLUDE_DIR SIGCXX20_LIB_INCLUDE_DIR)
 endif()
 
 # End of Findsigcxx20.cmake

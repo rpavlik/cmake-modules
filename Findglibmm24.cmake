@@ -126,15 +126,9 @@ Endif()
 
 if(GLIBMM24_FOUND OR GLIBMM24_MARK_AS_ADVANCED)
 	foreach(_dependency _glibmm24_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY)
-		mark_as_advanced(${_dependency}_INCLUDE_DIR)
+		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
 	endforeach()
-	foreach(_cachevar
-		GLIBMM24_LIBRARY
-		GLIBMM24_INCLUDE_DIR
-		GLIBMM24_LIB_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(GLIBMM24_LIBRARY GLIBMM24_INCLUDE_DIR GLIBMM24_LIB_INCLUDE_DIR)
 endif()
 
 # End of Findglibmm24.cmake

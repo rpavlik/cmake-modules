@@ -37,7 +37,7 @@
 #   Kevin M. Godby <kevin@godby.org>
 
 # If bullet isn't required, then neither are its dependencies
-if(glibmm24_FIND_QUIETLY)
+if(Bullet_FIND_QUIETLY)
 	set(_FIND_FLAGS "QUIET")
 else()
 	set(_FIND_FLAGS "")
@@ -96,21 +96,16 @@ if(BULLET_FOUND)
 	# they might have dependencies too!
 	foreach(bullet_component ${bullet_components})
 		string(TOUPPER ${bullet_component} BULLET_COMPONENT)
-		set(BULLET_LIBRARIES ${BULLET_LIBRARIES} ${BULLET_${BULLET_COMPONENT}_LIBRARY})
+		list(APPEND BULLET_LIBRARIES ${BULLET_${BULLET_COMPONENT}_LIBRARY})
 	endforeach()
 	set(BULLET_INCLUDE_DIRS ${BULLET_INCLUDE_DIR})
 Endif()
 
 if(BULLET_FOUND OR BULLET_MARK_AS_ADVANCED)
 	foreach(_dependency _bullet_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY)
-		mark_as_advanced(${_dependency}_INCLUDE_DIR)
+		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
 	endforeach()
-	foreach(_cachevar
-		BULLET_LIBRARY
-		BULLET_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(BULLET_LIBRARY BULLET_INCLUDE_DIR)
 endif()
 
 # End of FindBullet.cmake

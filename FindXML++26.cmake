@@ -120,14 +120,9 @@ endif()
 
 if(XMLXX26_FOUND OR XMLXX26_MARK_AS_ADVANCED)
 	foreach(_dependency _XMLXX26_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY)
-		mark_as_advanced(${_dependency}_INCLUDE_DIR)
+		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
 	endforeach()
-	foreach(_cachevar
-		XMLXX26_LIBRARY
-		XMLXX26_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(XMLXX26_LIBRARY XMLXX26_INCLUDE_DIR)
 endif()
 
 # End of FindXML++26.cmake

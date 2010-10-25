@@ -91,14 +91,9 @@ Endif()
 
 if(GFLAGS_FOUND OR GFLAGS_MARK_AS_ADVANCED)
 	foreach(_dependency _gflags_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY)
-		mark_as_advanced(${_dependency}_INCLUDE_DIR)
+		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
 	endforeach()
-	foreach(_cachevar
-		GFLAGS_LIBRARY
-		GFLAGS_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(GFLAGS_LIBRARY GFLAGS_INCLUDE_DIR)
 endif()
 
 # End of FindGFlags.cmake
