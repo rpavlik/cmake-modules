@@ -57,7 +57,7 @@ find_package(Threads REQUIRED)
 # Let's find the gthread library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_gthread20_hint gthread-2.0 QUIET)
+	pkg_check_modules(_gthread20_hint QUIET gthread-2.0)
 endif()
 
 find_library(GTHREAD20_LIBRARY

@@ -46,7 +46,7 @@ endif()
 # Now let's find the bullet library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_bullet_hint bullet QUIET)
+	pkg_check_modules(_bullet_hint QUIET bullet)
 endif()
 
 set(bullet_components SoftBody Dynamics Collision LinearMath)

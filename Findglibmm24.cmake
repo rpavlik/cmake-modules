@@ -55,7 +55,7 @@ endforeach()
 # Now let's find the glibmm library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_glibmm24_hint glibmm-2.4 QUIET)
+	pkg_check_modules(_glibmm24_hint QUIET glibmm-2.4)
 endif()
 
 find_library(GLIBMM24_LIBRARY
