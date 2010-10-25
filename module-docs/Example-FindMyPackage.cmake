@@ -27,9 +27,12 @@
 # you don't use a library like that, you don't need to include the
 # lines dealing with that group of variables.
 #
-# Start of what would be a minimal module documentation blog:
+# Most library aren't nearly this complex - but some are, and many
+# have some parts of the complexity handled here.
 #
-# Cache Variables: (probably not for direct use in CMakeLists.txt)
+# Start of what would be a minimal module documentation block:
+#
+# Cache Variables: (not for direct use in CMakeLists.txt)
 #  MYPACKAGE_ROOT
 #  MYPACKAGE_LIBRARY
 #  MYPACKAGE_INCLUDE_DIR
@@ -61,7 +64,7 @@
 #
 # Use this module this way:
 #  find_package(MyPackage)
-#  include_directories(MYPACKAGE_INCLUDE_DIRS)
+#  include_directories(${MYPACKAGE_INCLUDE_DIRS})
 #  add_executable(myapp ${SOURCES})
 #  target_link_libraries(myapp ${MYPACKAGE_LIBRARIES})
 #  set_property(TARGET myapp PROPERTY LINK_FLAGS ${MYPACKAGE_LINKER_FLAGS})
@@ -112,6 +115,7 @@ foreach(lib a b c)
 
 endforeach()
 
+# Searching for dependencies here - always quiet.
 # see /usr/share/cmake-2.x/Modules/FindBLAS.cmake for the variables this will define
 if(NOT BLAS_FOUND)
 	find_package(BLAS QUIETLY)

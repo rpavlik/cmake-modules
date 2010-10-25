@@ -8,9 +8,12 @@
 # the end-user.  Please see that other file for the full documentation
 # of the example.
 #
+# Note that if you're going to be installing target export files, this
+# is probably what you should prefer. See cmake mailing list archives.
 #
-# Start of what would be a minimal module documentation blog:
+# Start of what would be a minimal module documentation block:
 #
+# Cache Variables: (not for direct use in CMakeLists.txt)
 #  MYPACKAGE_ROOT
 #  MYPACKAGE_LIBRARY
 #  MYPACKAGE_INCLUDE_DIR
@@ -42,7 +45,7 @@
 #
 # Use this module this way:
 #  find_package(MyPackage)
-#  include_directories(MYPACKAGE_INCLUDE_DIRS)
+#  include_directories(${MYPACKAGE_INCLUDE_DIRS})
 #  add_executable(myapp ${SOURCES})
 #  target_link_libraries(myapp ${MYPACKAGE_LIBRARIES})
 #  set_property(TARGET myapp PROPERTY LINK_FLAGS ${MYPACKAGE_LINKER_FLAGS})
