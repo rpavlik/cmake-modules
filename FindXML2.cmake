@@ -86,11 +86,7 @@ if(XML2_FOUND)
 endif()
 
 if(XML2_FOUND OR XML2_MARK_AS_ADVANCED)
-	foreach(_cachevar
-		XML2_LIBRARY
-		XML2_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(XML2_LIBRARY XML2_INCLUDE_DIR)
 endif()
 
 # End of FindXML2.cmake

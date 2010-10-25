@@ -91,14 +91,9 @@ endif()
 
 if(GLOG_FOUND OR GLOG_MARK_AS_ADVANCED)
 	foreach(_dependency _glog_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY)
-		mark_as_advanced(${_dependency}_INCLUDE_DIR)
+		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
 	endforeach()
-	foreach(_cachevar
-		GLOG_LIBRARY
-		GLOG_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(GLOG_LIBRARY GLOG_INCLUDE_DIR)
 endif()
 
 # End of FindGLog.cmake

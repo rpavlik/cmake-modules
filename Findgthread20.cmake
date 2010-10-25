@@ -109,15 +109,9 @@ endif()
 if(GTHREAD20_FOUND OR GTHREAD20_MARK_AS_ADVANCED)
 	foreach(_dependency LIST _gthread20_DEPENDENCIES)
 		string(TOUPPER ${_dependency} _DEPENDENCY)
-		mark_as_advanced(${_DEPENDENCY}_LIBRARY)
-		mark_as_advanced(${_DEPENDENCY}_INCLUDE_DIR)
+		mark_as_advanced(${_DEPENDENCY}_LIBRARY ${_DEPENDENCY}_INCLUDE_DIR)
 	endforeach()
-	foreach(_cachevar
-		GTHREAD20_LIBRARY
-		GTHREAD20_INCLUDE_DIR
-		GTHREAD20_LIB_INCLUDE_DIR)
-		mark_as_advanced(${_cachevar})
-	endforeach()
+	mark_as_advanced(GTHREAD20_LIBRARY GTHREAD20_INCLUDE_DIR GTHREAD20_LIB_INCLUDE_DIR)
 endif()
 
 # End of Findgthread20.cmake
