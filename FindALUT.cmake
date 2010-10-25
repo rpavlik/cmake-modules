@@ -112,19 +112,25 @@ if(ALUT_FOUND)
 		get_filename_component(_moddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 		if("${OPENAL_INCLUDE_DIR}" MATCHES "\\.framework$")
 			# OpenAL is in a framework - need a workaround
-			set(OPENAL_WORKAROUND_INCLUDE_DIR "${_moddir}/workarounds/mac-openal")
-			list(APPEND ALUT_WORKAROUND_INCLUDE_DIRS "${OPENAL_WORKAROUND_INCLUDE_DIR}")
+			set(OPENAL_WORKAROUND_INCLUDE_DIR
+				"${_moddir}/workarounds/mac-openal")
+			list(APPEND
+				ALUT_WORKAROUND_INCLUDE_DIRS
+				"${OPENAL_WORKAROUND_INCLUDE_DIR}")
 		endif()
 		if("${ALUT_INCLUDE_DIR}" MATCHES "\\.framework$")
 			# ALUT is in the OpenAL framework - need a workaround
-			set(ALUT_WORKAROUND_INCLUDE_DIR "${_moddir}/workarounds/mac-alut-framework")
-			list(APPEND ALUT_WORKAROUND_INCLUDE_DIRS "${ALUT_WORKAROUND_INCLUDE_DIR}")
+			set(ALUT_WORKAROUND_INCLUDE_DIR
+				"${_moddir}/workarounds/mac-alut-framework")
+			list(APPEND
+				ALUT_WORKAROUND_INCLUDE_DIRS
+				"${ALUT_WORKAROUND_INCLUDE_DIR}")
 		endif()
 	endif()
-	
+
 	if("${ALUT_INCLUDE_DIR}" MATCHES "AL$")
-	    get_filename_component(_parent "${ALUT_INCLUDE_DIR}/.." ABSOLUTE)
-	    list(APPEND ALUT_INCLUDE_DIRS "${_parent}")
+		get_filename_component(_parent "${ALUT_INCLUDE_DIR}/.." ABSOLUTE)
+		list(APPEND ALUT_INCLUDE_DIRS "${_parent}")
 	endif()
 	mark_as_advanced(ALUT_ROOT_DIR)
 endif()

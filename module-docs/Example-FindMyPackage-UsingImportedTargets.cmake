@@ -58,7 +58,11 @@
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 
-set(MYPACKAGE_ROOT "${MYPACKAGE_ROOT}" CACHE PATH "Root directory to look in")
+set(MYPACKAGE_ROOT
+	"${MYPACKAGE_ROOT}"
+	CACHE
+	PATH
+	"Root directory to look in")
 
 find_library(MYPACKAGE_LIBRARY
 	NAMES

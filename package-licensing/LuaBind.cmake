@@ -8,6 +8,8 @@
 #    (See accompanying file ../LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-add_permissive_license(LuaBind "Based in part on the work of the LuaBind project. LuaBind is licensed under the terms of the MIT license, reproduced at http://www.lua.org/license.html#5" "<http://www.rasterbar.com/products/luabind.html>")
+add_permissive_license(LuaBind
+	"Based in part on the work of the LuaBind project. LuaBind is licensed under the terms of the MIT license, reproduced at http://www.lua.org/license.html#5"
+	"<http://www.rasterbar.com/products/luabind.html>")
 
 include("package-licensing/Boost")

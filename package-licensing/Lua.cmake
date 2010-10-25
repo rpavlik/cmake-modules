@@ -8,4 +8,7 @@
 #    (See accompanying file ../LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-add_permissive_license(Lua "Based in part on the work of the Lua project, Copyright 1994-2008 Lua.org, PUC-Rio. Lua is licensed under the terms of the MIT license, reproduced at http://www.lua.org/license.html#5" "<http://www.lua.org/>")
+add_permissive_license(Lua
+	"Based in part on the work of the Lua project, Copyright 1994-2008 Lua.org, PUC-Rio. Lua is licensed under the terms of the MIT license, reproduced at http://www.lua.org/license.html#5"
+	"<http://www.lua.org/>")
+

@@ -21,12 +21,19 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 
-set(DB2PDF_ROOT_DIR "${DB2PDF_ROOT_DIR}" CACHE PATH "Directory to start our search in")
+set(DB2PDF_ROOT_DIR
+	"${DB2PDF_ROOT_DIR}"
+	CACHE
+	PATH
+	"Directory to start our search in")
 
 find_program(DB2PDF_COMMAND
-	NAMES db2pdf
-	HINTS "${DB2PDF_ROOT_DIR}"
-	PATH_SUFFIXES bin)
+	NAMES
+	db2pdf
+	HINTS
+	"${DB2PDF_ROOT_DIR}"
+	PATH_SUFFIXES
+	bin)
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
@@ -43,16 +50,23 @@ function(docbook_to_pdf _outvar)
 	set(INPUT ${ARGN})
 	set(_out)
 	set(_outname)
-		
+
 	foreach(_file ${INPUT})
 		get_filename_component(_base "${_file}" NAME_WE)
 		set(_outname "${CMAKE_CURRENT_BINARY_DIR}/${_base}.pdf")
 		list(APPEND _out "${_outname}")
 		if(DB2PDF_COMMAND)
-			add_custom_command(OUTPUT "${_outname}"
-				COMMAND ${DB2PDF_COMMAND} -o "${CMAKE_CURRENT_BINARY_DIR}" "${_file}"
-				WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-				MAIN_DEPENDENCY "${_file}")
+			add_custom_command(OUTPUT
+				"${_outname}"
+				COMMAND
+				${DB2PDF_COMMAND}
+				-o
+				"${CMAKE_CURRENT_BINARY_DIR}"
+				"${_file}"
+				WORKING_DIRECTORY
+				"${CMAKE_CURRENT_SOURCE_DIR}"
+				MAIN_DEPENDENCY
+				"${_file}")
 		endif()
 	endforeach()
 	set(${_outvar} ${_out} PARENT_SCOPE)

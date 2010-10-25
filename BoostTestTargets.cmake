@@ -47,15 +47,18 @@ if(NOT Boost_FOUND)
 	find_package(Boost 1.34.0 QUIET)
 endif()
 if("${Boost_VERSION}0" LESS "1034000")
-	set(_shared_msg "NOTE: boost::test-based targets and tests cannot "
+	set(_shared_msg
+		"NOTE: boost::test-based targets and tests cannot "
 		"be added: boost >= 1.34.0 required but not found. "
 		"(found: '${Boost_VERSION}'; want >=103400) ")
 	if(BUILD_TESTING)
-		message(FATAL_ERROR ${_shared_msg}
+		message(FATAL_ERROR
+			${_shared_msg}
 			"You may disable BUILD_TESTING to continue without the "
 			"tests.")
 	else()
-		message(STATUS ${_shared_msg}
+		message(STATUS
+			${_shared_msg}
 			"BUILD_TESTING disabled, so continuing anyway.")
 	endif()
 endif()
@@ -79,7 +82,9 @@ if(Boost_FOUND AND NOT "${Boost_VERSION}0" LESS "1034000")
 		set(_boostConfig "BoostTestTargetsIncluded.h")
 	endif()
 	get_filename_component(_moddir ${CMAKE_CURRENT_LIST_FILE} PATH)
-	configure_file("${_moddir}/${_boostConfig}" "${CMAKE_CURRENT_BINARY_DIR}/BoostTestTargetConfig.h" COPYONLY)
+	configure_file("${_moddir}/${_boostConfig}"
+		"${CMAKE_CURRENT_BINARY_DIR}/BoostTestTargetConfig.h"
+		COPYONLY)
 	include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 endif()
 
@@ -89,8 +94,14 @@ function(add_boost_test _name)
 	endif()
 	if("${CMAKE_VERSION}" VERSION_LESS "2.8.0")
 		if(NOT "${_boost_test_cmakever_pestered}x" EQUALS "${CMAKE_VERSION}x")
-			message(STATUS "Not adding boost::test targets - CMake 2.8.0 or newer required, using ${CMAKE_VERSION}")
-			set(_boost_test_cmakever_pestered "${CMAKE_VERSION}" CACHE INTERNAL "" FORCE)
+			message(STATUS
+				"Not adding boost::test targets - CMake 2.8.0 or newer required, using ${CMAKE_VERSION}")
+			set(_boost_test_cmakever_pestered
+				"${CMAKE_VERSION}"
+				CACHE
+				INTERNAL
+				""
+				FORCE)
 		endif()
 		return()
 	endif()
@@ -128,7 +139,8 @@ function(add_boost_test _name)
 	endif()
 
 	if(NOT SOURCES)
-		message(FATAL_ERROR "Syntax error in use of add_boost_test: at least one source file required!")
+		message(FATAL_ERROR
+			"Syntax error in use of add_boost_test: at least one source file required!")
 	endif()
 
 	if(Boost_FOUND AND NOT "${Boost_VERSION}0" LESS "1034000")
@@ -145,8 +157,11 @@ function(add_boost_test _name)
 			elseif("${thefile}" MATCHES ".*boost/test/included/unit_test.hpp.*")
 				set(includeType INCLUDED)
 				set(includeFileLoc ${src})
-				set(_boosttesttargets_libs) # clear this out - linking would be a bad idea
-				if(NOT "${thefile}" MATCHES ".*OVERRIDE_BOOST_TEST_INCLUDED_WARNING.*")
+				set(_boosttesttargets_libs)	# clear this out - linking would be a bad idea
+				if(NOT
+					"${thefile}"
+					MATCHES
+					".*OVERRIDE_BOOST_TEST_INCLUDED_WARNING.*")
 					message("Please replace the include line in ${src} with this alternate include line instead:")
 					message("  \#include <BoostTestTargetConfig.h>")
 					message("Once you've saved your changes, re-run CMake. (See BoostTestTargets.cmake for more info)")
@@ -157,7 +172,8 @@ function(add_boost_test _name)
 
 		if(NOT _boostTestTargetsNagged${_name} STREQUAL "${includeType}")
 			if("includeType" STREQUAL "CONFIGURED")
-				message(STATUS "Test '${_name}' uses the CMake-configurable form of the boost test framework - congrats! (Including File: ${includeFileLoc})")
+				message(STATUS
+					"Test '${_name}' uses the CMake-configurable form of the boost test framework - congrats! (Including File: ${includeFileLoc})")
 			elseif("${includeType}" STREQUAL "INCLUDED")
 				message("In test '${_name}': ${includeFileLoc} uses the 'included' form of the boost unit test framework.")
 			else()
@@ -167,7 +183,12 @@ function(add_boost_test _name)
 				message("Once you've saved your changes, re-run CMake. (See BoostTestTargets.cmake for more info)")
 			endif()
 		endif()
-		set(_boostTestTargetsNagged${_name} "${includeType}" CACHE INTERNAL "" FORCE)
+		set(_boostTestTargetsNagged${_name}
+			"${includeType}"
+			CACHE
+			INTERNAL
+			""
+			FORCE)
 
 
 		if(RESOURCES)
@@ -177,7 +198,10 @@ function(add_boost_test _name)
 		# Generate a unique target name, using the relative binary dir
 		# and provided name. (transform all / into _ and remove all other
 		# non-alphabet characters)
-		file(RELATIVE_PATH targetpath "${CMAKE_BINARY_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+		file(RELATIVE_PATH
+			targetpath
+			"${CMAKE_BINARY_DIR}"
+			"${CMAKE_CURRENT_BINARY_DIR}")
 		string(REGEX REPLACE "[^A-Za-z/_]" "" targetpath "${targetpath}")
 		string(REPLACE "/" "_" targetpath "${targetpath}")
 
@@ -194,11 +218,7 @@ function(add_boost_test _name)
 		endif()
 
 		if(RESOURCES)
-			set_property(TARGET
-				${_target_name}
-				PROPERTY
-				RESOURCE
-				${RESOURCES})
+			set_property(TARGET ${_target_name} PROPERTY RESOURCE ${RESOURCES})
 			copy_resources_to_build_tree(${_target_name})
 		endif()
 
@@ -215,30 +235,32 @@ function(add_boost_test _name)
 			set(_test_command ${_target_name})
 		endif()
 
-	    if(TESTS AND ("${Boost_VERSION}" VERSION_GREATER "103799"))
+		if(TESTS AND ( "${Boost_VERSION}" VERSION_GREATER "103799" ))
 			foreach(_test ${TESTS})
-				add_test(NAME ${_name}-${_test}
+				add_test(NAME
+					${_name}-${_test}
 					COMMAND
-				    ${_test_command}
-				    --run_test=${_test}
-				    ${Boost_TEST_FLAGS})
+					${_test_command}
+					--run_test=${_test}
+					${Boost_TEST_FLAGS})
 				if(FAIL_REGULAR_EXPRESSION)
-    				set_tests_properties(${_name}-${_test}
-            			PROPERTIES
-            			FAIL_REGULAR_EXPRESSION
-            			"${FAIL_REGULAR_EXPRESSION}")
+					set_tests_properties(${_name}-${_test}
+						PROPERTIES
+						FAIL_REGULAR_EXPRESSION
+						"${FAIL_REGULAR_EXPRESSION}")
 				endif()
 			endforeach()
 		else()
-			add_test(NAME ${_name}-boost_test
+			add_test(NAME
+				${_name}-boost_test
 				COMMAND
-			    ${_test_command}
-			    ${Boost_TEST_FLAGS})
+				${_test_command}
+				${Boost_TEST_FLAGS})
 			if(FAIL_REGULAR_EXPRESSION)
-    			set_tests_properties(${_name}-${_test}
-        			PROPERTIES
-        			FAIL_REGULAR_EXPRESSION
-        			"${FAIL_REGULAR_EXPRESSION}")
+				set_tests_properties(${_name}-${_test}
+					PROPERTIES
+					FAIL_REGULAR_EXPRESSION
+					"${FAIL_REGULAR_EXPRESSION}")
 			endif()
 		endif()
 

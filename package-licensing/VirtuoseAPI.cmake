@@ -8,5 +8,7 @@
 #    (See accompanying file ../LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-add_proprietary_license(VirtuoseAPI "Based in part on the Haption VirtuoseAPI." "<http://www.haption.com/site/eng/html/logiciel.php?item=1>")
+add_proprietary_license(VirtuoseAPI
+	"Based in part on the Haption VirtuoseAPI."
+	"<http://www.haption.com/site/eng/html/logiciel.php?item=1>")
 add_redistribution_warning("Redistribution of the VirtuoseAPI may be restricted.")

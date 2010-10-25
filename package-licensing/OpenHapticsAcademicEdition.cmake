@@ -8,6 +8,8 @@
 #    (See accompanying file ../LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-add_proprietary_license(OpenHapticsAE "Based in part on the Sensable OpenHaptics Toolkit Academic Edition as licensed to Iowa State University. NOT FOR REDISTRIBUTION." "<http://sensable.com/openhaptics-academic-edition-faqs.htm>")
+add_proprietary_license(OpenHapticsAE
+	"Based in part on the Sensable OpenHaptics Toolkit Academic Edition as licensed to Iowa State University. NOT FOR REDISTRIBUTION."
+	"<http://sensable.com/openhaptics-academic-edition-faqs.htm>")
 
 add_redistribution_warning("NOT FOR REDISTRIBUTION - OpenHaptics Toolkit Academic Edition licensed to Iowa State University.")

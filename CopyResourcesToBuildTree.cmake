@@ -23,7 +23,8 @@ function(copy_resources_to_build_tree _target)
 	get_target_property(_resources ${_target} RESOURCE)
 	if(NOT _resources)
 		# Bail if no resources
-		message(STATUS "Told to copy resources for target ${_target}, but "
+		message(STATUS
+			"Told to copy resources for target ${_target}, but "
 			"no resources are set!")
 		return()
 	endif()

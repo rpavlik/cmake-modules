@@ -31,7 +31,9 @@ endif()
 set(__get_cpu_details YES)
 
 function(get_cpu_details)
-	option(CPUDETAILS_VERBOSE "Should we display results of the CPU info check?" NO)
+	option(CPUDETAILS_VERBOSE
+		"Should we display results of the CPU info check?"
+		NO)
 	mark_as_advanced(CPUDETAILS_VERBOSE)
 
 	###
@@ -47,7 +49,11 @@ function(get_cpu_details)
 		set(CPU_INTEL YES)
 	endif()
 
-	set(CPU_INTEL ${CPU_INTEL} CACHE INTERNAL "Intel x86 or x86_64 architecture machine?")
+	set(CPU_INTEL
+		${CPU_INTEL}
+		CACHE
+		INTERNAL
+		"Intel x86 or x86_64 architecture machine?")
 
 	###
 	# CPU_EXE_64BIT/32BIT
@@ -131,9 +137,27 @@ function(get_cpu_details)
 		endif()
 	endif()
 
-	set(CPU_INTEL ${CPU_INTEL} CACHE INTERNAL "Intel x86 or x86_64 architecture machine?")
+	set(CPU_INTEL
+		${CPU_INTEL}
+		CACHE
+		INTERNAL
+		"Intel x86 or x86_64 architecture machine?")
 
 	foreach(_var
+		CPU_EXE_64BIT
+		CPU_EXE_32BIT
+		CPU_HAS_SSE
+		CPU_HAS_SSE2
+		CPU_HAS_SSE3
+		CPU_HAS_SSSE3
+		CPU_HAS_SSE4_1
+		CPU_HAS_SSE4_2)
+		set(${_var} ${${_var}} CACHE INTERNAL "")
+	endforeach()
+
+	if(CPUDETAILS_VERBOSE)
+		foreach(_var
+			CPU_INTEL
 			CPU_EXE_64BIT
 			CPU_EXE_32BIT
 			CPU_HAS_SSE
@@ -142,20 +166,6 @@ function(get_cpu_details)
 			CPU_HAS_SSSE3
 			CPU_HAS_SSE4_1
 			CPU_HAS_SSE4_2)
-		set(${_var} ${${_var}} CACHE INTERNAL "")
-	endforeach()
-
-	if(CPUDETAILS_VERBOSE)
-		foreach(_var
-				CPU_INTEL
-				CPU_EXE_64BIT
-				CPU_EXE_32BIT
-				CPU_HAS_SSE
-				CPU_HAS_SSE2
-				CPU_HAS_SSE3
-				CPU_HAS_SSSE3
-				CPU_HAS_SSE4_1
-				CPU_HAS_SSE4_2)
 			get_property(_help CACHE ${_var} PROPERTY HELPSTRING)
 			message(STATUS "[get_cpu_details] ${_var} (${_help}): ${${_var}}")
 		endforeach()

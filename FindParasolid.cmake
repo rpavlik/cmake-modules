@@ -76,19 +76,26 @@ if(WIN32)
 		list(APPEND dirs ${dirs2})
 	endif()
 
-	list_combinations(libsearchdirs PREFIXES ${dirs} "${PARASOLID_ROOT_DIR}" SUFFIXES "/dll")
+	list_combinations(libsearchdirs
+		PREFIXES
+		${dirs}
+		"${PARASOLID_ROOT_DIR}"
+		SUFFIXES
+		"/dll")
 	list(APPEND libsearchdirs ${dirs} "${PARASOLID_ROOT_DIR}")
 elseif("${_lcsystem}" MATCHES "linux")
 	if(CMAKE_SIZEOF_VOID_P MATCHES "8")
 		# 64-bit
-		prefix_list_glob(libsearchdirs "/Parasolid*/kernel/intel_linux/base_lx64"
+		prefix_list_glob(libsearchdirs
+			"/Parasolid*/kernel/intel_linux/base_lx64"
 			"${PARASOLID_ROOT_DIR}"
 			"/usr"
 			"/usr/local"
 			"/usr/local/ugs")
 	else()
 		# 32-bit
-		prefix_list_glob(libsearchdirs "/Parasolid*/kernel/intel_linux/base_lx32"
+		prefix_list_glob(libsearchdirs
+			"/Parasolid*/kernel/intel_linux/base_lx32"
 			"${PARASOLID_ROOT_DIR}"
 			"/usr"
 			"/usr/local"
@@ -137,7 +144,10 @@ get_filename_component(_includedir
 get_filename_component(_includedir2
 	"${PARASOLID_LIBRARY_DIR}/.."
 	ABSOLUTE)
-set(includesearchdirs "${PARASOLID_LIBRARY_DIR}" "${_includedir}" "${_includedir2}")
+set(includesearchdirs
+	"${PARASOLID_LIBRARY_DIR}"
+	"${_includedir}"
+	"${_includedir2}")
 clean_directory_list(includesearchdirs)
 
 ###
@@ -272,7 +282,7 @@ if(PARASOLID_FOUND)
 		get_filename_component(_moddir "${CMAKE_CURRENT_LIST_FILE}" PATH)
 		add_subdirectory("${_moddir}/nested_targets/Parasolid")
 	endif()
-	
+
 	set(PARASOLID_INCLUDE_DIRS "${PARASOLID_INCLUDE_DIR}")
 	set(PARASOLID_LIBRARIES
 		"${PARASOLID_pskernel_LIBRARY}"

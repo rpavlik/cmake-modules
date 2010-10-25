@@ -50,15 +50,17 @@ if(PARASOLID_fg_LIBRARY STREQUAL "parasolid_fg_nested_target")
 	if(MSVC)
 		# Disable warnings - no sense in warning about a third party's potential bugs.
 		# set_property(TARGET
-			# parasolid_fg_nested_target
-			# PROPERTY
-			# COMPILE_FLAGS
-			# "/wd4189 /wd4701")
+		# parasolid_fg_nested_target
+		# PROPERTY
+		# COMPILE_FLAGS
+		# "/wd4189 /wd4701")
 	endif()
 endif()
 
 
-if(PARASOLID_frustrum_LIBRARY STREQUAL "parasolid_frustrum_nested_target")
+if(PARASOLID_frustrum_LIBRARY
+	STREQUAL
+	"parasolid_frustrum_nested_target")
 	get_filename_component(_frustrumdir "${PARASOLID_FRUSTRUM_C}" PATH)
 	include_directories("${_frustrumdir}")
 	add_library(parasolid_frustrum_nested_target
@@ -93,9 +95,9 @@ if(PARASOLID_frustrum_LIBRARY STREQUAL "parasolid_frustrum_nested_target")
 	if(MSVC)
 		# Disable warnings - no sense in warning about a third party's potential bugs.
 		# set_property(TARGET
-			# parasolid_frustrum_nested_target
-			# PROPERTY
-			# COMPILE_FLAGS
-			# "/wd4189 /wd4701")
+		# parasolid_frustrum_nested_target
+		# PROPERTY
+		# COMPILE_FLAGS
+		# "/wd4189 /wd4701")
 	endif()
 endif()

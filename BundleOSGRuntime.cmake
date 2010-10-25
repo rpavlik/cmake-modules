@@ -34,8 +34,12 @@ function(_osgbundle_split_debug_versions releasevar debugvar)
 endfunction()
 
 function(_osgbundle_find_plugins varprefix filenameprefix)
-	file(GLOB all "${OSG_RUNTIME_LIBRARY_DIR}/osgPlugins-${OPENSCENEGRAPH_VERSION}/${filenameprefix}*${CMAKE_SHARED_LIBRARY_SUFFIX}")
-	_osgbundle_split_debug_versions(${varprefix}_PLUGINS_RELEASE ${varprefix}_PLUGINS_DEBUG ${all})
+	file(GLOB
+		all
+		"${OSG_RUNTIME_LIBRARY_DIR}/osgPlugins-${OPENSCENEGRAPH_VERSION}/${filenameprefix}*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+	_osgbundle_split_debug_versions(${varprefix}_PLUGINS_RELEASE
+		${varprefix}_PLUGINS_DEBUG
+		${all})
 endfunction()
 
 if(OPENSCENEGRAPH_FOUND)
@@ -61,9 +65,9 @@ if(OPENSCENEGRAPH_FOUND)
 		set(OSG_RUNTIME_LIBRARY_DIR "${_osglibdir}")
 		set(_osgbundle_platformOK on)
 	endif()
-	
+
 	# Find the osgDB plugins
-	
+
 	_osgbundle_find_plugins(OSGDB osgdb)
 	_osgbundle_find_plugins(OSGWRAPPER osgwrapper)
 endif()
@@ -94,7 +98,7 @@ if(OSGRUNTIME_BUNDLE AND OPENSCENEGRAPH_FOUND AND _osgbundle_caninstall)
 	if(WIN32)
 		set(DESTINATION bin)
 		install(FILES "${OSGBUNDLE_zlib1dll}"
-				DESTINATION ${DESTINATION})
+			DESTINATION ${DESTINATION})
 
 		if(OSGBUNDLE_zlib1ddll)
 			install(FILES "${OSGBUNDLE_zlib1ddll}"
@@ -106,9 +110,9 @@ if(OSGRUNTIME_BUNDLE AND OPENSCENEGRAPH_FOUND AND _osgbundle_caninstall)
 	endif()
 
 	install(DIRECTORY "${_osgroot}/bin/" "${_osgroot}/lib/"
-				DESTINATION ${DESTINATION}
-				FILES_MATCHING
+		DESTINATION ${DESTINATION}
+		FILES_MATCHING
 
-				# Runtime files
-				PATTERN "*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+		# Runtime files
+		PATTERN "*${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif()

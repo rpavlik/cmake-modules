@@ -23,7 +23,9 @@ set(__enable_extra_compiler_warnings YES)
 macro(_enable_extra_compiler_warnings_flags)
 	set(_flags)
 	if(MSVC)
-		option(COMPILER_WARNINGS_EXTREME "Use compiler warnings that are probably overkill." off)
+		option(COMPILER_WARNINGS_EXTREME
+			"Use compiler warnings that are probably overkill."
+			off)
 		mark_as_advanced(COMPILER_WARNINGS_EXTREME)
 		set(_flags "/W4")
 		if(COMPILER_WARNINGS_EXTREME)
