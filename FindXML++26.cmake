@@ -44,7 +44,7 @@ endforeach()
 # Now let's find the libxml++-2.6 library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_xmlxx26_hint libxml++-2.6 QUIET)
+	pkg_check_modules(_xmlxx26_hint QUIET libxml++-2.6)
 endif()
 
 find_library(XMLXX26_LIBRARY

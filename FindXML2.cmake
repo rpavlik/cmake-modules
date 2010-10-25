@@ -31,7 +31,7 @@
 # If pkg-config is available, we'll use its information as a hint to cmake
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_xml2_hint libxml-2.0 QUIET)
+	pkg_check_modules(_xml2_hint QUIET libxml-2.0)
 endif()
 
 # Find the xml2 library

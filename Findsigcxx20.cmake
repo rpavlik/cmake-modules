@@ -46,7 +46,7 @@ endif()
 # Let's find the sigcxx library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_sigcxx20_hint sigc++-2.0 QUIET)
+	pkg_check_modules(_sigcxx20_hint QUIET sigc++-2.0)
 endif()
 
 find_library(SIGCXX20_LIBRARY
