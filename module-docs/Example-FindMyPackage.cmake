@@ -30,6 +30,7 @@
 # Start of what would be a minimal module documentation blog:
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  MYPACKAGE_ROOT
 #  MYPACKAGE_LIBRARY
 #  MYPACKAGE_INCLUDE_DIR
 #  MYPACKAGE_a_LIBRARY
@@ -41,8 +42,6 @@
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  MYPACKAGE_FOUND
-#  MYPACKAGE_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  MYPACKAGE_LIBRARIES
 #  MYPACKAGE_INCLUDE_DIRS
@@ -75,6 +74,7 @@
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 
+set(MYPACKAGE_ROOT "${MYPACKAGE_ROOT}" CACHE PATH "Root directory to look in")
 
 find_library(MYPACKAGE_LIBRARY
 	NAMES
@@ -165,19 +165,17 @@ if(MYPACKAGE_FOUND)
 
 endif()
 
-if(MYPACKAGE_FOUND OR MYPACKAGE_MARK_AS_ADVANCED)
-	foreach(_cachevar
-		MYPACKAGE_LIBRARY
-		MYPACKAGE_INCLUDE_DIR
-		MYPACKAGE_a_LIBRARY
-		MYPACKAGE_a_INCLUDE_DIR
-		MYPACKAGE_b_LIBRARY
-		MYPACKAGE_b_INCLUDE_DIR
-		MYPACKAGE_c_LIBRARY
-		MYPACKAGE_c_INCLUDE_DIR)
+mark_as_advanced(MYPACKAGE_LIBRARY
+	MYPACKAGE_INCLUDE_DIR
+	MYPACKAGE_a_LIBRARY
+	MYPACKAGE_a_INCLUDE_DIR
+	MYPACKAGE_b_LIBRARY
+	MYPACKAGE_b_INCLUDE_DIR
+	MYPACKAGE_c_LIBRARY
+	MYPACKAGE_c_INCLUDE_DIR)
 
-		mark_as_advanced(${_cachevar})
-	endforeach()
+if(MYPACKAGE_FOUND)
+	mark_as_advanced(MYPACKAGE_ROOT)
 endif()
 
 # End of Example-FindMyPackage.cmake
