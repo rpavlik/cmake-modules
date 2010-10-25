@@ -46,7 +46,7 @@ endif()
 # Now let's find the glog library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_glog_hint libglog)
+	pkg_check_modules(_glog_hint libglog QUIET)
 endif()
 
 find_library(GLOG_LIBRARY

@@ -55,7 +55,7 @@ endforeach()
 # Let's find the gobject library
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-	pkg_check_modules(_gobject20_hint gobject-2.0)
+	pkg_check_modules(_gobject20_hint gobject-2.0 QUIET)
 endif()
 
 find_library(GOBJECT20_LIBRARY
