@@ -207,7 +207,12 @@ if(VRJUGGLER22_FOUND)
 
 	set(_vjbase)
 	set(_vjbaseclean)
-	foreach(_lib ${VPR20_LIBRARY} ${VRJ22_LIBRARY} ${VRJOGL22_LIBRARY} ${JCCL12_LIBRARY} ${GADGETEER12_LIBRARY})
+	foreach(_lib
+		${VPR20_LIBRARY}
+		${VRJ22_LIBRARY}
+		${VRJOGL22_LIBRARY}
+		${JCCL12_LIBRARY}
+		${GADGETEER12_LIBRARY})
 		get_filename_component(_libpath "${_lib}" PATH)
 		get_filename_component(_abspath "${_libpath}/.." ABSOLUTE)
 		list(APPEND _vjbase "${_abspath}")
@@ -245,7 +250,9 @@ if(VRJUGGLER22_FOUND)
 	set(_vrj22_base_dir "${_vrj22_base_dir}" CACHE INTERNAL "" FORCE)
 
 	if(_vrj22_have_base_dir)
-		file(GLOB _poss_dirs ${VRJUGGLER22_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
+		file(GLOB
+			_poss_dirs
+			${VRJUGGLER22_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
 		find_path(VRJUGGLER22_VJ_CFG_DIR
 			standalone.jconf
 			PATHS
@@ -267,9 +274,10 @@ if(VRJUGGLER22_FOUND)
 		"TWEEK_BASE_DIR=${VRJUGGLER22_VJ_BASE_DIR}"
 		"VJ_CFG_DIR=${VRJUGGLER22_VJ_CFG_DIR}")
 
-    include(GetDirectoryList)
+	include(GetDirectoryList)
 
-    get_directory_list(VRJUGGLER22_RUNTIME_LIBRARY_DIRS ${VRJUGGLER22_LIBRARIES})
+	get_directory_list(VRJUGGLER22_RUNTIME_LIBRARY_DIRS
+		${VRJUGGLER22_LIBRARIES})
 	if(WIN32)
 		foreach(dir ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
 			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${dir}/../bin")
@@ -279,7 +287,10 @@ if(VRJUGGLER22_FOUND)
 	if(MSVC)
 		# Needed to make linking against boost work with 2.2.1 binaries - rp20091022
 		# BOOST_ALL_DYN_LINK
-		set(VRJUGGLER22_DEFINITIONS "-DBOOST_ALL_DYN_LINK" "-DCPPDOM_DYN_LINK" "-DCPPDOM_AUTO_LINK")
+		set(VRJUGGLER22_DEFINITIONS
+			"-DBOOST_ALL_DYN_LINK"
+			"-DCPPDOM_DYN_LINK"
+			"-DCPPDOM_AUTO_LINK")
 
 		# Disable these annoying warnings
 		# 4275: non dll-interface class used as base for dll-interface class
@@ -298,26 +309,32 @@ if(VRJUGGLER22_FOUND)
 	set(VRJUGGLER22_CXX_FLAGS
 		"${VRJUGGLER22_CXX_FLAGS} ${CPPDOM_CXX_FLAGS}")
 
-	set(VRJUGGLER22_DEFINITIONS
-		"${VRJUGGLER22_DEFINITIONS}" "-DJUGGLER_DEBUG")
+	list(APPEND VRJUGGLER22_DEFINITIONS
+		"-DJUGGLER_DEBUG")
 
 	set(_VRJUGGLER22_SEARCH_COMPONENTS
 		"${VRJUGGLER22_REQUESTED_COMPONENTS}"
 		CACHE
 		INTERNAL
 		"Requested components, used as a flag.")
-	
-	
-	
+
+
+
 	set(_plugin_dirs)
 	foreach(_libdir ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
 		# Find directories of Gadgeteer plugins and drivers
 		if(EXISTS "${_libdir}/gadgeteer")
-			list(APPEND _plugin_dirs "${_libdir}/gadgeteer/drivers" "${_libdir}/gadgeteer/plugins")
+			list(APPEND
+				_plugin_dirs
+				"${_libdir}/gadgeteer/drivers"
+				"${_libdir}/gadgeteer/plugins")
 		elseif(EXISTS "${_libdir}/gadgeteer-1.2")
-			list(APPEND _plugin_dirs "${_libdir}/gadgeteer-1.2/drivers" "${_libdir}/gadgeteer-1.2/plugins")
+			list(APPEND
+				_plugin_dirs
+				"${_libdir}/gadgeteer-1.2/drivers"
+				"${_libdir}/gadgeteer-1.2/plugins")
 		endif()
-		
+
 		# Find directories of Sonix plugins
 		if(EXISTS "${_libdir}/sonix")
 			list(APPEND _plugin_dirs "${_libdir}/sonix/plugins/dbg")
@@ -327,7 +344,7 @@ if(VRJUGGLER22_FOUND)
 			list(APPEND _plugin_dirs "${_libdir}/sonix-1.2/plugins/opt")
 		endif()
 	endforeach()
-	
+
 	# Grab the actual plugins
 	foreach(_libdir ${_plugin_dirs})
 		if(EXISTS "${_libdir}")
@@ -336,7 +353,7 @@ if(VRJUGGLER22_FOUND)
 			list(APPEND VRJUGGLER22_BUNDLE_PLUGINS ${_plugins})
 		endif()
 	endforeach()
-	
+
 	mark_as_advanced(VRJUGGLER22_ROOT_DIR)
 endif()
 
@@ -351,7 +368,7 @@ function(install_vrjuggler22_data_files prefix)
 	else()
 		set(DEST "${prefix}/${reldest}")
 	endif()
-	
+
 	# configFiles *.jconf
 	file(GLOB
 		_vj_config_files
@@ -383,7 +400,7 @@ function(install_vrjuggler22_data_files prefix)
 	install(FILES "${base}/calibration.table" DESTINATION "${DEST}")
 endfunction()
 
-function(install_vrjuggler22_plugins prefix varForFilenames)	
+function(install_vrjuggler22_plugins prefix varForFilenames)
 	set(DEST "${prefix}")
 
 	set(out)
@@ -395,7 +412,7 @@ function(install_vrjuggler22_plugins prefix varForFilenames)
 		list(APPEND out "${filedest}")
 		install(FILES "${full}" DESTINATION "${path}")
 	endforeach()
-	
+
 	set(${varForFilenames} ${out} PARENT_SCOPE)
 
 endfunction()
@@ -440,21 +457,26 @@ function(get_vrjuggler_bundle_sources _target_sources)
 	endif()
 endfunction()
 
-function(fixup_vrjuggler_app_bundle _target _targetInstallDest _extralibs _libdirs)
-	
+function(fixup_vrjuggler_app_bundle
+	_target
+	_targetInstallDest
+	_extralibs
+	_libdirs)
+
 	if(NOT VRJUGGLER22_FOUND)
 		return()
 	endif()
-	
+
 	if(NOT MACOSX_PACKAGE_DIR)
 		set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
 	endif()
-	
-	set(TARGET_LOCATION "${_targetInstallDest}/${_target}${CMAKE_EXECUTABLE_SUFFIX}")
+
+	set(TARGET_LOCATION
+		"${_targetInstallDest}/${_target}${CMAKE_EXECUTABLE_SUFFIX}")
 	if(APPLE)
 		set(TARGET_LOCATION "${TARGET_LOCATION}.app")
 	endif()
-	
+
 	set_target_properties(${_target}
 		PROPERTIES
 		MACOSX_BUNDLE
@@ -475,7 +497,7 @@ function(fixup_vrjuggler_app_bundle _target _targetInstallDest _extralibs _libdi
 	if(WIN32)
 		list(APPEND _libdirs "${VRJUGGLER22_VJ_BASE_DIR}/bin")
 	endif()
-	
+
 	set(BUNDLE_LIBS ${_extralibs})
 	set(BUNDLE_LIB_DIRS "${VRJUGGLER22_VJ_BASE_DIR}" ${_libdirs})
 

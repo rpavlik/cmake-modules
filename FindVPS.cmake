@@ -292,12 +292,13 @@ find_package_handle_standard_args(VPS
 
 if(VPS_FOUND)
 	set(VPS_vps_INCLUDE_DIRS "${VPS_vps_INCLUDE_DIR}")
-	set(VPS_INCLUDE_DIRS
-		"${VPS_vps_INCLUDE_DIR}")
+	set(VPS_INCLUDE_DIRS "${VPS_vps_INCLUDE_DIR}")
 	set(VPS_grviewer_INCLUDE_DIRS
 		"${VPS_vps_INCLUDE_DIR}"
 		"${VPS_grviewer_INCLUDE_DIR}")
 	set(VPS_LIBRARIES "${VPS_vps_LIBRARY}")
-	set(VPS_grviewer_LIBRARIES "${VPS_vps_LIBRARY}" "${VPS_grviewer_LIBRARY}")
+	set(VPS_grviewer_LIBRARIES
+		"${VPS_vps_LIBRARY}"
+		"${VPS_grviewer_LIBRARY}")
 	mark_as_advanced(VPS_ROOT_DIR VPS_DIR)
 endif()

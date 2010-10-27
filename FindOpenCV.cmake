@@ -58,7 +58,7 @@ find_path(OPENCV_BASE_DIR
 	include/cv/cv.h
 	include/cv.h
 	HINTS
-		"${OPENCV_ROOT_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	"$ENV{OPENCV_ROOT_DIR}"
 	"$ENV{OpenCV_ROOT_DIR}"
 	"$ENV{OPENCV_DIR}"	# only for backward compatibility deprecated by ROOT_DIR
@@ -205,7 +205,10 @@ set(_req_includes)
 foreach(NAME ${OpenCV_FIND_COMPONENTS})
 
 	# only good if header and library both found
-	list(APPEND _req_check OPENCV_${NAME}_LIBRARY OPENCV_${NAME}_INCLUDE_DIR)
+	list(APPEND
+		_req_check
+		OPENCV_${NAME}_LIBRARY
+		OPENCV_${NAME}_INCLUDE_DIR)
 	list(APPEND _req_libs "${OPENCV_${NAME}_LIBRARY}")
 	list(APPEND _req_includes "${OPENCV_${NAME}_INCLUDE_DIR}")
 

@@ -89,4 +89,4 @@ That separate project can (and probably does) have its own license specifics.
 
 
 
-[1]: http://github.com/apenwarr/git-subtree  "Git Subtree master - might also consider the fork from musixmatch"
+[1]: http://github.com/apenwarr/git-subtree  "Git Subtree master"

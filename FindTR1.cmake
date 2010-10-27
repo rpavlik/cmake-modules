@@ -56,7 +56,11 @@ if(WIN32)
 		set(PLATFORM "Visual Studio older than Visual Studio 2008")
 		list(APPEND _check Boost_FOUND)
 		find_package(Boost COMPONENTS math_c99 math_tr1 ${_findflags})
-		list(APPEND TR1_INCLUDE_DIRS "${Boost_INCLUDE_DIR}/boost/tr1/tr1" "${Boost_INCLUDE_DIR}/boost/tr1" "${Boost_INCLUDE_DIR}")
+		list(APPEND
+			TR1_INCLUDE_DIRS
+			"${Boost_INCLUDE_DIR}/boost/tr1/tr1"
+			"${Boost_INCLUDE_DIR}/boost/tr1"
+			"${Boost_INCLUDE_DIR}")
 		list(APPEND TR1_LIBRARY_DIRS ${Boost_LIBRARY_DIRS})
 	endif()
 else()

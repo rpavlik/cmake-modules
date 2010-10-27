@@ -8,7 +8,8 @@
 #    (See accompanying file ../LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-add_proprietary_license("VR JuggLua" "Based in part on VR JuggLua, Copyright 2010 Iowa State University. This version of VR JuggLua is unreleased research software - NOT FOR REDISTRIBUTION.")
+add_proprietary_license("VR JuggLua"
+	"Based in part on VR JuggLua, Copyright 2010 Iowa State University. This version of VR JuggLua is unreleased research software - NOT FOR REDISTRIBUTION.")
 add_redistribution_warning("This version of VR JuggLua is unreleased research software - NOT FOR REDISTRIBUTION.")
 include("package-licensing/VRJuggler")
 include("package-licensing/OpenSceneGraph")

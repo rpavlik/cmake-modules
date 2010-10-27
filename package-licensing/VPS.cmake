@@ -8,6 +8,8 @@
 #    (See accompanying file ../LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-add_proprietary_license(VPS "Based in part on Voxmap PointShell(TM) software from Boeing, licensed to Iowa State University. NOT FOR REDISTRIBUTION." "<http://www.boeing.com/phantom/vps/>")
+add_proprietary_license(VPS
+	"Based in part on Voxmap PointShell(TM) software from Boeing, licensed to Iowa State University. NOT FOR REDISTRIBUTION."
+	"<http://www.boeing.com/phantom/vps/>")
 
 add_redistribution_warning("NOT FOR REDISTRIBUTION - Voxmap PointShell(TM) software licensed only to Iowa State University.")
