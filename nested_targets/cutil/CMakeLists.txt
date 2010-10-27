@@ -28,11 +28,7 @@ else()
 	
 endif()
 
-cuda_add_library(cutil ${TYPE} ${SOURCES})
-set_target_properties(cutil
-	PROPERTIES
-	EXCLUDE_FROM_ALL
-	true)
+cuda_add_library(cutil ${TYPE} EXCLUDE_FROM_ALL ${SOURCES})
 
 set(CUTIL_INCLUDE_DIRS "${CUTIL_ROOT_DIR}/inc" PARENT_SCOPE)
 set(CUTIL_LIBRARIES cutil PARENT_SCOPE)

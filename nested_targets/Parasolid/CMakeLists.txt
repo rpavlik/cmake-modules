@@ -41,11 +41,6 @@ if(PARASOLID_fg_LIBRARY STREQUAL "parasolid_fg_nested_target")
 		PROPERTY
 		PROJECT_LABEL
 		"Parasolid Foreign Geometry Example Library")
-	set_property(TARGET
-		parasolid_fg_nested_target
-		PROPERTY
-		EXCLUDE_FROM_ALL
-		YES)
 
 	if(MSVC)
 		# Disable warnings - no sense in warning about a third party's potential bugs.
@@ -86,11 +81,6 @@ if(PARASOLID_frustrum_LIBRARY
 		PROPERTY
 		PROJECT_LABEL
 		"Parasolid Frustrum Example Library")
-	set_property(TARGET
-		parasolid_frustrum_nested_target
-		PROPERTY
-		EXCLUDE_FROM_ALL
-		YES)
 
 	if(MSVC)
 		# Disable warnings - no sense in warning about a third party's potential bugs.
