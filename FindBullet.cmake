@@ -80,11 +80,7 @@ find_path(BULLET_INCLUDE_DIR
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Bullet
 	DEFAULT_MSG
-	BULLET_SOFTBODY_LIBRARY
-	BULLET_DYNAMICS_LIBRARY
-	BULLET_COLLISION_LIBRARY
-	BULLET_LINEARMATH_LIBRARY
-	BULLET_INCLUDE_DIR)
+	${bullet_vars})
 
 if(BULLET_FOUND)
 	# Set variables containing libraries and their dependencies
