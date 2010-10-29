@@ -3,13 +3,12 @@
 # FindFMOD.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  FMOD_ROOT_DIR
 #  FMOD_LIBRARY
 #  FMOD_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  FMOD_FOUND
-#  FMOD_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  FMOD_LIBRARIES
 #  FMOD_INCLUDE_DIRS
@@ -28,12 +27,11 @@
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
 
-# If fmod isn't required, then neither are its dependencies
-if(FMOD_FIND_QUIETLY)
-	set(_FIND_FLAGS "QUIET")
-else()
-	set(_FIND_FLAGS "")
-endif()
+set(FMOD_ROOT_DIR
+	"${FMOD_ROOT_DIR}"
+	CACHE
+	PATH
+	"Directory to search")
 
 # Now let's find the FMOD library
 find_package(PkgConfig QUIET)
@@ -45,9 +43,8 @@ find_library(FMOD_LIBRARY
 	NAMES
 	fmodex64
 	HINTS
+	${FMOD_ROOT_DIR}
 	${_fmod_hint_LIBRARY_DIRS}
-	PATHS
-	${FMOD_ROOT}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -58,9 +55,8 @@ find_path(FMOD_INCLUDE_DIR
 	NAMES
 	fmodex/fmod.h
 	HINTS
+	${FMOD_ROOT_DIR}
 	${_fmod_hint_INCLUDE_DIRS}
-	PATHS
-	${FMOD_ROOT}
 	PATH_SUFFIXES
 	include
 )
@@ -79,11 +75,10 @@ if(FMOD_FOUND)
 	# they might have dependencies too!
 	set(FMOD_LIBRARIES    ${FMOD_LIBRARY})
 	set(FMOD_INCLUDE_DIRS ${FMOD_INCLUDE_DIR})
+	mark_as_advanced(FMOD_ROOT_DIR)
 endif()
 
-if(FMOD_FOUND OR FMOD_MARK_AS_ADVANCED)
-	mark_as_advanced(FMOD_LIBRARY FMOD_INCLUDE_DIR)
-endif()
+mark_as_advanced(FMOD_LIBRARY FMOD_INCLUDE_DIR)
 
 # End of FindFMOD.cmake
 
