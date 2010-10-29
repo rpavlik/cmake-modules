@@ -8,8 +8,6 @@
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  BULLET_FOUND
-#  BULLET_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  BULLET_LIBRARIES
 #  BULLET_INCLUDE_DIRS
@@ -50,6 +48,7 @@ if(PKG_CONFIG_FOUND)
 endif()
 
 set(bullet_components SoftBody Dynamics Collision LinearMath)
+set(bullet_vars BULLET_INCLUDE_DIR)
 foreach(bullet_component ${bullet_components})
 	string(TOUPPER ${bullet_component} BULLET_COMPONENT)
 	find_library(BULLET_${BULLET_COMPONENT}_LIBRARY
@@ -65,6 +64,7 @@ foreach(bullet_component ${bullet_components})
 		lib32
 		lib64
 	)
+	list(APPEND bullet_vars BULLET_${BULLET_COMPONENT}_LIBRARY)
 endforeach()
 
 find_path(BULLET_INCLUDE_DIR
@@ -99,14 +99,10 @@ if(BULLET_FOUND)
 		list(APPEND BULLET_LIBRARIES ${BULLET_${BULLET_COMPONENT}_LIBRARY})
 	endforeach()
 	set(BULLET_INCLUDE_DIRS ${BULLET_INCLUDE_DIR})
-Endif()
-
-if(BULLET_FOUND OR BULLET_MARK_AS_ADVANCED)
-	foreach(_dependency _bullet_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
-	endforeach()
-	mark_as_advanced(BULLET_LIBRARY BULLET_INCLUDE_DIR)
+	mark_as_advanced(BULLET_ROOT_DIR)
 endif()
+
+mark_as_advanced(${bullet_vars})
 
 # End of FindBullet.cmake
 
