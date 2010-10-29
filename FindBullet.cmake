@@ -40,12 +40,6 @@ set(BULLET_ROOT_DIR
 	CACHE
 	PATH
 	"Directory to search")
-# If bullet isn't required, then neither are its dependencies
-if(Bullet_FIND_QUIETLY)
-	set(_FIND_FLAGS "QUIET")
-else()
-	set(_FIND_FLAGS "")
-endif()
 
 # Now let's find the bullet library
 find_package(PkgConfig QUIET)
