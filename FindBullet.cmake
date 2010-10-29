@@ -12,14 +12,12 @@
 #
 #  BULLET_LIBRARIES
 #  BULLET_INCLUDE_DIRS
-#  BULLET_LINKER_FLAGS
 #
 # Use this module this way:
 #  find_package(Bullet)
 #  include_directories(BULLET_INCLUDE_DIRS)
 #  add_executable(myapp ${SOURCES})
 #  target_link_libraries(myapp ${BULLET_LIBRARIES})
-#  set_property(TARGET myapp PROPERTY LINK_FLAGS ${BULLET_LINKER_FLAGS})
 #
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (CMake standard module)
