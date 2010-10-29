@@ -86,7 +86,7 @@ find_path(BULLET_INCLUDE_DIR
 # handle the QUIETLY and REQUIRED arguments and set BULLET_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(BULLET
+find_package_handle_standard_args(Bullet
 	DEFAULT_MSG
 	BULLET_SOFTBODY_LIBRARY
 	BULLET_DYNAMICS_LIBRARY
