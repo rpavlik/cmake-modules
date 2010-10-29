@@ -3,6 +3,7 @@
 # FindBullet.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  BULLET_ROOT_DIR
 #  BULLET_LIBRARY
 #  BULLET_INCLUDE_DIR
 #
@@ -34,6 +35,11 @@
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
 
+set(BULLET_ROOT_DIR
+	"${BULLET_ROOT_DIR}"
+	CACHE
+	PATH
+	"Directory to search")
 # If bullet isn't required, then neither are its dependencies
 if(Bullet_FIND_QUIETLY)
 	set(_FIND_FLAGS "QUIET")
@@ -56,9 +62,8 @@ foreach(bullet_component ${bullet_components})
 		Bullet${bullet_component}
 		${bullet_component}
 		HINTS
+		${BULLET_ROOT_DIR}
 		${_bullet_hint_LIBRARY_DIRS}
-		PATHS
-		${BULLET_ROOT}
 		PATH_SUFFIXES
 		lib
 		lib32
@@ -71,9 +76,8 @@ find_path(BULLET_INCLUDE_DIR
 	NAMES
 	btBulletCollisionCommon.h
 	HINTS
+	${BULLET_ROOT_DIR}
 	${_bullet_hint_INCLUDE_DIRS}
-	PATHS
-	${BULLET_ROOT}
 	PATH_SUFFIXES
 	include
 	include/boost
