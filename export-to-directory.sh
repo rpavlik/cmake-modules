@@ -2,12 +2,12 @@
 
 src="$(dirname $(readlink -f $0))"
 
-if [ "x$1" == "x-f" ]; then
+if [ "x$1" = "x-f" ]; then
 	dst="$(readlink -mn $2)/"
-	args=-f
+	args="-f"
 else
 	dst="$(readlink -mn $1)/"
-	args=$2
+	args="$2"
 fi
 
 echo "Exporting the modules from '$src' to '$dst'"
