@@ -64,7 +64,7 @@ function(add_cppcheck_sources _targetname)
 			list(APPEND
 				CPPCHECK_FAIL_REGULAR_EXPRESSION
 				${CPPCHECK_WARN_REGULAR_EXPRESSION})
-			list(REMOVE_AT _input ${_unused_func})
+			list(REMOVE_AT _input ${_fail_on_warn})
 		endif()
 
 		set(_files)
