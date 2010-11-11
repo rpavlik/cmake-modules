@@ -214,7 +214,9 @@ set(JTTK_LIBRARIES "${JTTK_JtTk_LIBRARY}")
 # Prepare for the rest of our search based off of where we found the link library
 ###
 get_filename_component(JTTK_LIBRARY_DIR "${JTTK_LIBRARY}" PATH)
-get_filename_component(JTTK_DEV_PATH "${JTTK_LIBRARY_DIR}/../.." ABSOLUTE)
+get_filename_component(JTTK_DEV_PATH
+	"${JTTK_LIBRARY_DIR}/../.."
+	ABSOLUTE)
 
 # Grab JtTk version
 string(REGEX MATCH "JtTk[0-9]*" _ver "${JTTK_LIBRARY}")
@@ -242,7 +244,9 @@ string(REGEX
 	"${_jtver}")
 
 # Setup dev path
-get_filename_component(JTTK_DEV_PATH "${JTTK_LIBRARY_DIR}/../../" ABSOLUTE)
+get_filename_component(JTTK_DEV_PATH
+	"${JTTK_LIBRARY_DIR}/../../"
+	ABSOLUTE)
 
 list(APPEND JTTK_ENVIRONMENT "JTTK_DEV_PATH=${JTTK_DEV_PATH}")
 set(ENV{JTTK_DEV_PLATFORM} ${BITS})
@@ -255,7 +259,8 @@ set(_deps_check)
 ###
 # Find the headers
 ###
-find_path(JTTK_INCLUDE_DIR JtTk/JtkEntity.h
+find_path(JTTK_INCLUDE_DIR
+	JtTk/JtkEntity.h
 	HINTS
 	${JTTK_DEV_PATH}/include)
 
@@ -344,18 +349,37 @@ elseif(UNIX)
 			string(REGEX MATCHALL "..key ([0-9A-Z])+" _keylines "${_log}")
 			set(JTTK_KEYS)
 			foreach(_keyline ${_keylines})
-				string(REGEX REPLACE "..key (([0-9A-Z])+)$" "\\1" _key "${_keyline}")
+				string(REGEX
+					REPLACE
+					"..key (([0-9A-Z])+)$"
+					"\\1"
+					_key
+					"${_keyline}")
 				list(APPEND JTTK_KEYS "${_key}")
 				message(STATUS "Found JtTk key: ${_key}")
 			endforeach()
-			set(JTTK_KEYS "${JTTK_KEYS}" CACHE STRING "A semi-colon separated list of JtTk keys to stamp on the binaries." FORCE)
-			set(JTTK_KEYS_AUTO "${JTTK_KEYS}" CACHE INTERNAL "The keys we auto-detected" FORCE)
+			set(JTTK_KEYS
+				"${JTTK_KEYS}"
+				CACHE
+				STRING
+				"A semi-colon separated list of JtTk keys to stamp on the binaries."
+				FORCE)
+			set(JTTK_KEYS_AUTO
+				"${JTTK_KEYS}"
+				CACHE
+				INTERNAL
+				"The keys we auto-detected"
+				FORCE)
 		endif()
 	else()
 		foreach(_key ${JTTK_KEYS})
 			message(STATUS "Using cached JtTk key: ${_key}")
 		endforeach()
-		set(JTTK_KEYS "${JTTK_KEYS}" CACHE STRING "A semi-colon separated list of JtTk keys to stamp on the binaries.")
+		set(JTTK_KEYS
+			"${JTTK_KEYS}"
+			CACHE
+			STRING
+			"A semi-colon separated list of JtTk keys to stamp on the binaries.")
 	endif()
 
 	# Find dependencies
@@ -406,7 +430,9 @@ endif()
 function(jttk_stamp_binary _target)
 	if(UNIX)
 		get_target_property(_binary "${_target}" LOCATION)
-		configure_file("${_jttk_mod_dir}/FindJtTk.stampkey.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/${_target}.stampkey.cmake" @ONLY)
+		configure_file("${_jttk_mod_dir}/FindJtTk.stampkey.cmake.in"
+			"${CMAKE_CURRENT_BINARY_DIR}/${_target}.stampkey.cmake"
+			@ONLY)
 		add_custom_command(TARGET
 			"${_target}"
 			POST_BUILD

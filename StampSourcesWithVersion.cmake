@@ -50,7 +50,9 @@ endif()
 set(__stamp_sources_with_version YES)
 
 if(NOT APPLE)
-	option(ENABLE_VERSION_STAMPING "Modify source files to update the version in the comment header. Maintainers only!" OFF)
+	option(ENABLE_VERSION_STAMPING
+		"Modify source files to update the version in the comment header. Maintainers only!"
+		OFF)
 	mark_as_advanced(ENABLE_VERSION_STAMPING)
 endif()
 
@@ -110,7 +112,8 @@ function(_stamp_file_with_version version filename)
 				${filename}
 				WORKING_DIRECTORY
 				"${CMAKE_CURRENT_SOURCE_DIR}"
-				RESULT_VARIABLE files_different
+				RESULT_VARIABLE
+				files_different
 				OUTPUT_QUIET
 				ERROR_QUIET)
 

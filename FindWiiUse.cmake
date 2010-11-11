@@ -63,10 +63,11 @@ if(WIN32)
 		NAMES
 		wiiuse.dll
 		HINTS
-		"${_libdir/}"
-		"${_libdir}/../"
+		"${_libdir}"
+		"${_libdir}/.."
 		PATH_SUFFIXES
 		bin)
+
 	set(WIIUSE_RUNTIME_LIBRARIES "${WIIUSE_RUNTIME_LIBRARY}")
 	get_filename_component(WIIUSE_RUNTIME_LIBRARY_DIRS
 		"${WIIUSE_RUNTIME_LIBRARY}"
@@ -91,4 +92,6 @@ if(WIIUSE_FOUND)
 	mark_as_advanced(WIIUSE_ROOT_DIR)
 endif()
 
-mark_as_advanced(WIIUSE_INCLUDE_DIR WIIUSE_LIBRARY WIIUSE_RUNTIME_LIBRARY)
+mark_as_advanced(WIIUSE_INCLUDE_DIR
+	WIIUSE_LIBRARY
+	WIIUSE_RUNTIME_LIBRARY)

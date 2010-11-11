@@ -118,8 +118,7 @@ if(NOT IN_DASHBOARD_SCRIPT)
 
 	if(NOT "1.${CMAKE_VERSION}" VERSION_LESS "1.2.8.0")
 		if(IS_DIRECTORY "${CMAKE_SOURCE_DIRECTORY}/.git")
-			find_program(DASHBOARDSCRIPT_GIT_EXECUTABLE
-				NAMES git)
+			find_program(DASHBOARDSCRIPT_GIT_EXECUTABLE NAMES git)
 			if(DASHBOARDSCRIPT_GIT_EXECUTABLE)
 
 				set(UPDATE_TYPE "git")
@@ -164,7 +163,7 @@ function(create_dashboard_scripts)
 		else()
 			message(STATUS "You can add these sample lines to your crontab:")
 		endif()
-		
+
 		set(_msg)
 
 		foreach(DASHBOARDSCRIPT_DASH_TYPE Nightly Continuous Experimental)

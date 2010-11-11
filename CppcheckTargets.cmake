@@ -61,8 +61,10 @@ function(add_cppcheck_sources _targetname)
 
 		list(FIND _input FAIL_ON_WARNINGS _fail_on_warn)
 		if("${_fail_on_warn}" GREATER "-1")
-			list(APPEND CPPCHECK_FAIL_REGULAR_EXPRESSION ${CPPCHECK_WARN_REGULAR_EXPRESSION})
-			list(REMOVE_AT _input ${_unused_func})
+			list(APPEND
+				CPPCHECK_FAIL_REGULAR_EXPRESSION
+				${CPPCHECK_WARN_REGULAR_EXPRESSION})
+			list(REMOVE_AT _input ${_fail_on_warn})
 		endif()
 
 		set(_files)
@@ -80,7 +82,8 @@ function(add_cppcheck_sources _targetname)
 				if(EXISTS "${_cppcheck_loc}")
 					list(APPEND _files "${_cppcheck_loc}")
 				else()
-					message(FATAL_ERROR "Adding CPPCHECK for file target ${_targetname}: "
+					message(FATAL_ERROR
+						"Adding CPPCHECK for file target ${_targetname}: "
 						"File ${_source} does not exist or needs a corrected path location "
 						"since we think its absolute path is ${_cppcheck_loc}")
 				endif()
@@ -129,7 +132,8 @@ endfunction()
 
 function(add_cppcheck _name)
 	if(NOT TARGET ${_name})
-		message(FATAL_ERROR "add_cppcheck given a target name that does not exist: '${_name}' !")
+		message(FATAL_ERROR
+			"add_cppcheck given a target name that does not exist: '${_name}' !")
 	endif()
 	if(CPPCHECK_FOUND)
 		set(_cppcheck_args)
@@ -151,7 +155,9 @@ function(add_cppcheck _name)
 
 		list(FIND _input FAIL_ON_WARNINGS _fail_on_warn)
 		if("${_fail_on_warn}" GREATER "-1")
-			list(APPEND CPPCHECK_FAIL_REGULAR_EXPRESSION ${CPPCHECK_WARN_REGULAR_EXPRESSION})
+			list(APPEND
+				CPPCHECK_FAIL_REGULAR_EXPRESSION
+				${CPPCHECK_WARN_REGULAR_EXPRESSION})
 			list(REMOVE_AT _input ${_unused_func})
 		endif()
 

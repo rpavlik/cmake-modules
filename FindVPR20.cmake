@@ -168,7 +168,12 @@ if((NOT "${Boost_FOUND}")
 		endif()
 
 		if(Boost_VERSION GREATER 103401)
-			find_package(Boost ${_FIND_FLAGS} COMPONENTS filesystem system signals)
+			find_package(Boost
+				${_FIND_FLAGS}
+				COMPONENTS
+				filesystem
+				system
+				signals)
 		endif()
 	endif()
 

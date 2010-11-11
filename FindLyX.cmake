@@ -10,7 +10,7 @@
 #    [OUTPUT_TO_SOURCE_DIR]
 #    [ EXTRA_DEPS <bibtex-or-other-file> [...] ]) - the base function
 #
-# These shortcut functions all have the same syntax: 
+# These shortcut functions all have the same syntax:
 #  lyx_export_to_XXX(<output-variable>
 #    INPUT <lyx-file> [...]
 #    [OUTPUT_TO_SOURCE_DIR]
@@ -37,12 +37,19 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 
-set(LYX_ROOT_DIR "${LYX_ROOT_DIR}" CACHE PATH "Directory to start our search in")
+set(LYX_ROOT_DIR
+	"${LYX_ROOT_DIR}"
+	CACHE
+	PATH
+	"Directory to start our search in")
 
 find_program(LYX_COMMAND
-	NAMES lyx
-	HINTS "${LYX_ROOT_DIR}"
-	PATH_SUFFIXES bin)
+	NAMES
+	lyx
+	HINTS
+	"${LYX_ROOT_DIR}"
+	PATH_SUFFIXES
+	bin)
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
@@ -109,7 +116,7 @@ function(lyx_export _format _extension _outvar)
 				COMMENT "Exporting ${_file} to ${_format}...")
 		endif()
 	endforeach()
-	
+
 	set(${_outvar} ${_out} PARENT_SCOPE)
 endfunction()
 

@@ -42,10 +42,18 @@ function(_osgbundle_split_debug_versions releasevar debugvar)
 endfunction()
 
 function(_osgbundle_find_plugins varprefix filenameprefix)
-	file(GLOB all "${OSG_RUNTIME_LIBRARY_DIR}/osgPlugins-${OPENSCENEGRAPH_VERSION}/${filenameprefix}*${CMAKE_SHARED_LIBRARY_SUFFIX}")
-	_osgbundle_split_debug_versions(${varprefix}_PLUGINS_RELEASE ${varprefix}_PLUGINS_DEBUG ${all})
-	set(${varprefix}_PLUGINS_RELEASE "${${varprefix}_PLUGINS_RELEASE}" PARENT_SCOPE)
-	set(${varprefix}_PLUGINS_DEBUG "${${varprefix}_PLUGINS_DEBUG}" PARENT_SCOPE)
+	file(GLOB
+		all
+		"${OSG_RUNTIME_LIBRARY_DIR}/osgPlugins-${OPENSCENEGRAPH_VERSION}/${filenameprefix}*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+	_osgbundle_split_debug_versions(${varprefix}_PLUGINS_RELEASE
+		${varprefix}_PLUGINS_DEBUG
+		${all})
+	set(${varprefix}_PLUGINS_RELEASE
+		"${${varprefix}_PLUGINS_RELEASE}"
+		PARENT_SCOPE)
+	set(${varprefix}_PLUGINS_DEBUG
+		"${${varprefix}_PLUGINS_DEBUG}"
+		PARENT_SCOPE)
 endfunction()
 
 if(OPENSCENEGRAPH_FOUND)

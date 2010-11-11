@@ -26,19 +26,20 @@ endif()
 set(__add_lua YES)
 
 define_property(TARGET
-	PROPERTY 
+	PROPERTY
 	LUA_TARGET
 	BRIEF_DOCS
-	"Lua target" 
-	FULL_DOCS 
+	"Lua target"
+	FULL_DOCS
 	"Is this a Lua target created by add_lua_target?")
 
 function(add_lua_target _target _dest)
 	if(NOT ARGN)
-		message(WARNING "In add_lua_target call for target ${_target}, no Lua files were specified!")
+		message(WARNING
+			"In add_lua_target call for target ${_target}, no Lua files were specified!")
 		return()
 	endif()
-	
+
 	set(ALLFILES)
 	foreach(luafile ${ARGN})
 		if(IS_ABSOLUTE "${luafile}")
@@ -59,11 +60,11 @@ function(add_lua_target _target _dest)
 				COMMENT "Copying ${luapath} to ${_dest}/${luafile}")
 		list(APPEND ALLFILES "${_dest}/${luafile}")
 	endforeach()
-	
+
 	# Custom target depending on all the lua file commands
 	add_custom_target(${_target}
-			SOURCES ${ARGN}
-			DEPENDS ${ALLFILES})
+		SOURCES ${ARGN}
+		DEPENDS ${ALLFILES})
 
 	set_property(TARGET ${_target} PROPERTY LUA_TARGET YES)
 endfunction()
@@ -71,16 +72,17 @@ endfunction()
 function(install_lua_target _target)
 	get_target_property(_isLua ${_target} LUA_TARGET)
 	if(NOT _isLua)
-		message(WARNING "install_lua_target called on a target not created with add_lua_target!")
+		message(WARNING
+			"install_lua_target called on a target not created with add_lua_target!")
 		return()
 	endif()
-	
+
 	# Get sources
 	get_target_property(_srcs ${_target} SOURCES)
-	
+
 	# Remove the "fake" file forcing build
 	list(REMOVE_AT _srcs 0)
-	
+
 	# Forward the call to install
 	install(PROGRAMS ${_srcs} ${ARGN})
 endfunction()

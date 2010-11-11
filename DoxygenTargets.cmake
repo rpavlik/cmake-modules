@@ -153,7 +153,7 @@ function(add_doxygen _doxyfile)
 		get_filename_component(INCLUDE_FILE "${_doxyfileabs}" NAME)
 		get_filename_component(INCLUDE_PATH "${_doxyfileabs}" PATH)
 
-        # Doesn't currently work on Windows, so don't bother
+		# Doesn't currently work on Windows, so don't bother
 		if(DOXYGEN_LATEX AND NOT NO_PDF AND NOT WIN32)
 			set(MAKE_PDF YES)
 			set(GENERATE_LATEX YES)

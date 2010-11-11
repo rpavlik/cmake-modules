@@ -4,6 +4,7 @@
 # The following variable is optionally searched for defaults
 #  OPENCV_ROOT_DIR:            Base directory of OpenCv tree to use.
 #
+#  OPENCV_NEW_LIBRARY_NAMES   Set to YES before searching if you want to
 # The following are set after configuration is done:
 #  OPENCV_FOUND
 #  OPENCV_INCLUDE_DIRS
@@ -31,19 +32,6 @@ set(OPENCV_ROOT_DIR
 
 include(ProgramFilesGlob)
 
-
-# required cv components with header and library if COMPONENTS unspecified
-if(NOT OpenCV_FIND_COMPONENTS)
-	# default
-	set(OpenCV_FIND_COMPONENTS CV CXCORE CVAUX HIGHGUI)
-	if(WIN32)
-		list(APPEND OpenCV_FIND_COMPONENTS CVCAM)	# WIN32 only actually
-	endif()
-else()
-	string(TOUPPER "${OpenCV_FIND_COMPONENTS}" OpenCV_FIND_COMPONENTS)
-endif()
-
-
 # typical root dirs of installations, exactly one of them is used
 program_files_glob(_dirs "/OpenCV*/")
 
@@ -58,13 +46,11 @@ find_path(OPENCV_BASE_DIR
 	include/cv/cv.h
 	include/cv.h
 	HINTS
-		"${OPENCV_ROOT_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	"$ENV{OPENCV_ROOT_DIR}"
-	"$ENV{OpenCV_ROOT_DIR}"
-	"$ENV{OPENCV_DIR}"	# only for backward compatibility deprecated by ROOT_DIR
-	"$ENV{OPENCV_HOME}"	# only for backward compatibility
 	"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Intel(R) Open Source Computer Vision Library_is1;Inno Setup: App Path]"
 	${_dirs})
+
 
 
 
@@ -88,39 +74,44 @@ set(OPENCV_LIBDIR_SUFFIXES lib lib64 OpenCV/lib otherlibs/_graphics/lib)
 #
 # find incdir for each lib
 #
-find_path(OPENCV_CV_INCLUDE_DIR
+find_path(OPENCV_cv_INCLUDE_DIR
 	NAMES
 	cv.h
 	HINTS
-	${OPENCV_BASE_DIR}
+	"${OPENCV_BASE_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	PATH_SUFFIXES
 	${OPENCV_INCDIR_SUFFIXES})
-find_path(OPENCV_CXCORE_INCLUDE_DIR
+find_path(OPENCV_cxcore_INCLUDE_DIR
 	NAMES
 	cxcore.h
 	HINTS
-	${OPENCV_BASE_DIR}
+	"${OPENCV_BASE_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	PATH_SUFFIXES
 	${OPENCV_INCDIR_SUFFIXES})
-find_path(OPENCV_CVAUX_INCLUDE_DIR
+find_path(OPENCV_cxcore_INCLUDE_DIR
 	NAMES
 	cvaux.h
 	HINTS
-	${OPENCV_BASE_DIR}
+	"${OPENCV_BASE_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	PATH_SUFFIXES
 	${OPENCV_INCDIR_SUFFIXES})
-find_path(OPENCV_HIGHGUI_INCLUDE_DIR
+find_path(OPENCV_highgui_INCLUDE_DIR
 	NAMES
 	highgui.h
 	HINTS
-	${OPENCV_BASE_DIR}
+	"${OPENCV_BASE_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	PATH_SUFFIXES
 	${OPENCV_INCDIR_SUFFIXES})
-find_path(OPENCV_CVCAM_INCLUDE_DIR
+find_path(OPENCV_cvcam_INCLUDE_DIR
 	NAMES
 	cvcam.h
 	HINTS
-	${OPENCV_BASE_DIR}
+	"${OPENCV_BASE_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	PATH_SUFFIXES
 	${OPENCV_INCDIR_SUFFIXES})
 
@@ -128,72 +119,65 @@ find_path(OPENCV_CVCAM_INCLUDE_DIR
 # find sbsolute path to all libraries
 # some are optionally, some may not exist on Linux
 #
-find_library(OPENCV_CV_LIBRARY
+find_library(OPENCV_legacy_LIBRARY
 	NAMES
-	cv
-	opencv
+	opencv_legacy
 	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_CVAUX_LIBRARY
-	NAMES
-	cvaux
-	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_CVCAM_LIBRARY
-	NAMES
-	cvcam
-	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_CVHAARTRAINING_LIBRARY
-	NAMES
-	cvhaartraining
-	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_CXCORE_LIBRARY
-	NAMES
-	cxcore
-	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_CXTS_LIBRARY
-	NAMES
-	cxts
-	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_HIGHGUI_LIBRARY
-	NAMES
-	highgui
-	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_ML_LIBRARY
-	NAMES
-	ml
-	HINTS
-	${OPENCV_BASE_DIR}
-	PATH_SUFFIXES
-	${OPENCV_LIBDIR_SUFFIXES})
-find_library(OPENCV_TRS_LIBRARY
-	NAMES
-	trs
-	HINTS
-	${OPENCV_BASE_DIR}
+	"${OPENCV_BASE_DIR}"
+	"${OPENCV_ROOT_DIR}"
 	PATH_SUFFIXES
 	${OPENCV_LIBDIR_SUFFIXES})
 
+set(OPENCV_NEW_COMPONENTS calib3d contrib core features2d highgui imgproc legacy ml objdetect video)
+set(OPENCV_OLD_COMPONENTS cv cvaux cvcam cvhaartraining cxcore cxts highgui ml trs)
+set(opencv_components)
+if(OPENCV_NEW_LIBRARY_NAMES OR OPENCV_legacy_LIBRARY)
 
+	# New-style library names
+	foreach(component ${OPENCV_NEW_COMPONENTS})
+		find_library(OPENCV_${component}_LIBRARY
+		NAMES
+		opencv_${component}
+		HINTS
+		${OPENCV_BASE_DIR}
+		PATH_SUFFIXES
+		${OPENCV_LIBDIR_SUFFIXES})
+	endforeach()
+
+	# cv components with header and library if COMPONENTS unspecified
+	if(NOT OpenCV_FIND_COMPONENTS)
+		# default
+		set(opencv_components core legacy imgproc highgui)
+		if(WIN32)
+			list(APPEND opencv_components video)	# WIN32 only actually
+		endif()
+	else()
+		# TODO: clean up/convert to new components
+		string(TOLOWER "${OpenCV_FIND_COMPONENTS}" opencv_components)
+	endif()
+
+else()
+	# Old-style lib names
+	if(NOT OpenCV_FIND_COMPONENTS)
+		# default
+		set(opencv_components cv cxcore cvaux highgui)
+		if(WIN32)
+			list(APPEND opencv_components cvcam)	# WIN32 only actually
+		endif()
+	else()
+		string(TOLOWER "${OpenCV_FIND_COMPONENTS}" opencv_components)
+	endif()
+
+	foreach(component ${OPENCV_OLD_COMPONENTS})
+		find_library(OPENCV_${component}_LIBRARY
+			NAMES
+			cvaux
+			HINTS
+			${OPENCV_BASE_DIR}
+			PATH_SUFFIXES
+			${OPENCV_LIBDIR_SUFFIXES})
+	endforeach()
+endif()
 
 #
 # Logic selecting required libs and headers
@@ -202,47 +186,48 @@ find_library(OPENCV_TRS_LIBRARY
 set(_req_check)
 set(_req_libs)
 set(_req_includes)
-foreach(NAME ${OpenCV_FIND_COMPONENTS})
+foreach(component ${opencv_components})
+	#message(STATUS "Component requested: ${component}")
 
 	# only good if header and library both found
-	list(APPEND _req_check OPENCV_${NAME}_LIBRARY OPENCV_${NAME}_INCLUDE_DIR)
-	list(APPEND _req_libs "${OPENCV_${NAME}_LIBRARY}")
-	list(APPEND _req_includes "${OPENCV_${NAME}_INCLUDE_DIR}")
+	list(APPEND
+		_req_check
+		OPENCV_${component}_LIBRARY)
+	list(APPEND _req_libs "${OPENCV_${component}_LIBRARY}")
+	if(DEFINED OPENCV_${component}_INCLUDE_DIR)
+		list(APPEND
+			_req_check
+			OPENCV_${component}_INCLUDE_DIR)
+		list(APPEND _req_includes "${OPENCV_${component}_INCLUDE_DIR}")
+	endif()
+
 
 endforeach()
-
-# get the link directory for rpath to be used with LINK_DIRECTORIES:
-if(OPENCV_CV_LIBRARY)
-
-endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(OpenCV
 	DEFAULT_MSG
+	OPENCV_cv_INCLUDE_DIR
 	${_req_check})
 
 if(OPENCV_FOUND)
-	get_filename_component(OPENCV_LIBRARY_DIRS ${OPENCV_CV_LIBRARY} PATH)
+	set(OPENCV_LIBRARY_DIRS)
+	foreach(lib ${_req_libs})
+		get_filename_component(dir "${lib}" PATH)
+		list(APPEND OPENCV_LIBRARY_DIRS "${dir}")
+	endforeach()
+	list(REVERSE OPENCV_LIBRARY_DIRS)
+	list(REMOVE_DUPLICATES OPENCV_LIBRARY_DIRS)
+	list(REVERSE OPENCV_LIBRARY_DIRS)
+
 	set(OPENCV_INCLUDE_DIRS ${_req_includes})
 	set(OPENCV_LIBRARIES ${_req_libs})
 	mark_as_advanced(OPENCV_ROOT_DIR)
 endif()
 
-mark_as_advanced(OPENCV_INCLUDE_DIRS
-	OPENCV_CV_INCLUDE_DIR
-	OPENCV_CXCORE_INCLUDE_DIR
-	OPENCV_CVAUX_INCLUDE_DIR
-	OPENCV_CVCAM_INCLUDE_DIR
-	OPENCV_HIGHGUI_INCLUDE_DIR
-	OPENCV_LIBRARIES
-	OPENCV_CV_LIBRARY
-	OPENCV_CXCORE_LIBRARY
-	OPENCV_CVAUX_LIBRARY
-	OPENCV_CVCAM_LIBRARY
-	OPENCV_CVHAARTRAINING_LIBRARY
-	OPENCV_CXTS_LIBRARY
-	OPENCV_HIGHGUI_LIBRARY
-	OPENCV_ML_LIBRARY
-	OPENCV_TRS_LIBRARY)
+mark_as_advanced(OPENCV_BASE_DIR)
+foreach(component ${OPENCV_NEW_COMPONENTS} ${OPENCV_OLD_COMPONENTS})
+	mark_as_advanced(OPENCV_${component}_LIBRARY OPENCV_${component}_INCLUDE_DIR)
+endforeach()
