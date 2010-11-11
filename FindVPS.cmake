@@ -16,6 +16,11 @@
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
+#
+#          Copyright Iowa State University 2009-2010
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE_1_0.txt or copy at
+#          http://www.boost.org/LICENSE_1_0.txt)
 
 include(SelectLibraryConfigurations)
 include(ListCombinations)
@@ -31,6 +36,7 @@ set(VPS_ROOT_DIR
 # Try the config file mode.
 find_package(VPS QUIET NO_MODULE)
 if(VPS_FOUND)
+	mark_as_advanced(VPS_DIR VPS_ROOT_DIR)
 	return()
 endif()
 
@@ -293,5 +299,5 @@ if(VPS_FOUND)
 		"${VPS_grviewer_INCLUDE_DIR}")
 	set(VPS_LIBRARIES "${VPS_vps_LIBRARY}")
 	set(VPS_grviewer_LIBRARIES "${VPS_vps_LIBRARY}" "${VPS_grviewer_LIBRARY}")
-	mark_as_advanced(VPS_ROOT_DIR)
+	mark_as_advanced(VPS_ROOT_DIR VPS_DIR)
 endif()

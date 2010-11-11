@@ -36,6 +36,11 @@
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
+#
+#          Copyright Iowa State University 2009-2010
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE_1_0.txt or copy at
+#          http://www.boost.org/LICENSE_1_0.txt)
 
 set(_HUMAN "VPR 2.0")
 set(_RELEASE_NAMES vpr-2_0 libvpr-2_0)
@@ -248,7 +253,7 @@ find_package_handle_standard_args(VPR20
 
 if(VPR20_FOUND)
 
-	set(VPR20_INCLUDE_DIRS ${VPR20_INCLUDE_DIR} ${_deps_includes})
+	set(VPR20_INCLUDE_DIRS "${VPR20_INCLUDE_DIR}" ${_deps_includes})
 
 	clean_directory_list(VPR20_INCLUDE_DIRS)
 

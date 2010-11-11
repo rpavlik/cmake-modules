@@ -17,7 +17,7 @@
 #   [TESTS <testcasename> [<testcasename>...]])
 #
 #  If for some reason you need access to the executable target created,
-#  it is ${BOOST_TEST_TARGET_PREFIX}${testdriver_name} as specified when
+#  it can be found in ${${testdriver_name}_TARGET_NAME} as specified when
 #  you called add_boost_test
 #
 # Requires CMake 2.6 or newer (uses the 'function' command)
@@ -30,13 +30,18 @@
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
+#
+#          Copyright Iowa State University 2009-2010
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE_1_0.txt or copy at
+#          http://www.boost.org/LICENSE_1_0.txt)
 
 if(__add_boost_test)
 	return()
 endif()
 set(__add_boost_test YES)
 
-set(BOOST_TEST_TARGET_PREFIX "boosttesttarget_")
+set(BOOST_TEST_TARGET_PREFIX "boosttest")
 
 if(NOT Boost_FOUND)
 	find_package(Boost 1.34.0 QUIET)
@@ -89,7 +94,7 @@ function(add_boost_test _name)
 		endif()
 		return()
 	endif()
-	
+
 	# parse arguments
 	set(_nowhere)
 	set(_curdest _nowhere)
@@ -169,12 +174,21 @@ function(add_boost_test _name)
 			list(APPEND SOURCES ${RESOURCES})
 		endif()
 
-		set(_target_name ${BOOST_TEST_TARGET_PREFIX}${_name})
+		# Generate a unique target name, using the relative binary dir
+		# and provided name. (transform all / into _ and remove all other
+		# non-alphabet characters)
+		file(RELATIVE_PATH targetpath "${CMAKE_BINARY_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+		string(REGEX REPLACE "[^A-Za-z/_]" "" targetpath "${targetpath}")
+		string(REPLACE "/" "_" targetpath "${targetpath}")
+
+		set(_target_name ${BOOST_TEST_TARGET_PREFIX}-${targetpath}-${_name})
+		set(${_name}_TARGET_NAME "${_target_name}" PARENT_SCOPE)
+
+		# Build the test.
 		add_executable(${_target_name} ${SOURCES})
 
-		#if(USE_COMPILED_LIBRARY)
-			list(APPEND LIBRARIES ${_boosttesttargets_libs})
-		#endif()
+		list(APPEND LIBRARIES ${_boosttesttargets_libs})
+
 		if(LIBRARIES)
 			target_link_libraries(${_target_name} ${LIBRARIES})
 		endif()
@@ -194,13 +208,13 @@ function(add_boost_test _name)
 		endif()
 
 		# TODO: Figure out why only recent boost handles individual test running properly
-		
+
 		if(LAUNCHER)
 			set(_test_command ${LAUNCHER} "\$<TARGET_FILE:${_target_name}>")
 		else()
 			set(_test_command ${_target_name})
 		endif()
-		
+
 	    if(TESTS AND ("${Boost_VERSION}" VERSION_GREATER "103799"))
 			foreach(_test ${TESTS})
 				add_test(NAME ${_name}-${_test}
@@ -216,7 +230,7 @@ function(add_boost_test _name)
 				endif()
 			endforeach()
 		else()
-			add_test(NAME ${_name}-boost::test
+			add_test(NAME ${_name}-boost_test
 				COMMAND
 			    ${_test_command}
 			    ${Boost_TEST_FLAGS})

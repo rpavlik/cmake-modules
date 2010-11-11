@@ -14,6 +14,11 @@
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
+#
+#          Copyright Iowa State University 2009-2010
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE_1_0.txt or copy at
+#          http://www.boost.org/LICENSE_1_0.txt)
 
 if(__add_lua)
 	return()
@@ -36,16 +41,22 @@ function(add_lua_target _target _dest)
 	
 	set(ALLFILES)
 	foreach(luafile ${ARGN})
+		if(IS_ABSOLUTE "${luafile}")
+			set(luapath "${luafile}")
+			get_filename_component(luafile "${luafile}" NAME)
+		else()
+			set(luapath "${CMAKE_CURRENT_SOURCE_DIR}/${luafile}")
+		endif()
 		add_custom_command(OUTPUT "${_dest}/${luafile}"
 				COMMAND
 				${CMAKE_COMMAND}
 				ARGS -E make_directory "${_dest}"
 				COMMAND
 				${CMAKE_COMMAND}
-				ARGS -E copy "${CMAKE_CURRENT_SOURCE_DIR}/${luafile}" "${_dest}"
+				ARGS -E copy "${luapath}" "${_dest}"
 				WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-				DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${luafile}"
-				COMMENT "Copying ${luafile} to ${_dest}/${luafile}")
+				DEPENDS "${luapath}"
+				COMMENT "Copying ${luapath} to ${_dest}/${luafile}")
 		list(APPEND ALLFILES "${_dest}/${luafile}")
 	endforeach()
 	

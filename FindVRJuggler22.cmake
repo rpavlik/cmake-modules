@@ -56,6 +56,11 @@
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
+#
+#          Copyright Iowa State University 2009-2010
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE_1_0.txt or copy at
+#          http://www.boost.org/LICENSE_1_0.txt)
 
 include(CleanLibraryList)
 include(CleanDirectoryList)
@@ -235,10 +240,10 @@ if(VRJUGGLER22_FOUND)
 			set(_vrj22_have_base_dir YES)
 		endif()
 	endif()
-	
+
 	set(_vrj22_base_dir "${VRJUGGLER22_VJ_BASE_DIR}")
 	set(_vrj22_base_dir "${_vrj22_base_dir}" CACHE INTERNAL "" FORCE)
-	
+
 	if(_vrj22_have_base_dir)
 		file(GLOB _poss_dirs ${VRJUGGLER22_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
 		find_path(VRJUGGLER22_VJ_CFG_DIR
@@ -248,7 +253,7 @@ if(VRJUGGLER22_FOUND)
 			NO_DEFAULT_PATH)
 		mark_as_advanced(VRJUGGLER22_VJ_CFG_DIR)
 	endif()
-		
+
 	set(VRJUGGLER22_VJ_BASE_DIR
 		"${VRJUGGLER22_VJ_BASE_DIR}"
 		CACHE
@@ -263,9 +268,14 @@ if(VRJUGGLER22_FOUND)
 		"VJ_CFG_DIR=${VRJUGGLER22_VJ_CFG_DIR}")
 
     include(GetDirectoryList)
-    
+
     get_directory_list(VRJUGGLER22_RUNTIME_LIBRARY_DIRS ${VRJUGGLER22_LIBRARIES})
-    
+	if(WIN32)
+		foreach(dir ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
+			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${dir}/../bin")
+		endforeach()
+	endif()
+
 	if(MSVC)
 		# Needed to make linking against boost work with 2.2.1 binaries - rp20091022
 		# BOOST_ALL_DYN_LINK
@@ -277,7 +287,7 @@ if(VRJUGGLER22_FOUND)
 		# 4100: unused parameter
 		# 4512: assignment operator could not be generated
 		# 4127: (Not currently disabled) conditional expression in loop evaluates to constant
-		
+
 		set(VRJUGGLER22_CXX_FLAGS "/wd4275 /wd4251 /wd4100 /wd4512")
 	elseif(CMAKE_COMPILER_IS_GNUCXX)
 		# Silence annoying warnings about deprecated hash_map.
@@ -296,7 +306,182 @@ if(VRJUGGLER22_FOUND)
 		CACHE
 		INTERNAL
 		"Requested components, used as a flag.")
+	
+	
+	
+	set(_plugin_dirs)
+	foreach(_libdir ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
+		# Find directories of Gadgeteer plugins and drivers
+		if(EXISTS "${_libdir}/gadgeteer")
+			list(APPEND _plugin_dirs "${_libdir}/gadgeteer/drivers" "${_libdir}/gadgeteer/plugins")
+		elseif(EXISTS "${_libdir}/gadgeteer-1.2")
+			list(APPEND _plugin_dirs "${_libdir}/gadgeteer-1.2/drivers" "${_libdir}/gadgeteer-1.2/plugins")
+		endif()
+		
+		# Find directories of Sonix plugins
+		if(EXISTS "${_libdir}/sonix")
+			list(APPEND _plugin_dirs "${_libdir}/sonix/plugins/dbg")
+			list(APPEND _plugin_dirs "${_libdir}/sonix/plugins/opt")
+		elseif(EXISTS "${_libdir}/sonix-1.2")
+			list(APPEND _plugin_dirs "${_libdir}/sonix-1.2/plugins/dbg")
+			list(APPEND _plugin_dirs "${_libdir}/sonix-1.2/plugins/opt")
+		endif()
+	endforeach()
+	
+	# Grab the actual plugins
+	foreach(_libdir ${_plugin_dirs})
+		if(EXISTS "${_libdir}")
+			list(APPEND VRJUGGLER22_RUNTIME_LIBRARY_DIRS "${_libdir}")
+			file(GLOB _plugins "${_libdir}/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+			list(APPEND VRJUGGLER22_BUNDLE_PLUGINS ${_plugins})
+		endif()
+	endforeach()
+	
 	mark_as_advanced(VRJUGGLER22_ROOT_DIR)
 endif()
 
 mark_as_advanced(VRJUGGLER22_DEFINITIONS)
+
+function(install_vrjuggler22_data_files prefix)
+	set(base "${VRJUGGLER22_VJ_CFG_DIR}/..")
+	get_filename_component(base "${base}" ABSOLUTE)
+	file(RELATIVE_PATH reldest "${VRJUGGLER22_VJ_BASE_DIR}" "${base}")
+	if(prefix STREQUAL "" OR prefix STREQUAL "." OR prefix STREQUAL "./")
+		set(DEST "${reldest}")
+	else()
+		set(DEST "${prefix}/${reldest}")
+	endif()
+	
+	# configFiles *.jconf
+	file(GLOB
+		_vj_config_files
+		"${base}/configFiles/*.jconf")
+	install(FILES ${_vj_config_files} DESTINATION "${DEST}/configFiles/")
+
+	# definitions *.jdef
+	file(GLOB
+		_vj_defs_files
+		"${base}/definitions/*.jdef")
+	install(FILES ${_vj_defs_files} DESTINATION "${DEST}/definitions/")
+
+	# models *.flt
+	file(GLOB
+		_vj_model_files
+		"${base}/models/*.flt")
+	install(FILES ${_vj_model_files} DESTINATION "${DEST}/models/")
+
+	# sounds *.wav
+	file(GLOB
+		_vj_sound_files
+		"${base}/sounds/*.wav")
+	install(FILES ${_vj_sound_files} DESTINATION "${DEST}/sounds/")
+
+	# calibration.table - needed?
+	file(GLOB
+		_vj_config_files
+		"${base}/configFiles/*.jconf")
+	install(FILES "${base}/calibration.table" DESTINATION "${DEST}")
+endfunction()
+
+function(install_vrjuggler22_plugins prefix varForFilenames)	
+	set(DEST "${prefix}")
+
+	set(out)
+	foreach(plugin ${VRJUGGLER22_BUNDLE_PLUGINS})
+		get_filename_component(full "${plugin}" ABSOLUTE)
+		file(RELATIVE_PATH relloc "${VRJUGGLER22_VJ_BASE_DIR}" "${full}")
+		set(filedest "${DEST}/${relloc}")
+		get_filename_component(path "${filedest}" PATH)
+		list(APPEND out "${filedest}")
+		install(FILES "${full}" DESTINATION "${path}")
+	endforeach()
+	
+	set(${varForFilenames} ${out} PARENT_SCOPE)
+
+endfunction()
+
+function(get_vrjuggler_bundle_sources _target_sources)
+	if(APPLE)
+		if(NOT MACOSX_PACKAGE_DIR)
+			set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
+		endif()
+
+		set(_vj_base_dir .)
+		set(_vj_data_dir ${vj_base_dir}/share/vrjuggler-2.2)
+
+		# Append Mac-specific sources to source list
+		set(_vj_bundle_src
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib)
+
+		message(STATUS "vjbundlesrc: ${_vj_bundle_src}")
+		set(${_target_sources}
+			${${_target_sources}}
+			${_vj_bundle_src}
+			PARENT_SCOPE)
+
+		# Set destination of nib files
+		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION
+			Resources/en.lproj/MainMenu.nib/)
+
+		# Set destination of Resources
+		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION
+			Resources/)
+	endif()
+endfunction()
+
+function(fixup_vrjuggler_app_bundle _target _targetInstallDest _extralibs _libdirs)
+	
+	if(NOT VRJUGGLER22_FOUND)
+		return()
+	endif()
+	
+	if(NOT MACOSX_PACKAGE_DIR)
+		set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
+	endif()
+	
+	set(TARGET_LOCATION "${_targetInstallDest}/${_target}${CMAKE_EXECUTABLE_SUFFIX}")
+	if(APPLE)
+		set(TARGET_LOCATION "${TARGET_LOCATION}.app")
+	endif()
+	
+	set_target_properties(${_target}
+		PROPERTIES
+		MACOSX_BUNDLE
+		true
+		MACOSX_BUNDLE_INFO_PLIST
+		${MACOSX_PACKAGE_DIR}/VRJuggler22BundleInfo.plist.in
+		MACOSX_BUNDLE_ICON_FILE
+		vrjuggler.icns
+		MACOSX_BUNDLE_INFO_STRING
+		"${PROJECT_NAME} (VR Juggler Application) version ${CPACK_PACKAGE_VERSION}, created by ${CPACK_PACKAGE_VENDOR}"
+		MACOSX_BUNDLE_GUI_IDENTIFIER
+		org.vrjuggler.${PROJECT_NAME}
+		MACOSX_BUNDLE_SHORT_VERSION_STRING
+		${CPACK_PACKAGE_VERSION}
+		MACOSX_BUNDLE_BUNDLE_VERSION
+		${CPACK_PACKAGE_VERSION})
+
+	if(WIN32)
+		list(APPEND _libdirs "${VRJUGGLER22_VJ_BASE_DIR}/bin")
+	endif()
+	
+	set(BUNDLE_LIBS ${_extralibs})
+	set(BUNDLE_LIB_DIRS "${VRJUGGLER22_VJ_BASE_DIR}" ${_libdirs})
+
+	configure_file(${MACOSX_PACKAGE_DIR}/fixupbundle.cmake.in
+		${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake
+		@ONLY)
+	install(SCRIPT
+		"${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake")
+endfunction()

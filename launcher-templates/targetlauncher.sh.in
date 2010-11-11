@@ -2,7 +2,7 @@
 bindir=$(pwd)
 cd @USERFILE_WORKING_DIRECTORY@
 @USERFILE_ENV_COMMANDS@
-if [ "x$1" = "x--debugger" ]; then
+if test "x$1" = "x--debugger"; then
 	shift
 	echo "r @LAUNCHERSCRIPT_COMMAND_ARGUMENTS@" > $bindir/gdbscript
 	echo "bt" >> $bindir/gdbscript
