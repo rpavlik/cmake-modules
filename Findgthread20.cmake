@@ -3,13 +3,12 @@
 # Findgthread20.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  GTHREAD20_ROOT_DIR
 #  GTHREAD20_LIBRARY
 #  GTHREAD20_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  GTHREAD20_FOUND
-#  GTHREAD20_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  GTHREAD20_LIBRARIES
 #  GTHREAD20_INCLUDE_DIRS
@@ -38,6 +37,15 @@
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
+
+set(GTHREAD20_ROOT_DIR
+	"${GTHREAD20_ROOT_DIR}"
+	CACHE
+	PATH
+	"Prefix directory for GThread 2.0")
 
 # If gthread isn't required, then neither are its dependencies
 if(gthread20_FIND_QUIETLY)
@@ -46,7 +54,7 @@ else()
 	set(_FIND_FLAGS "")
 endif()
 
-# Find the dependencies for libxml++
+# Find the dependencies for gthread-2.0
 set(_gthread20_DEPENDENCIES glib20)
 find_package(glib20 ${_FIND_FLAGS})
 
@@ -67,7 +75,7 @@ find_library(GTHREAD20_LIBRARY
 	${_gthread20_hint_LIBRARY_DIRS}
 	${_gthread20_hint_LIBRARY_DIR}
 	PATHS
-	${GTHREAD20_ROOT}
+	${GTHREAD20_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -81,7 +89,7 @@ find_library(RT_LIBRARY
 	${_gthread20_hint_LIBRARY_DIRS}
 	${_gthread20_hint_LIBRARY_DIR}
 	PATHS
-	${GTHREAD20_ROOT}
+	${GTHREAD20_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -104,9 +112,6 @@ if(GTHREAD20_FOUND)
 	set(GTHREAD20_LIBRARIES ${GTHREAD20_LIBRARY} ${GLIB20_LIBRARIES} ${RT_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 	set(GTHREAD20_INCLUDE_DIRS ${GLIB20_INCLUDE_DIRS})
 	set(GTHREAD20_LINKER_FLAGS ${GLIB20_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT})
-endif()
-
-if(GTHREAD20_FOUND OR GTHREAD20_MARK_AS_ADVANCED)
 	foreach(_dependency LIST _gthread20_DEPENDENCIES)
 		string(TOUPPER ${_dependency} _DEPENDENCY)
 		mark_as_advanced(${_DEPENDENCY}_LIBRARY ${_DEPENDENCY}_INCLUDE_DIR)

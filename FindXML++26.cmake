@@ -3,13 +3,12 @@
 # FindXML++26.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  XMLXX26_ROOT_DIR
 #  XMLXX26_LIBRARY
 #  XMLXX26_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  XMLXX26_FOUND
-#  XMLXX26_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  XMLXX26_LIBRARIES
 #  XMLXX26_INCLUDE_DIRS
@@ -24,9 +23,24 @@
 #
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (CMake standard module)
+#  FindPkgConfig (CMake standard module)
+#  Findglibmm24
+#  FindXML2
+#
+# Dependencies:
+#  none
+#
+# BEGIN_DOT_FILE
+#  libxmlxx [ label = "libxml++ 2.6" ];
+#  libxmlxx -> glibmm24
+#  libxmlxx -> xml2
+# END_DOT_FILE
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
 
 # If libxml++ isn't required, then neither are its dependencies
 if(XMLXX26_FIND_QUIETLY)
@@ -52,11 +66,8 @@ find_library(XMLXX26_LIBRARY
 	xml++-2.6
 	HINTS
 	${_xmlxx26_hint_LIBRARY_DIRS}
-	${XMLPP_ROOT}
-	${XML++_ROOT}
-	${XMLXX_ROOT}
 	PATHS
-	${XMLXX26_ROOT}
+	${XMLXX26_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -68,11 +79,8 @@ find_path(XMLXX26_INCLUDE_DIR
 	libxml++/libxml++.h
 	HINTS
 	${_xmlxx26_hint_INCLUDE_DIRS}
-	${XML++_ROOT}
-	${XMLPP_ROOT}
-	${XMLXX_ROOT}
 	PATHS
-	${XMLXX26_ROOT}
+	${XMLXX26_ROOT_DIR}
 	PATH_SUFFIXES
 	include
 	include/libxml++-2.6
@@ -85,7 +93,7 @@ find_path(XMLXX26_LIB_INCLUDE_DIR
 	${_xmlxx26_hint_LIBRARY_DIRS}
 	${_xmlxx26_hint_INCLUDE_DIRS}
 	PATHS
-	${XMLXX26_ROOT}
+	${XMLXX26_ROOT_DIR}
 	PATH_SUFFIXES
 	include
 	include/libxml++-2.6
@@ -115,12 +123,7 @@ if(XMLXX26_FOUND)
 		set(XMLXX26_LIBRARIES    ${XMLXX26_LIBRARIES}    ${${_DEP}_LIBRARIES})
 		set(XMLXX26_INCLUDE_DIRS ${XMLXX26_INCLUDE_DIRS} ${${_DEP}_INCLUDE_DIRS})
 		set(XMLXX26_LINKER_FLAGS ${XMLXX26_LINKER_FLAGS} ${${_DEP}_LINKER_FLAGS})
-	endforeach()
-endif()
-
-if(XMLXX26_FOUND OR XMLXX26_MARK_AS_ADVANCED)
-	foreach(_dependency _XMLXX26_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
+		mark_as_advanced(${_dep}_LIBRARY ${_dep}_INCLUDE_DIR)
 	endforeach()
 	mark_as_advanced(XMLXX26_LIBRARY XMLXX26_INCLUDE_DIR)
 endif()

@@ -3,13 +3,11 @@
 # Findgobject20.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  GOBJECT20_ROOT_DIR
 #  GOBJECT20_LIBRARY
-#  GOBJECT20_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  GOBJECT20_FOUND
-#  GOBJECT20_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  GOBJECT20_LIBRARIES
 #  GOBJECT20_INCLUDE_DIRS
@@ -39,6 +37,11 @@
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
 
+set(GOBJECT20_ROOT_DIR
+	"${GOBJECT20_ROOT_DIR}"
+	CACHE
+	PATH
+	"Prefix directory for GObject 2.0")
 # If gobject isn't required, then neither are its dependencies
 if(gobject20_FIND_QUIETLY)
 	set(_FIND_FLAGS "QUIET")
@@ -65,7 +68,7 @@ find_library(GOBJECT20_LIBRARY
 	${_gobject20_hint_LIBRARY_DIRS}
 	${_gobject20_hint_LIBRARY_DIR}
 	PATHS
-	${GOBJECT20_ROOT}
+	${GOBJECT20_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -90,15 +93,9 @@ if(GOBJECT20_FOUND)
 		set(GOBJECT20_LIBRARIES ${GOBJECT20_LIBRARY} ${${_DEP}_LIBRARIES})
 		set(GOBJECT20_INCLUDE_DIRS ${GLIB20_INCLUDE_DIRS} ${${_DEP}_INCLUDE_DIRS})
 		set(GOBJECT20_LINKER_FLAGS ${GLIB20_LINKER_FLAGS} ${${_DEP}_LINKER_FLAGS})
+		mark_as_advanced(${_DEP}_LIBRARY ${_DEP}_INCLUDE_DIR)
 	endforeach()
-endif()
-
-if(GOBJECT20_FOUND OR GOBJECT20_MARK_AS_ADVANCED)
-	foreach(_dependency LIST _gobject20_DEPENDENCIES)
-		string(TOUPPER ${_dependency} _DEPENDENCY)
-		mark_as_advanced(${_DEPENDENCY}_LIBRARY ${_DEPENDENCY}_INCLUDE_DIR)
-	endforeach()
-	mark_as_advanced(GOBJECT20_LIBRARY GOBJECT20_INCLUDE_DIR GOBJECT20_LIB_INCLUDE_DIR)
+	mark_as_advanced(GOBJECT20_LIBRARY)
 endif()
 
 # End of Findgobject20.cmake

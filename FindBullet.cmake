@@ -32,12 +32,15 @@
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
 
 set(BULLET_ROOT_DIR
 	"${BULLET_ROOT_DIR}"
 	CACHE
 	PATH
-	"Directory to search")
+	"Prefix directory for Bullet")
 
 # Now let's find the bullet library
 find_package(PkgConfig QUIET)
@@ -72,7 +75,7 @@ find_path(BULLET_INCLUDE_DIR
 	${_bullet_hint_INCLUDE_DIRS}
 	PATH_SUFFIXES
 	include
-	include/boost
+	include/bullet
 )
 
 # handle the QUIETLY and REQUIRED arguments and set BULLET_FOUND to TRUE if

@@ -3,30 +3,44 @@
 # FindXML2.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  XML2_ROOT_DIR
 #  XML2_LIBRARY
 #  XML2_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  XML2_FOUND
-#  XML2_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  XML2_LIBRARIES
 #  XML2_INCLUDE_DIRS
-#  XML2_LINKER_FLAGS
 #
 # Use this module this way:
 #  find_package(XML2)
 #  include_directories(XML2_INCLUDE_DIRS)
 #  add_executable(myapp ${SOURCES})
 #  target_link_libraries(myapp ${XML2_LIBRARIES})
-#  set_property(TARGET myapp PROPERTY LINK_FLAGS ${XML2_LINKER_FLAGS})
 #
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (CMake standard module)
+#  FindPkgConfig (CMake standard module)
+#
+# Dependencies:
+#  none
+#
+# BEGIN_DOT_FILE
+#  xml2 [ label = "XML 2.0" ];
+# END_DOT_FILE
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
+
+set(XML2_ROOT_DIR
+	"${XML2_ROOT_DIR}"
+	CACHE
+	PATH
+	"Prefix directory for XML 2.0")
 
 # If pkg-config is available, we'll use its information as a hint to cmake
 find_package(PkgConfig QUIET)
@@ -42,9 +56,8 @@ find_library(XML2_LIBRARY
 	HINTS
 	${_xml2_hint_LIBRARY_DIRS}
 	${_xml2_hint_LIBRARY_DIR}
-	${XML_ROOT}
 	PATHS
-	${XML2_ROOT}
+	${XML2_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -58,9 +71,8 @@ find_path(XML2_INCLUDE_DIR
 	HINTS
 	${_xml2_hint_INCLUDE_DIRS}
 	${_xml2_hint_INCLUDE_DIR}
-	${XML_ROOT}
 	PATHS
-	${XML2_ROOT}
+	${XML2_ROOT_DIR}
 	PATH_SUFFIXES
 	include
 	include/libxml2
@@ -82,10 +94,6 @@ if(XML2_FOUND)
 	# they might have dependencies too!
 	set(XML2_LIBRARIES ${XML2_LIBRARY})
 	set(XML2_INCLUDE_DIRS ${XML2_INCLUDE_DIR})
-	set(XML2_LINKER_FLAGS "")
-endif()
-
-if(XML2_FOUND OR XML2_MARK_AS_ADVANCED)
 	mark_as_advanced(XML2_LIBRARY XML2_INCLUDE_DIR)
 endif()
 
