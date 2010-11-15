@@ -3,24 +3,21 @@
 # FindGFlags.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  GFLAGS_ROOT_DIR
 #  GFLAGS_LIBRARY
 #  GFLAGS_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  GFLAGS_FOUND
-#  GFLAGS_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  GFLAGS_LIBRARIES
 #  GFLAGS_INCLUDE_DIRS
-#  GFLAGS_LINKER_FLAGS
 #
 # Use this module this way:
 #  find_package(GFlags)
 #  include_directories(GFLAGS_INCLUDE_DIRS)
 #  add_executable(myapp ${SOURCES})
 #  target_link_libraries(myapp ${GFLAGS_LIBRARIES})
-#  set_property(TARGET myapp PROPERTY LINK_FLAGS ${GFLAGS_LINKER_FLAGS})
 #
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (CMake standard module)
@@ -35,9 +32,18 @@
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
+
+set(GFLAGS_ROOT_DIR
+	"${GFLAGS_ROOT_DIR}"
+	CACHE
+	PATH
+	"Prefix directory for GFlags")
 
 # If gflags isn't required, then neither are its dependencies
-if(glibmm24_FIND_QUIETLY)
+if(gflags_FIND_QUIETLY)
 	set(_FIND_FLAGS "QUIET")
 else()
 	set(_FIND_FLAGS "")
@@ -55,7 +61,7 @@ find_library(GFLAGS_LIBRARY
 	HINTS
 	${_gflags_hint_LIBRARY_DIRS}
 	PATHS
-	${GFLAGS_ROOT}
+	${GFLAGS_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -68,7 +74,7 @@ find_path(GFLAGS_INCLUDE_DIR
 	HINTS
 	${_gflags_hint_INCLUDE_DIRS}
 	PATHS
-	${GFLAGS_ROOT}
+	${GFLAGS_ROOT_DIR}
 	PATH_SUFFIXES
 	include
 )
@@ -87,12 +93,6 @@ if(GFLAGS_FOUND)
 	# they might have dependencies too!
 	set(GFLAGS_LIBRARIES    ${GFLAGS_LIBRARY})
 	set(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIR})
-Endif()
-
-if(GFLAGS_FOUND OR GFLAGS_MARK_AS_ADVANCED)
-	foreach(_dependency _gflags_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
-	endforeach()
 	mark_as_advanced(GFLAGS_LIBRARY GFLAGS_INCLUDE_DIR)
 endif()
 

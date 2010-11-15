@@ -3,13 +3,12 @@
 # Findglibmm24.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  GLIBMM24_ROOT_DIR
 #  GLIBMM24_LIBRARY
 #  GLIBMM24_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  GLIBMM24_FOUND
-#  GLIBMM24_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  GLIBMM24_LIBRARIES
 #  GLIBMM24_INCLUDE_DIRS
@@ -25,6 +24,8 @@
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (CMake standard module)
 #  FindPkgConfig (CMake standard module)
+#  Findgobject20
+#  Findsigcxx20
 #
 # Dependencies:
 #  gobject-2.0
@@ -38,6 +39,15 @@
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
+
+set(GLIBMM24_ROOT_DIR
+	"${GLIBMM24_ROOT_DIR}"
+	CACHE
+	PATH
+	"Prefix directory for glibmm-2.4")
 
 # If glibmm isn't required, then neither are its dependencies
 if(glibmm24_FIND_QUIETLY)
@@ -64,7 +74,7 @@ find_library(GLIBMM24_LIBRARY
 	HINTS
 	${_glibmm24_hint_LIBRARY_DIRS}
 	PATHS
-	${GLIBMM24_ROOT}
+	${GLIBMM24_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -77,7 +87,7 @@ find_path(GLIBMM24_INCLUDE_DIR
 	HINTS
 	${_glibmm24_hint_INCLUDE_DIRS}
 	PATHS
-	${GLIBMM24_ROOT}
+	${GLIBMM24_ROOT_DIR}
 	PATH_SUFFIXES
 	include
 	include/glibmm-2.4
@@ -90,7 +100,7 @@ find_path(GLIBMM24_LIB_INCLUDE_DIR
 	${_glibmm24_hint_LIBRARY_DIRS}
 	${_glibmm24_hint_INCLUDE_DIRS}
 	PATHS
-	${GLIBMM24_ROOT}
+	${GLIBMM24_ROOT_DIR}
 	PATH_SUFFIXES
 	include
 	include/glibmm-2.4
@@ -121,12 +131,7 @@ if(GLIBMM24_FOUND)
 		set(GLIBMM24_LIBRARIES    ${GLIBMM24_LIBRARIES}    ${${_DEP}_LIBRARIES})
 		set(GLIBMM24_INCLUDE_DIRS ${GLIBMM24_INCLUDE_DIRS} ${${_DEP}_INCLUDE_DIRS})
 		set(GLIBMM24_LINKER_FLAGS ${GLIBMM24_LINKER_FLAGS} ${${_DEP}_LINKER_FLAGS})
-	endforeach()
-Endif()
-
-if(GLIBMM24_FOUND OR GLIBMM24_MARK_AS_ADVANCED)
-	foreach(_dependency _glibmm24_DEPENDENCIES)
-		mark_as_advanced(${_dependency}_LIBRARY ${_dependency}_INCLUDE_DIR)
+		mark_as_advanced(${_dep}_LIBRARY ${_dep}_INCLUDE_DIR)
 	endforeach()
 	mark_as_advanced(GLIBMM24_LIBRARY GLIBMM24_INCLUDE_DIR GLIBMM24_LIB_INCLUDE_DIR)
 endif()

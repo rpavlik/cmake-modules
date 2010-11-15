@@ -3,24 +3,21 @@
 # Findglib20.cmake
 #
 # Cache Variables: (probably not for direct use in CMakeLists.txt)
+#  GLIB20_ROOT_DIR
 #  GLIB20_LIBRARY
 #  GLIB20_INCLUDE_DIR
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  GLIB20_FOUND
-#  GLIB20_MARK_AS_ADVANCED - whether to mark our vars as advanced even
-#    if we don't find this library.
 #
 #  GLIB20_LIBRARIES
 #  GLIB20_INCLUDE_DIRS
-#  GLIB20_LINKER_FLAGS
 #
 # Use this module this way:
 #  find_package(glib20)
 #  include_directories(GLIB20_INCLUDE_DIRS)
 #  add_executable(myapp ${SOURCES})
 #  target_link_libraries(myapp ${GLIB20_LIBRARIES})
-#  set_property(TARGET myapp PROPERTY LINK_FLAGS ${GLIB20_LINKER_FLAGS})
 #
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (CMake standard module)
@@ -35,6 +32,9 @@
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
 
 # Let's find the glib library
 find_package(PkgConfig)
@@ -49,7 +49,7 @@ find_library(GLIB20_LIBRARY
 	${_glib20_hint_LIBRARY_DIRS}
 	${_glib20_hint_LIBRARY_DIR}
 	PATHS
-	${GLIB20_ROOT}
+	${GLIB20_ROOT_DIR}
 	PATH_SUFFIXES
 	lib
 	lib32
@@ -63,7 +63,7 @@ find_path(GLIB20_INCLUDE_DIR
 	${_glib20_hint_INCLUDE_DIRS}
 	${_glib20_hint_INCLUDE_DIR}
 	PATHS
-	${GLIB20_ROOT}
+	${GLIB20_ROOT_DIR}
 	PATH_SUFFIXES
 	include
 	include/glib-2.0
@@ -80,13 +80,13 @@ find_path(GLIB20_LIB_INCLUDE_DIR
 	PATHS
 	${GLIB20_LIBRARY_DIR}/glib-2.0/include/
 	${GLIB20_LIBRARY_DIR}
-	${GLIB20_ROOT}
+	${GLIB20_ROOT_DIR}
 	PATH_SUFFIXES
 	glib-2.0/include
 	glib-2.0
 )
 
-# handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
+# handle the QUIETLY and REQUIRED arguments and set GLIB20_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(GLIB20
@@ -101,10 +101,6 @@ if(GLIB20_FOUND)
 	# they might have dependencies too!
 	set(GLIB20_LIBRARIES ${GLIB20_LIBRARY})
 	set(GLIB20_INCLUDE_DIRS ${GLIB20_INCLUDE_DIR} ${GLIB20_LIB_INCLUDE_DIR})
-	set(GLIB20_LINKER_FLAGS "")
-endif()
-
-if(GLIB20_FOUND OR GLIB20_MARK_AS_ADVANCED)
 	mark_as_advanced(GLIB20_LIBRARY GLIB20_INCLUDE_DIR GLIB20_LIB_INCLUDE_DIR)
 endif()
 

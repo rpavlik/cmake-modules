@@ -23,9 +23,17 @@
 #
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (CMake standard module)
+#  FindPkgConfig (CMake standard module)
+#
+# BEGIN_DOT_FILE
+#   fmod [ label = "fmod" ];
+# END_DOT_FILE
 #
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
+#
+# License:
+#   Boost 1.0 <http://www.boost.org/users/license.html>
 
 set(FMOD_ROOT_DIR
 	"${FMOD_ROOT_DIR}"
