@@ -229,7 +229,7 @@ else()
 
 		set(OPENCV_INCLUDE_DIRS ${_req_includes})
 		set(OPENCV_LIBRARIES ${_req_libs})
-		mark_as_advanced(OPENCV_ROOT_DIR)
+		mark_as_advanced(OPENCV_ROOT_DIR OpenCV_DIR)
 	endif()
 
 	mark_as_advanced(OPENCV_BASE_DIR)
