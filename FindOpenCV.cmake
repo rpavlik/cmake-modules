@@ -176,7 +176,7 @@ else()
 		foreach(component ${OPENCV_OLD_COMPONENTS})
 			find_library(OPENCV_${component}_LIBRARY
 				NAMES
-				cvaux
+				${component}
 				HINTS
 				${OPENCV_BASE_DIR}
 				PATH_SUFFIXES
