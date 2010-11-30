@@ -61,12 +61,13 @@ find_library(FMOD_LIBRARY
 
 find_path(FMOD_INCLUDE_DIR
 	NAMES
-	fmodex/fmod.h
+	fmod.h
 	HINTS
 	${FMOD_ROOT_DIR}
 	${_fmod_hint_INCLUDE_DIRS}
 	PATH_SUFFIXES
 	include
+	include/fmodex
 )
 
 # handle the QUIETLY and REQUIRED arguments and set FMOD_FOUND to TRUE if
