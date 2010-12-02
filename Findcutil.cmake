@@ -22,8 +22,8 @@ find_package(CUDA QUIET)
 
 file(TO_CMAKE_PATH "${CUDA_SDK_ROOT_DIR}/C/common" CUTIL_ROOT_DIR)
 
-if(NOT EXISTS "${CUTIL_ROOT_DIR}//src/cutil.cpp")
-	set(CUDA_SDK_ROOT_DIR not-found CACHE PATH "NVIDIA GPU Computing SDK dir" FORCE)
+if(NOT EXISTS "${CUTIL_ROOT_DIR}/src/cutil.cpp")
+	set(CUDA_SDK_ROOT_DIR SDKDIR-NOTFOUND CACHE PATH "NVIDIA GPU Computing SDK dir" FORCE)
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
