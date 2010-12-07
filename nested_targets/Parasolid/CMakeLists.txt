@@ -10,10 +10,6 @@
 #    (See accompanying file ../../LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-include_directories("${HDAPI_HDU_INCLUDE_DIR}"
-	"${HDAPI_INCLUDE_DIR}"
-	"${HLAPI_HLU_INCLUDE_DIR}"
-	"${HLAPI_INCLUDE_DIR}")
 
 if(PARASOLID_fg_LIBRARY STREQUAL "parasolid_fg_nested_target")
 	get_filename_component(_fgdir "${PARASOLID_FG_C}" PATH)
@@ -42,14 +38,6 @@ if(PARASOLID_fg_LIBRARY STREQUAL "parasolid_fg_nested_target")
 		PROJECT_LABEL
 		"Parasolid Foreign Geometry Example Library")
 
-	if(MSVC)
-		# Disable warnings - no sense in warning about a third party's potential bugs.
-		# set_property(TARGET
-		# parasolid_fg_nested_target
-		# PROPERTY
-		# COMPILE_FLAGS
-		# "/wd4189 /wd4701")
-	endif()
 endif()
 
 
@@ -82,12 +70,4 @@ if(PARASOLID_frustrum_LIBRARY
 		PROJECT_LABEL
 		"Parasolid Frustrum Example Library")
 
-	if(MSVC)
-		# Disable warnings - no sense in warning about a third party's potential bugs.
-		# set_property(TARGET
-		# parasolid_frustrum_nested_target
-		# PROPERTY
-		# COMPILE_FLAGS
-		# "/wd4189 /wd4701")
-	endif()
 endif()
