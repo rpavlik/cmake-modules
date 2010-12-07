@@ -73,6 +73,18 @@ set(DCUBED_ROOT_DIR
 	PATH
 	"Root directory to search for DCubed")
 
+# Do this by default
+if(NOT DEFINED DCUBED_NESTED_TARGETS)
+	set(DCUBED_NESTED_TARGETS TRUE)
+endif()
+
+set(DCUBED_NESTED_TARGETS
+	"${DCUBED_NESTED_TARGETS}"
+	CACHE
+	BOOL
+	"Whether we should compile the wrappers as a part of the solution")
+mark_as_advanced(DCUBED_NESTED_TARGETS)
+
 ###
 # Configure DCubed
 ###
@@ -88,8 +100,10 @@ foreach(lib aem cdmwp d3e_base d3e_cd dcm dcm3 g3)
 		${lib}
 		PATHS
 		"${DCUBED_ROOT_DIR}/lib/${_verstring}")
-	list(APPEND DCUBED_LIBRARIES ${DCUBED_${lib}_LIBRARY})
-	list(APPEND DCUBED_CORE_LIBRARIES ${DCUBED_${lib}_LIBRARY})
+	if(DCUBED_${lib}_LIBRARY)
+		list(APPEND DCUBED_LIBRARIES ${DCUBED_${lib}_LIBRARY})
+		list(APPEND DCUBED_CORE_LIBRARIES ${DCUBED_${lib}_LIBRARY})
+	endif()
 	mark_as_advanced(DCUBED_${lib}_LIBRARY)
 endforeach()
 
@@ -103,18 +117,44 @@ foreach(lib d3ew_p d3ew_scene)
 		${lib}_${D3BUILD}
 		PATHS
 		"${DCUBED_ROOT_DIR}/wrappers/cdmwp/${lib}")
-	list(APPEND DCUBED_LIBRARIES ${DCUBED_WRAPPER_${lib}_LIBRARY})
-	list(APPEND DCUBED_WRAPPER_LIBRARIES ${DCUBED_WRAPPER_${lib}_LIBRARY})
 	mark_as_advanced(DCUBED_WRAPPER_${lib}_LIBRARY)
 endforeach()
 
-list(APPEND DCUBED_LIBRARIES ${DCUBED_WRAPPER_LIBRARIES})
+set(_nest_targets)
+if(DCUBED_WRAPPER_INCLUDE_DIR)
+	foreach(lib d3ew_p d3ew_scene)
+		if(DCUBED_NESTED_TARGETS OR NOT DCUBED_WRAPPER_${lib}_LIBRARY)
+			if(PARASOLID_FOUND)
+				set(_nest_targets YES)
+				set(DCUBED_WRAPPER_${lib}_LIBRARY
+					"dcubed_wrapper_${lib}_nested_target"
+					CACHE
+					STRING
+					"We will build the DCubed wrapper ${lib} lib."
+					FORCE)
+			else()
+				set(DCUBED_WRAPPER_${lib}_LIBRARY
+					"NESTED_TARGET_REQUIRES_PARASOLID-NOTFOUND"
+					CACHE
+					STRING
+					"Can't build the DCubed wrapper ${lib} without first finding Parasolid."
+					FORCE)
+			endif()
+		endif()
+	endforeach()
+endif()
+
+foreach(lib d3ew_p d3ew_scene)
+	if(DCUBED_WRAPPER_${lib}_LIBRARY)
+		list(APPEND DCUBED_WRAPPER_LIBRARIES ${DCUBED_WRAPPER_${lib}_LIBRARY})
+	endif()
+endforeach()
 
 if(NOT DCUBED_ROOT_DIR)
 	get_filename_component(_path "${DCUBED_dcm_LIBRARY}" PATH)
 	get_filename_component(_path "${_path}/../.." ABSOLUTE)
 	set(DCUBED_ROOT_DIR
-		"${DCUBED_ROOT_DIR}"
+		"${_path}"
 		CACHE
 		PATH
 		"Root directory to search for DCubed"
@@ -137,8 +177,13 @@ find_package_handle_standard_args(DCubed
 	DCUBED_WRAPPER_LIBRARIES)
 
 if(DCUBED_FOUND)
+	if(_nest_targets)
+		get_filename_component(_moddir "${CMAKE_CURRENT_LIST_FILE}" PATH)
+		add_subdirectory("${_moddir}/nested_targets/DCubed")
+	endif()
 	set(DCUBED_INCLUDE_DIRS
 		"${DCUBED_CORE_INCLUDE_DIR}"
+		"${DCUBED_CORE_INCLUDE_DIR}/if3"
 		"${DCUBED_WRAPPER_INCLUDE_DIR}")
 	mark_as_advanced(DCUBED_ROOT_DIR)
 endif()
