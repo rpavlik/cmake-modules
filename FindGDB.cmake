@@ -36,7 +36,9 @@ find_program(GDB_COMMAND
 	libexec)
 
 if(GDB_COMMAND AND NOT GDB_VERSION)
-	execute_process(COMMAND gdb --version | head -n 1 | sed -E 's/.*gdb ([^ ]*).*/\\1/'
+	execute_process(COMMAND gdb --version
+		COMMAND head -n 1
+		COMMAND sed -E 's/.*gdb ([^ ]*).*/\\1/'
 		OUTPUT_VARIABLE GDB_VERSION)
 	if(GDB_VERSION VERSION_LESS 6.4)
 		set(GDB_HAS_RETURN_CHILD_RESULT FALSE)
