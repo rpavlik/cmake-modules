@@ -25,64 +25,12 @@ if(__add_lua)
 endif()
 set(__add_lua YES)
 
-define_property(TARGET
-	PROPERTY
-	LUA_TARGET
-	BRIEF_DOCS
-	"Lua target"
-	FULL_DOCS
-	"Is this a Lua target created by add_lua_target?")
+include(FileCopyTargets)
 
-function(add_lua_target _target _dest)
-	if(NOT ARGN)
-		message(WARNING
-			"In add_lua_target call for target ${_target}, no Lua files were specified!")
-		return()
-	endif()
-
-	set(ALLFILES)
-	foreach(luafile ${ARGN})
-		if(IS_ABSOLUTE "${luafile}")
-			set(luapath "${luafile}")
-			get_filename_component(luafile "${luafile}" NAME)
-		else()
-			set(luapath "${CMAKE_CURRENT_SOURCE_DIR}/${luafile}")
-		endif()
-		add_custom_command(OUTPUT "${_dest}/${luafile}"
-				COMMAND
-				${CMAKE_COMMAND}
-				ARGS -E make_directory "${_dest}"
-				COMMAND
-				${CMAKE_COMMAND}
-				ARGS -E copy "${luapath}" "${_dest}"
-				WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-				DEPENDS "${luapath}"
-				COMMENT "Copying ${luapath} to ${_dest}/${luafile}")
-		list(APPEND ALLFILES "${_dest}/${luafile}")
-	endforeach()
-
-	# Custom target depending on all the lua file commands
-	add_custom_target(${_target}
-		SOURCES ${ARGN}
-		DEPENDS ${ALLFILES})
-
-	set_property(TARGET ${_target} PROPERTY LUA_TARGET YES)
+function(add_lua_target)
+	add_file_copy_target(${ARGN})
 endfunction()
 
-function(install_lua_target _target)
-	get_target_property(_isLua ${_target} LUA_TARGET)
-	if(NOT _isLua)
-		message(WARNING
-			"install_lua_target called on a target not created with add_lua_target!")
-		return()
-	endif()
-
-	# Get sources
-	get_target_property(_srcs ${_target} SOURCES)
-
-	# Remove the "fake" file forcing build
-	list(REMOVE_AT _srcs 0)
-
-	# Forward the call to install
-	install(PROGRAMS ${_srcs} ${ARGN})
+function(install_lua_target)
+	install_file_copy_target(${ARGN})
 endfunction()
