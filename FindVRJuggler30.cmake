@@ -11,11 +11,11 @@
 # Components available to search for (uses "VRJOGL30" by default):
 #  VRJOGL30
 #  VRJ30
-#  GADGETEER20
+#  Gadgeteer20
 #  JCCL14
 #  VPR22
-#  SONIX14
-#  TWEEK14
+#  Sonix14
+#  Tweek14
 #
 # Additionally, a full setup requires these packages and their Find_.cmake scripts
 #  CPPDOM
@@ -58,6 +58,11 @@
 # Iowa State University HCI Graduate Program/VRAC
 # Updated for VR Juggler 3.0 by:
 # Brandon Newendorp <brandon@newendorp.com>
+#
+# Copyright Iowa State University 2009-2010.
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
 
 include(CleanLibraryList)
 include(CleanDirectoryList)
@@ -73,11 +78,11 @@ if(NOT VRJUGGLER30_ROOT_DIR)
 endif()
 
 # Default required components
-if(NOT VRJUGGLER30_FIND_COMPONENTS)
-	set(VRJUGGLER30_FIND_COMPONENTS VRJOGL30)
+if(NOT VRJuggler30_FIND_COMPONENTS)
+	set(VRJuggler30_FIND_COMPONENTS vrjogl30)
 endif()
 
-if(VRJUGGLER30_FIND_QUIETLY)
+if(VRJuggler30_FIND_QUIETLY)
 	set(_FIND_FLAGS "QUIET")
 else()
 	set(_FIND_FLAGS "")
@@ -86,14 +91,14 @@ endif()
 set(VRJUGGLER30_SUBMODULES
 	VRJ30
 	VRJOGL30
-	GADGETEER20
+	Gadgeteer20
 	JCCL14
 	VPR22
-	SONIX14
-	TWEEK14)
+	Sonix14
+	Tweek14)
 string(TOUPPER "${VRJUGGLER30_SUBMODULES}" VRJUGGLER30_SUBMODULES_UC)
 string(TOUPPER
-	"${VRJUGGLER30_FIND_COMPONENTS}"
+	"${VRJuggler30_FIND_COMPONENTS}"
 	VRJUGGLER30_FIND_COMPONENTS_UC)
 
 # Turn a potentially messy components list into a nice one with versions.
@@ -168,15 +173,15 @@ if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "JCCL14" AND NOT JCCL14_FOUND)
 endif()
 
 if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "GADGETEER20" AND NOT GADGETEER20_FOUND)
-	find_package(GADGETEER20 ${_FIND_FLAGS})
+	find_package(Gadgeteer20 ${_FIND_FLAGS})
 endif()
 
 if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "SONIX14" AND NOT SONIX14_FOUND)
-	find_package(SONIX14 ${_FIND_FLAGS})
+	find_package(Sonix14 ${_FIND_FLAGS})
 endif()
 
 if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "TWEEK14" AND NOT TWEEK14_FOUND)
-	find_package(TWEEK14 ${_FIND_FLAGS})
+	find_package(Tweek14 ${_FIND_FLAGS})
 endif()
 
 if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "VPR22" AND NOT VPR22_FOUND)
@@ -186,7 +191,7 @@ endif()
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(VRJUGGLER30
+find_package_handle_standard_args(VRJuggler30
 	DEFAULT_MSG
 	${VRJUGGLER30_COMPONENTS_FOUND})
 
@@ -212,10 +217,15 @@ if(VRJUGGLER30_FOUND)
 
 	clean_directory_list(_vjbase)
 
+	set(_vrj30_have_base_dir NO)
 	list(LENGTH _vjbase _vjbaselen)
 	if("${_vjbaselen}" EQUAL 1 AND NOT VRJUGGLER30_VJ_BASE_DIR)
 		list(GET _vjbase 0 VRJUGGLER30_VJ_BASE_DIR)
 		mark_as_advanced(VRJUGGLER30_VJ_BASE_DIR)
+		if(NOT VRJUGGLER30_VJ_BASE_DIR STREQUAL _vrj30_base_dir)
+			unset(VRJUGGLER30_VJ_CFG_DIR)
+		endif()
+		set(_vrj30_have_base_dir YES)
 	else()
 		list(GET _vjbase 0 _calculated_base_dir)
 		if(NOT
@@ -225,8 +235,29 @@ if(VRJUGGLER30_FOUND)
 			message("It looks like you might be mixing VR Juggler versions... ${_vjbaselen} ${_vjbase}")
 			message("If you are, fix your libraries then remove the VRJUGGLER30_VJ_BASE_DIR variable in CMake, then configure again")
 			message("If you aren't, set the VRJUGGLER30_VJ_BASE_DIR variable to the desired VJ_BASE_DIR to use when running")
+		else()
+			if(NOT VRJUGGLER30_VJ_BASE_DIR STREQUAL _vrj30_base_dir)
+				unset(VRJUGGLER30_VJ_CFG_DIR)
+			endif()
+			set(_vrj30_have_base_dir YES)
 		endif()
 	endif()
+
+	set(_vrj30_base_dir "${VRJUGGLER30_VJ_BASE_DIR}")
+	set(_vrj30_base_dir "${_vrj30_base_dir}" CACHE INTERNAL "" FORCE)
+
+	if(_vrj30_have_base_dir)
+		file(GLOB
+			_poss_dirs
+			${VRJUGGLER30_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
+		find_path(VRJUGGLER30_VJ_CFG_DIR
+			standalone.jconf
+			PATHS
+			${_poss_dirs}
+			NO_DEFAULT_PATH)
+		mark_as_advanced(VRJUGGLER30_VJ_CFG_DIR)
+	endif()
+
 	set(VRJUGGLER30_VJ_BASE_DIR
 		"${VRJUGGLER30_VJ_BASE_DIR}"
 		CACHE
@@ -237,16 +268,25 @@ if(VRJUGGLER30_FOUND)
 		"VJ_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}"
 		"JCCL_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}"
 		"SONIX_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}"
-		"TWEEK_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}")
+		"TWEEK_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}"
+		"VJ_CFG_DIR=${VRJUGGLER22_VJ_CFG_DIR}")
 
-    include(GetDirectoryList)
-    
-    get_directory_list(VRJUGGLER30_RUNTIME_LIBRARY_DIRS ${VRJUGGLER30_LIBRARIES})
-    
+	include(GetDirectoryList)
+
+	get_directory_list(VRJUGGLER30_RUNTIME_LIBRARY_DIRS
+		${VRJUGGLER30_LIBRARIES})
+	if(WIN32)
+		foreach(dir ${VRJUGGLER30_RUNTIME_LIBRARY_DIRS})
+			list(APPEND VRJUGGLER30_RUNTIME_LIBRARY_DIRS "${dir}/../bin")
+		endforeach()
+	endif()
+
 	if(MSVC)
-		# Needed to make linking against boost work with 3.0 binaries - rp20091022
 		# BOOST_ALL_DYN_LINK
-		set(VRJUGGLER30_DEFINITIONS "-DBOOST_ALL_DYN_LINK" "-DCPPDOM_DYN_LINK" "-DCPPDOM_AUTO_LINK")
+		set(VRJUGGLER30_DEFINITIONS
+			"-DBOOST_ALL_DYN_LINK"
+			"-DCPPDOM_DYN_LINK"
+			"-DCPPDOM_AUTO_LINK")
 
 		# Disable these annoying warnings
 		# 4275: non dll-interface class used as base for dll-interface class
@@ -254,7 +294,7 @@ if(VRJUGGLER30_FOUND)
 		# 4100: unused parameter
 		# 4512: assignment operator could not be generated
 		# 4127: (Not currently disabled) conditional expression in loop evaluates to constant
-		
+
 		set(VRJUGGLER30_CXX_FLAGS "/wd4275 /wd4251 /wd4100 /wd4512")
 	elseif(CMAKE_COMPILER_IS_GNUCXX)
 		# Silence annoying warnings about deprecated hash_map.
@@ -270,7 +310,193 @@ if(VRJUGGLER30_FOUND)
 		CACHE
 		INTERNAL
 		"Requested components, used as a flag.")
+
+
+
+	set(_plugin_dirs)
+	foreach(_libdir ${VRJUGGLER30_RUNTIME_LIBRARY_DIRS})
+		# Find directories of Gadgeteer plugins and drivers
+		if(EXISTS "${_libdir}/gadgeteer")
+			list(APPEND
+				_plugin_dirs
+				"${_libdir}/gadgeteer/drivers"
+				"${_libdir}/gadgeteer/plugins")
+		elseif(EXISTS "${_libdir}/gadgeteer-1.4")
+			list(APPEND
+				_plugin_dirs
+				"${_libdir}/gadgeteer-1.4/drivers"
+				"${_libdir}/gadgeteer-1.4/plugins")
+		endif()
+
+		# Find directories of Sonix plugins
+		if(EXISTS "${_libdir}/sonix")
+			list(APPEND _plugin_dirs "${_libdir}/sonix/plugins/dbg")
+			list(APPEND _plugin_dirs "${_libdir}/sonix/plugins/opt")
+		elseif(EXISTS "${_libdir}/sonix-1.4")
+			list(APPEND _plugin_dirs "${_libdir}/sonix-1.4/plugins/dbg")
+			list(APPEND _plugin_dirs "${_libdir}/sonix-1.4/plugins/opt")
+		endif()
+	endforeach()
+
+	# Grab the actual plugins
+	foreach(_libdir ${_plugin_dirs})
+		if(EXISTS "${_libdir}")
+			list(APPEND VRJUGGLER30_RUNTIME_LIBRARY_DIRS "${_libdir}")
+			file(GLOB _plugins "${_libdir}/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+			list(APPEND VRJUGGLER30_BUNDLE_PLUGINS ${_plugins})
+		endif()
+	endforeach()
+
 	mark_as_advanced(VRJUGGLER30_ROOT_DIR)
 endif()
 
 mark_as_advanced(VRJUGGLER30_DEFINITIONS)
+
+function(install_vrjuggler30_data_files prefix)
+	set(base "${VRJUGGLER30_VJ_CFG_DIR}/..")
+	get_filename_component(base "${base}" ABSOLUTE)
+	file(RELATIVE_PATH reldest "${VRJUGGLER30_VJ_BASE_DIR}" "${base}")
+	if(prefix STREQUAL "" OR prefix STREQUAL "." OR prefix STREQUAL "./")
+		set(DEST "${reldest}")
+	else()
+		set(DEST "${prefix}/${reldest}")
+	endif()
+
+	# configFiles *.jconf
+	file(GLOB
+		_vj_config_files
+		"${base}/configFiles/*.jconf")
+	install(FILES ${_vj_config_files} DESTINATION "${DEST}/configFiles/")
+
+	# definitions *.jdef
+	file(GLOB
+		_vj_defs_files
+		"${base}/definitions/*.jdef")
+	install(FILES ${_vj_defs_files} DESTINATION "${DEST}/definitions/")
+
+	# models *.flt
+	file(GLOB
+		_vj_model_files
+		"${base}/models/*.flt")
+	install(FILES ${_vj_model_files} DESTINATION "${DEST}/models/")
+
+	# sounds *.wav
+	file(GLOB
+		_vj_sound_files
+		"${base}/sounds/*.wav")
+	install(FILES ${_vj_sound_files} DESTINATION "${DEST}/sounds/")
+
+	# calibration.table - needed?
+	file(GLOB
+		_vj_config_files
+		"${base}/configFiles/*.jconf")
+	install(FILES "${base}/calibration.table" DESTINATION "${DEST}")
+endfunction()
+
+function(install_vrjuggler30_plugins prefix varForFilenames)
+	set(DEST "${prefix}")
+
+	set(out)
+	foreach(plugin ${VRJUGGLER22_BUNDLE_PLUGINS})
+		get_filename_component(full "${plugin}" ABSOLUTE)
+		file(RELATIVE_PATH relloc "${VRJUGGLER30_VJ_BASE_DIR}" "${full}")
+		set(filedest "${DEST}/${relloc}")
+		get_filename_component(path "${filedest}" PATH)
+		list(APPEND out "${filedest}")
+		install(FILES "${full}" DESTINATION "${path}")
+	endforeach()
+
+	set(${varForFilenames} ${out} PARENT_SCOPE)
+
+endfunction()
+
+function(get_vrjuggler_bundle_sources _target_sources)
+	if(APPLE)
+		if(NOT MACOSX_PACKAGE_DIR)
+			set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
+		endif()
+
+		set(_vj_base_dir .)
+		set(_vj_data_dir ${vj_base_dir}/share/vrjuggler-3.0)
+
+		# Append Mac-specific sources to source list
+		set(_vj_bundle_src
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib)
+
+		message(STATUS "vjbundlesrc: ${_vj_bundle_src}")
+		set(${_target_sources}
+			${${_target_sources}}
+			${_vj_bundle_src}
+			PARENT_SCOPE)
+
+		# Set destination of nib files
+		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
+			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION
+			Resources/en.lproj/MainMenu.nib/)
+
+		# Set destination of Resources
+		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
+			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+			PROPERTIES
+			MACOSX_PACKAGE_LOCATION
+			Resources/)
+	endif()
+endfunction()
+
+function(fixup_vrjuggler_app_bundle
+	_target
+	_targetInstallDest
+	_extralibs
+	_libdirs)
+
+	if(NOT VRJUGGLER30_FOUND)
+		return()
+	endif()
+
+	if(NOT MACOSX_PACKAGE_DIR)
+		set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
+	endif()
+
+	set(TARGET_LOCATION
+		"${_targetInstallDest}/${_target}${CMAKE_EXECUTABLE_SUFFIX}")
+	if(APPLE)
+		set(TARGET_LOCATION "${TARGET_LOCATION}.app")
+	endif()
+
+	set_target_properties(${_target}
+		PROPERTIES
+		MACOSX_BUNDLE
+		true
+		MACOSX_BUNDLE_INFO_PLIST
+		${MACOSX_PACKAGE_DIR}/VRJuggler30BundleInfo.plist.in
+		MACOSX_BUNDLE_ICON_FILE
+		vrjuggler.icns
+		MACOSX_BUNDLE_INFO_STRING
+		"${PROJECT_NAME} (VR Juggler Application) version ${CPACK_PACKAGE_VERSION}, created by ${CPACK_PACKAGE_VENDOR}"
+		MACOSX_BUNDLE_GUI_IDENTIFIER
+		org.vrjuggler.${PROJECT_NAME}
+		MACOSX_BUNDLE_SHORT_VERSION_STRING
+		${CPACK_PACKAGE_VERSION}
+		MACOSX_BUNDLE_BUNDLE_VERSION
+		${CPACK_PACKAGE_VERSION})
+
+	if(WIN32)
+		list(APPEND _libdirs "${VRJUGGLER30_VJ_BASE_DIR}/bin")
+	endif()
+
+	set(BUNDLE_LIBS ${_extralibs})
+	set(BUNDLE_LIB_DIRS "${VRJUGGLER30_VJ_BASE_DIR}" ${_libdirs})
+
+	configure_file(${MACOSX_PACKAGE_DIR}/fixupbundle.cmake.in
+		${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake
+		@ONLY)
+	install(SCRIPT
+		"${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake")
+endfunction()
