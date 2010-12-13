@@ -1,7 +1,7 @@
 # - try to find VR Juggler 3.0 core library
 # Requires JCCL 1.4, Gadgeteer 1.4, VPR 2.2, and Sonix 1.4
-# (thus FindJCCL14.cmake, FindGADGETEER20.cmake, FindVPR22.cmake,
-# and FindSONIX14.cmake)
+# (thus FindJCCL14.cmake, FindGadgeteer20.cmake, FindVPR22.cmake,
+# and FindSonix14.cmake)
 # Requires X11 if not on Mac or Windows.
 # Optionally uses Flagpoll and FindFlagpoll.cmake
 #
@@ -37,6 +37,11 @@
 # Iowa State University HCI Graduate Program/VRAC
 # Updated for VR Juggler 3.0 by:
 # Brandon Newendorp <brandon@newendorp.com>
+#
+# Copyright Iowa State University 2009-2010.
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
 
 
 set(_HUMAN "VR Juggler 3.0 Core")
@@ -122,7 +127,7 @@ if(NOT JCCL14_FOUND)
 endif()
 
 if(NOT GADGETEER20_FOUND)
-	find_package(GADGETEER20 ${_FIND_FLAGS})
+	find_package(Gadgeteer20 ${_FIND_FLAGS})
 endif()
 
 if(NOT VPR22_FOUND)
@@ -130,7 +135,7 @@ if(NOT VPR22_FOUND)
 endif()
 
 if(NOT SONIX14_FOUND)
-	find_package(SONIX14 ${_FIND_FLAGS})
+	find_package(Sonix14 ${_FIND_FLAGS})
 endif()
 
 if(UNIX AND NOT APPLE AND NOT WIN32)
