@@ -190,38 +190,6 @@ if(UNIX AND NOT WIN32)
 	endif()
 endif()
 
-if(WIN32)
-	find_library(VPR22_libnspr4_LIBRARY
-		NAMES
-		nspr4
-		libnspr4
-		HINTS
-		${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
-		"${_ROOT_DIR}"
-		PATH_SUFFIXES
-		${_VRJ_LIBSUFFIXES}
-		DOC
-		"${_HUMAN} NSPR4 library full path")
-
-	find_library(VPR22_libplc4_LIBRARY
-		NAMES
-		plc4
-		libplc4
-		HINTS
-		${${_FP_PKG_NAME}_FLAGPOLL_LIBRARY_DIRS}
-		"${_ROOT_DIR}"
-		PATH_SUFFIXES
-		${_VRJ_LIBDSUFFIXES}
-		DOC
-		"${_HUMAN} PLC4 library full path")
-	mark_as_advanced(VPR22_libnspr4_LIBRARY VPR22_libplc4_LIBRARY)
-	list(APPEND _deps_check VPR22_libnspr4_LIBRARY VPR22_libplc4_LIBRARY)
-	list(APPEND
-		_deps_libs
-		${VPR22_libnspr4_LIBRARY}
-		${VPR22_libplc4_LIBRARY})
-endif()
-
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
