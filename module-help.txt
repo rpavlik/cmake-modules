@@ -70,13 +70,9 @@ a few.
 
        
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   BoostTestTargets
        Add tests using boost::test
@@ -121,13 +117,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   BundleOSGPlugins
        Provide access to the OpenSceneGraph runtime files for bundling in
@@ -161,13 +153,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   BundleOSGRuntime
        Include the OpenSceneGraph runtime files in an installation or built
@@ -192,13 +180,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   BundleVRJ22Runtime
        Include the VR Juggler runtime files in an installation or built
@@ -221,13 +205,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CheckMacHIDAPI
        Script to check if the signature for a mac HID callback uses UInt32 or
@@ -255,13 +235,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CheckVersion
        Utility function for Find modules considering multiple possible
@@ -279,13 +255,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CleanDirectoryList
        Removes duplicate entries and non-directories from a provided list
@@ -302,13 +274,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CleanLibraryList
        A smarter replacement for list(REMOVE_DUPLICATES) for library lists
@@ -337,13 +305,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CopyResourcesToBuildTree
        Copy the resources your app needs to the build tree.
@@ -360,13 +324,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CppcheckTargets
        Run cppcheck on c++ source files as a custom target and a test
@@ -393,13 +353,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CreateDashboardScripts
        Create ctest -S scripts to use to run dashboard builds
@@ -436,13 +392,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CreateImportedTarget
        A smarter replacement for list(REMOVE_DUPLICATES) for library lists
@@ -463,13 +415,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   CreateLaunchers
        Create launchers to set working directory, env.  vars, etc.
@@ -518,13 +466,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   DoxygenTargets
        Run doxygen on source files as a custom target
@@ -555,13 +499,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   EnableExtraCompilerWarnings
        Add flags to compile with extra warnings
@@ -580,13 +520,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   EnableProfiling
        Add flags to compile with profiling support - currently only for GCC
@@ -605,13 +541,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FileCopyTargets
        Add a target for files that just need to be copied
@@ -643,13 +575,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindALUT
        try to find the OpenAL ALUT library
@@ -691,13 +619,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindBluez
        try to find Bluez
@@ -729,13 +653,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindCPPDOM
        try to find CPPDOM library
@@ -775,13 +695,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindDCubed
        try to find DCUBED library
@@ -810,13 +726,9 @@ a few.
        http://academic.cleardefinition.com Iowa State University HCI Graduate
        Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindFlagpoll
        try to find Flagpoll application, and offer package-finding services
@@ -863,13 +775,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindGDB
        Try to find GDB
@@ -895,13 +803,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindGHOST
        try to find Sensable GHOST library and include files
@@ -923,13 +827,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindGLUI
        Try to find GLUI (GL User Interface)
@@ -955,13 +855,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindGLUT
        try to find glut library and include files
@@ -1016,13 +912,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindGPM
        try to find GPM library
@@ -1054,13 +946,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindGadgeteer12
        try to find Gadgeteer 1.2 library
@@ -1104,13 +992,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindGlove5DT
        try to find Glove5DT libraries
@@ -1152,13 +1036,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindHIDAPI
        try to find HIDAPI library
@@ -1190,13 +1070,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindJCCL12
        try to find JCCL 1.2 library
@@ -1239,13 +1115,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindJtTk
        try to find JTTK library
@@ -1282,13 +1154,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindLAPACKLibs
        Try to find LAPACK and BLAS libraries
@@ -1310,13 +1178,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindLibusb1
        try to find libusb-1 library
@@ -1349,13 +1213,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindLuabind
        try to find Luabind
@@ -1387,13 +1247,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindLyX
        Try to find LyX, and define some custom commands to export from LyX
@@ -1445,13 +1301,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindMacHID
        try to find Mac HID frameworks
@@ -1488,13 +1340,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindOpenCV
        ------------------------------
@@ -1586,13 +1434,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindParasolid
        try to find PARASOLID library
@@ -1626,13 +1470,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindSonix12
        try to find Sonix 1.2 library
@@ -1675,13 +1515,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindTR1
        Try to find C++ TR1 headers and libraries
@@ -1703,13 +1539,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindTooN
        try to find TooN headers
@@ -1746,13 +1578,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindTooNtag
        try to find tag algorithm library (built on TooN)
@@ -1790,13 +1618,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindTweek12
        try to find Tweek 1.2 library
@@ -1839,13 +1663,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVPR20
        try to find VPR 2.0 library
@@ -1891,13 +1711,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVPS
        try to find VPS library
@@ -1925,13 +1741,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVRJ22
        try to find VR Juggler 2.2 core library
@@ -1976,13 +1788,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVRJOGL22
        try to find VRJuggler 2.2 OpenGL library
@@ -2025,13 +1833,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVRJuggler22
        try to find VRJuggler 2.2-related packages (main finder)
@@ -2108,13 +1912,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVRPN
        try to find VRPN library
@@ -2150,13 +1950,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVirtuoseAPI
        try to find Haption VirtuoseAPI library and include files
@@ -2221,13 +2017,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindWiiUse
        try to find WiiUse library
@@ -2261,13 +2053,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindWinHID
        try to find Windows HID support, part of the WDK/DDK
@@ -2302,13 +2090,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   Findargp
        try to find the argp library/component of glibc
@@ -2346,13 +2130,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   Findcppcheck
        try to find cppcheck tool
@@ -2390,13 +2170,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   Findcutil
        find NVIDIA CUDA and source for the cutil library, building cutil if
@@ -2419,13 +2195,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   Finddb2pdf
        Try to find db2pdf, and define a custom command to turn docbook into
@@ -2456,13 +2228,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindosgLua
        try to find osgLua
@@ -2493,13 +2261,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   Findquatlib
        Find quatlib
@@ -2516,13 +2280,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   GetCPUDetails
        Set a number of variables to indicate things about the current CPU and
@@ -2552,14 +2312,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
-       
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
   GetCompilerInfoString
@@ -2598,14 +2353,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
-       
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
        Some functions based on cmake-2.8.0 modules FindBoost.cmake and
        CTest.cmake
@@ -2679,13 +2429,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   GetFileList
        Returns a list of the file names of all files passed
@@ -2702,13 +2448,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   GetForceIncludeDefinitions
        Get the platform-appropriate flags to add to force inclusion of a file
@@ -2729,13 +2471,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   GetGitRevisionDescription
        Returns a version string from Git
@@ -2772,13 +2510,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   GetSubprojectStatus
        Returns whether the current project is on its own or within another
@@ -2797,13 +2531,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   Licensing
        Building a licensing description file
@@ -2814,13 +2544,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   ListCombinations
        Combine lists of prefixes and suffixes in all combinations
@@ -2838,13 +2564,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   ListFilter
        List filtering functions
@@ -2869,13 +2591,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   LuaTargets
        Copy lua source files as a custom target
@@ -2901,13 +2619,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   MSVCMultipleProcessCompile
        Compile with multiple processes on MSVC
@@ -2928,13 +2642,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   MSVCStaticRuntime
        Modify compile flags to use the static runtimes of MSVC
@@ -2955,13 +2665,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   MSVCVerboseLinking
        Add appropriate linker flags to show link details on Visual Studio
@@ -2985,13 +2691,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   MakeVRJugglerAppBundle
        A script to turn a VR Juggler app target into a Mac OS X bundle
@@ -3007,13 +2709,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   OptionRequires
        Add an option that depends on one or more variables being true.
@@ -3028,13 +2726,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   PrefixListGlob
        For each given prefix in a list, glob using the prefix+pattern
@@ -3047,13 +2741,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   ProgramFilesGlob
        Find bit-appropriate program files directories matching a given
@@ -3072,13 +2762,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   ResetConfigurations
        Re-set the available configurations to just RelWithDebInfo and Release
@@ -3095,14 +2781,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
-       
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
   SearchProgramFilesForOpenSceneGraph
@@ -3130,13 +2811,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   SetDefaultBuildType
        Set a developer-chosen default build type
@@ -3153,14 +2830,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
-       
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
   SplitLibraryList
@@ -3178,13 +2850,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   StampSourcesWithVersion
        It will only attempt a substitution within the first C-style comment
@@ -3239,13 +2907,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   TCHARWorkaround
        Script to compile Win32-developed sources using tchar without
@@ -3260,13 +2924,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   UseBackportedModules
        Do a version-dependent check and auto-include backported modules dirs
@@ -3293,13 +2953,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   UseTR1
        Use settings to enable access to C++ TR1
@@ -3313,13 +2969,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   WarningDev
        Print a developer warning, using author_warning if we have cmake 2.8
@@ -3334,13 +2986,9 @@ a few.
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-                 Copyright Iowa State University 2009-2010
-
-       Distributed under the Boost Software License, Version 1.0.
-
-           (See accompanying file LICENSE_1_0.txt or copy at
-                 http://www.boost.org/LICENSE_1_0.txt)
-
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 ------------------------------------------------------------------------------
 See Also
