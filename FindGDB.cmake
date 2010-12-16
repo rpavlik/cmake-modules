@@ -38,7 +38,7 @@ find_program(GDB_COMMAND
 if(GDB_COMMAND AND NOT GDB_VERSION)
 	execute_process(COMMAND gdb --version
 		COMMAND head -n 1
-		COMMAND sed -E 's/.*gdb ([^ ]*).*/\\1/'
+		COMMAND sed -E "s/.*gdb ([^ ]*).*/\\1/"
 		OUTPUT_VARIABLE GDB_VERSION)
 	set(GDB_VERSION "${GDB_VERSION}" CACHE STRING "Version of GDB detected.")
 endif()
