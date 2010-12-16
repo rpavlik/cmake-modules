@@ -173,4 +173,21 @@ find_package_handle_standard_args(VRJuggler
 
 if(VRJUGGLER_FOUND)
 	mark_as_advanced(VRJUGGLER_ROOT_DIR)
+	
+	# Set generic component variables, like VPR_LIBRARIES
+	if(VRJUGGLER_VERSION VERSION_EQUAL 2.2)
+		set(_components VRJ22 VRJOGL22 VPR20 TWEEK12 SONIX12 JCCL12)
+	else()
+		set(_components VRJ30 VRJOGL30 VPR22 TWEEK14 SONIX14 JCCL14)
+	endif()
+	
+	foreach(comp ${_components})
+		string(LENGTH "${comp}" len)
+		math(EXPR complen "${len} - 2")
+		string(SUBSTRING "${comp}" 0 ${complen} compshort)
+		set(${compshort}_LIBRARIES ${comp}_LIBRARIES)
+		set(${compshort}_INCLUDE_DIRS ${comp}_INCLUDE_DIRS)
+		set(${compshort}_LIBRARY_DIRS ${comp}_LIBRARY_DIRS)
+		set(${compshort}_CXX_FLAGS ${comp}_CXX_FLAGS)
+	endforeach()
 endif()
