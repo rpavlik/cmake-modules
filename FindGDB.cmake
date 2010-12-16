@@ -40,11 +40,7 @@ if(GDB_COMMAND AND NOT GDB_VERSION)
 		COMMAND head -n 1
 		COMMAND sed -E 's/.*gdb ([^ ]*).*/\\1/'
 		OUTPUT_VARIABLE GDB_VERSION)
-	if(GDB_VERSION VERSION_LESS 6.4)
-		set(GDB_HAS_RETURN_CHILD_RESULT FALSE)
-	else()
-		set(GDB_HAS_RETURN_CHILD_RESULT TRUE)
-	endif()
+	set(GDB_VERSION "${GDB_VERSION}" CACHE STRING "Version of GDB detected.")
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
@@ -54,6 +50,11 @@ find_package_handle_standard_args(GDB DEFAULT_MSG GDB_COMMAND GDB_VERSION)
 
 if(GDB_FOUND)
 	mark_as_advanced(GDB_ROOT_DIR)
+	if(GDB_VERSION VERSION_LESS 6.4)
+		set(GDB_HAS_RETURN_CHILD_RESULT FALSE)
+	else()
+		set(GDB_HAS_RETURN_CHILD_RESULT TRUE)
+	endif()
 endif()
 
-mark_as_advanced(GDB_COMMAND)
+mark_as_advanced(GDB_COMMAND GDB_VERSION)
