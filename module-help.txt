@@ -1,4 +1,4 @@
-cmake version 2.8.2
+cmake version 2.8.3
 ------------------------------------------------------------------------------
 Introduction
 
@@ -208,6 +208,28 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  BundleVRJ30Runtime
+       Include the VR Juggler runtime files in an installation or built
+       package.
+
+       
+
+         VRJUGGLERRUNTIME_BUNDLE
+         VRJUGGLERRUNTIME_BUNDLE_DEBUG - set to yes to include debug dll's as well
+
+       
+
+       Requires these CMake modules:
+
+         FindVRJuggler22 and its dependencies
+
+       
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
 
   CheckMacHIDAPI
        Script to check if the signature for a mac HID callback uses UInt32 or
@@ -996,6 +1018,49 @@ a few.
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindGadgeteer20
+       try to find Gadgeteer 2.0 library
+
+       Requires JCCL 1.4 and VPR 2.2 (thus FindJCCL14.cmake and
+       FindVPR22.cmake) Requires X11 if not on Mac or Windows.  Optionally
+       uses Flagpoll and FindFlagpoll.cmake
+
+       This library is a part of VR Juggler 3.0 - you probably want to use
+       find_package(VRJuggler30) instead, for an easy interface to this and
+       related scripts.  See FindVRJuggler30.cmake for more information.
+
+         GADGETEER20_LIBRARY_DIR, library search path
+         GADGETEER20_INCLUDE_DIR, include search path
+         GADGETEER20_LIBRARY, the library to link against
+         GADGETEER20_FOUND, If false, do not try to use this library.
+
+       
+
+       Plural versions refer to this library and its dependencies, and are
+       recommended to be used instead, unless you have a good reason.
+
+       Useful configuration variables you might want to add to your cache:
+
+         GADGETEER20_ROOT_DIR - A directory prefix to search
+                                (a path that contains include/ as a subdirectory)
+
+       
+
+       This script will use Flagpoll, if found, to provide hints to the
+       location of this library, but does not use the compiler flags returned
+       by Flagpoll directly.
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when searching for this component, so most sane build environments
+       should "just work." Note that you need to manually re-run CMake if you
+       change this environment variable, because it cannot auto-detect this
+       change and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
+
   FindGlove5DT
        try to find Glove5DT libraries
 
@@ -1118,6 +1183,48 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindJCCL14
+       try to find JCCL 1.4 library
+
+       Requires VPR 2.2 (thus FindVPR22.cmake) Optionally uses Flagpoll and
+       FindFlagpoll.cmake
+
+       This library is a part of VR Juggler 3.0 - you probably want to use
+       find_package(VRJuggler30) instead, for an easy interface to this and
+       related scripts.  See FindVRJuggler30.cmake for more information.
+
+         JCCL14_LIBRARY_DIR, library search path
+         JCCL14_INCLUDE_DIR, include search path
+         JCCL14_LIBRARY, the library to link against
+         JCCL14_FOUND, If false, do not try to use this library.
+
+       
+
+       Plural versions refer to this library and its dependencies, and are
+       recommended to be used instead, unless you have a good reason.
+
+       Useful configuration variables you might want to add to your cache:
+
+         JCCL14_ROOT_DIR - A directory prefix to search
+                           (a path that contains include/ as a subdirectory)
+
+       
+
+       This script will use Flagpoll, if found, to provide hints to the
+       location of this library, but does not use the compiler flags returned
+       by Flagpoll directly.
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when searching for this component, so most sane build environments
+       should "just work." Note that you need to manually re-run CMake if you
+       change this environment variable, because it cannot auto-detect this
+       change and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
 
   FindJtTk
        try to find JTTK library
@@ -1519,6 +1626,48 @@ a few.
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindSonix14
+       try to find Sonix 1.4 library
+
+       Requires VPR 2.2 and GMTL (thus FindVPR22.cmake and FindGMTL.cmake)
+       Optionally uses Flagpoll and FindFlagpoll.cmake
+
+       This library is a part of VR Juggler 3.0 - you probably want to use
+       find_package(VRJuggler30) instead, for an easy interface to this and
+       related scripts.  See FindVRJuggler30.cmake for more information.
+
+         SONIX14_LIBRARY_DIR, library search path
+         SONIX14_INCLUDE_DIR, include search path
+         SONIX14_LIBRARY, the library to link against
+         SONIX14_FOUND, If false, do not try to use this library.
+
+       
+
+       Plural versions refer to this library and its dependencies, and are
+       recommended to be used instead, unless you have a good reason.
+
+       Useful configuration variables you might want to add to your cache:
+
+         SONIX14_ROOT_DIR - A directory prefix to search
+                            (a path that contains include/ as a subdirectory)
+
+       
+
+       This script will use Flagpoll, if found, to provide hints to the
+       location of this library, but does not use the compiler flags returned
+       by Flagpoll directly.
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when searching for this component, so most sane build environments
+       should "just work." Note that you need to manually re-run CMake if you
+       change this environment variable, because it cannot auto-detect this
+       change and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
+
   FindTR1
        Try to find C++ TR1 headers and libraries
 
@@ -1667,6 +1816,48 @@ a few.
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindTweek14
+       try to find Tweek 1.4 library
+
+       Requires VPR 2.2 (thus FindVPR22.cmake) Optionally uses Flagpoll and
+       FindFlagpoll.cmake
+
+       This library is a part of VR Juggler 3.0 - you probably want to use
+       find_package(VRJuggler30) instead, for an easy interface to this and
+       related scripts.  See FindVRJuggler30.cmake for more information.
+
+         TWEEK14_LIBRARY_DIR, library search path
+         TWEEK14_INCLUDE_DIR, include search path
+         TWEEK14_LIBRARY, the library to link against
+         TWEEK14_FOUND, If false, do not try to use this library.
+
+       
+
+       Plural versions refer to this library and its dependencies, and are
+       recommended to be used instead, unless you have a good reason.
+
+       Useful configuration variables you might want to add to your cache:
+
+         TWEEK14_ROOT_DIR - A directory prefix to search
+                            (a path that contains include/ as a subdirectory)
+
+       
+
+       This script will use Flagpoll, if found, to provide hints to the
+       location of this library, but does not use the compiler flags returned
+       by Flagpoll directly.
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when searching for this component, so most sane build environments
+       should "just work." Note that you need to manually re-run CMake if you
+       change this environment variable, because it cannot auto-detect this
+       change and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
+
   FindVPR20
        try to find VPR 2.0 library
 
@@ -1714,6 +1905,51 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindVPR22
+       try to find VPR 2.2 library
+
+       Requires Boost 1.33.1 or greater (including filesystem and signals
+       libraries) (and thus FindBoost.cmake from 2.8rc3 or newer, preferably)
+       Requires NSPR4 (and PLC4) on Windows Requires pthreads on Unix (Mac or
+       Linux) Requires libuuid on Linux Optionally uses Flagpoll and
+       FindFlagpoll.cmake
+
+       This library is a part of VR Juggler 3.0 - you probably want to use
+       find_package(VRJuggler30) instead, for an easy interface to this and
+       related scripts.  See FindVRJuggler30.cmake for more information.
+
+         VPR22_LIBRARY_DIR, library search path
+         VPR22_INCLUDE_DIR, include search path
+         VPR22_LIBRARY, the library to link against
+         VPR22_FOUND, If false, do not try to use this library.
+
+       
+
+       Plural versions refer to this library and its dependencies, and are
+       recommended to be used instead, unless you have a good reason.
+
+       Useful configuration variables you might want to add to your cache:
+
+         VPR22_ROOT_DIR - A directory prefix to search
+                          (a path that contains include/ as a subdirectory)
+
+       
+
+       This script will use Flagpoll, if found, to provide hints to the
+       location of this library, but does not use the compiler flags returned
+       by Flagpoll directly.
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when searching for this component, so most sane build environments
+       should "just work." Note that you need to manually re-run CMake if you
+       change this environment variable, because it cannot auto-detect this
+       change and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
 
   FindVPS
        try to find VPS library
@@ -1792,6 +2028,54 @@ a few.
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindVRJ30
+       try to find VR Juggler 3.0 core library
+
+       Requires JCCL 1.4, Gadgeteer 1.4, VPR 2.2, and Sonix 1.4 (thus
+       FindJCCL14.cmake, FindGadgeteer20.cmake, FindVPR22.cmake, and
+       FindSonix14.cmake) Requires X11 if not on Mac or Windows.  Optionally
+       uses Flagpoll and FindFlagpoll.cmake
+
+       This library is a part of VR Juggler 3.0 - you probably want to use
+       find_package(VRJuggler30) instead, for an easy interface to this and
+       related scripts.  See FindVRJuggler30.cmake for more information.
+
+         VRJ30_LIBRARY_DIR, library search path
+         VRJ30_INCLUDE_DIR, include search path
+         VRJ30_LIBRARY, the library to link against
+         VRJ30_FOUND, If false, do not try to use this library.
+
+       
+
+       Plural versions refer to this library and its dependencies, and are
+       recommended to be used instead, unless you have a good reason.
+
+       Useful configuration variables you might want to add to your cache:
+
+         VRJ30_ROOT_DIR - A directory prefix to search
+                          (a path that contains include/ as a subdirectory)
+
+       
+
+       This script will use Flagpoll, if found, to provide hints to the
+       location of this library, but does not use the compiler flags returned
+       by Flagpoll directly.
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when searching for this component, so most sane build environments
+       should "just work." Note that you need to manually re-run CMake if you
+       change this environment variable, because it cannot auto-detect this
+       change and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
+
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
   FindVRJOGL22
        try to find VRJuggler 2.2 OpenGL library
 
@@ -1832,6 +2116,126 @@ a few.
        Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindVRJOGL30
+       try to find VRJuggler 3.0 OpenGL library
+
+       Requires VRJ core 3.0 (thus FindVRJ30.cmake) Requires OpenGL.
+       Optionally uses Flagpoll and FindFlagpoll.cmake
+
+       This library is a part of VR Juggler 3.0 - you probably want to use
+       find_package(VRJuggler30) instead, for an easy interface to this and
+       related scripts.  See FindVRJuggler30.cmake for more information.
+
+         VRJOGL30_LIBRARY_DIR, library search path
+         VRJOGL30_INCLUDE_DIRS, include search path for dependencies
+         VRJOGL30_LIBRARY, the library to link against
+         VRJOGL30_FOUND, If false, do not try to use this library.
+
+       
+
+       Plural versions refer to this library and its dependencies, and are
+       recommended to be used instead, unless you have a good reason.
+
+       Useful configuration variables you might want to add to your cache:
+
+         VRJOGL30_ROOT_DIR - A directory prefix to search
+                             (a path that contains include/ as a subdirectory)
+
+       
+
+       This script will use Flagpoll, if found, to provide hints to the
+       location of this library, but does not use the compiler flags returned
+       by Flagpoll directly.
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when searching for this component, so most sane build environments
+       should "just work." Note that you need to manually re-run CMake if you
+       change this environment variable, because it cannot auto-detect this
+       change and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
+
+  FindVRJuggler
+       try to find VR Juggler-related packages (combined finder)
+
+         VRJUGGLER_INCLUDE_DIRS, include search paths
+         VRJUGGLER_LIBRARIES, the libraries to link against
+         VRJUGGLER_ENVIRONMENT
+         VRJUGGLER_RUNTIME_LIBRARY_DIRS
+         VRJUGGLER_CXX_FLAGS
+         VRJUGGLER_DEFINITIONS
+         VRJUGGLER_FOUND, If false, do not try to use VR Juggler.
+
+       
+
+       Components available to search for (uses "VRJOGL" by default):
+
+         VRJOGL
+         VRJ
+         Gadgeteer
+         JCCL
+         VPR
+         Sonix
+         Tweek
+
+       
+
+       Additionally, a full setup requires these packages and their
+       Find_.cmake scripts
+
+         CPPDOM
+         GMTL
+
+       
+
+       Optionally uses Flagpoll (and FindFlagpoll.cmake)
+
+       Notes on components:
+
+         - All components automatically include their dependencies.
+         - If you do not specify a component, VRJOGL (the OpenGL view manager)
+           will be used by default.
+         - Capitalization of component names does not matter, but it's best to
+           pretend it does and use the above capitalization.
+         - Since this script calls find_package for your requested components and
+           their dependencies, you can use any of the variables specified in those
+           files in addition to the "summary" ones listed here, for more finely
+           controlled building and linking.
+
+       
+
+       This CMake script requires all of the Find*.cmake scripts for the
+       components listed above, as it is only a "meta-script" designed to
+       make using those scripts more developer-friendly.
+
+       Useful configuration variables you might want to add to your cache:
+
+         (CAPS COMPONENT NAME)_ROOT_DIR - A directory prefix to search
+                                (a path that contains include/ as a subdirectory)
+
+       
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when seeking any of the above components, as well as Flagpoll, CPPDOM,
+       and Boost (from within VPR), so most sane build environments should
+       "just work."
+
+       IMPORTANT: Note that you need to manually re-run CMake if you change
+       this environment variable, because it cannot auto-detect this change
+       and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
 
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
@@ -1911,6 +2315,86 @@ a few.
        Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindVRJuggler30
+       try to find VRJuggler 3.0-related packages (main finder)
+
+         VRJUGGLER30_LIBRARY_DIRS, library search paths
+         VRJUGGLER30_INCLUDE_DIRS, include search paths
+         VRJUGGLER30_LIBRARIES, the libraries to link against
+         VRJUGGLER30_ENVIRONMENT
+         VRJUGGLER30_RUNTIME_LIBRARY_DIRS
+         VRJUGGLER30_CXX_FLAGS
+         VRJUGGLER30_DEFINITIONS
+         VRJUGGLER30_FOUND, If false, do not try to use VR Juggler 3.0.
+
+       
+
+       Components available to search for (uses "VRJOGL30" by default):
+
+         VRJOGL30
+         VRJ30
+         Gadgeteer20
+         JCCL14
+         VPR22
+         Sonix14
+         Tweek14
+
+       
+
+       Additionally, a full setup requires these packages and their
+       Find_.cmake scripts
+
+         CPPDOM
+         GMTL
+
+       
+
+       Optionally uses Flagpoll (and FindFlagpoll.cmake)
+
+       Notes on components:
+
+         - All components automatically include their dependencies.
+         - You can search for the name above with or without the version suffix.
+         - If you do not specify a component, VRJOGL30(the OpenGL view manager)
+           will be used by default.
+         - Capitalization of component names does not matter, but it's best to
+           pretend it does and use the above capitalization.
+         - Since this script calls find_package for your requested components and
+           their dependencies, you can use any of the variables specified in those
+           files in addition to the "summary" ones listed here, for more finely
+           controlled building and linking.
+
+       
+
+       This CMake script requires all of the Find*.cmake scripts for the
+       components listed above, as it is only a "meta-script" designed to
+       make using those scripts more developer-friendly.
+
+       Useful configuration variables you might want to add to your cache:
+
+         (CAPS COMPONENT NAME)_ROOT_DIR - A directory prefix to search
+                                (a path that contains include/ as a subdirectory)
+
+       
+
+       The VJ_BASE_DIR environment variable is also searched (preferentially)
+       when seeking any of the above components, as well as Flagpoll, CPPDOM,
+       and Boost (from within VPR22), so most sane build environments should
+       "just work."
+
+       IMPORTANT: Note that you need to manually re-run CMake if you change
+       this environment variable, because it cannot auto-detect this change
+       and trigger an automatic re-run.
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
 
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
@@ -2712,6 +3196,21 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  MakeVRJugglerAppBundle30
+       A script to turn a VR Juggler app target into a Mac OS X bundle
+
+       
+
+         add_vrjuggler_bundle_sources(SOURCES_VAR_NAME) - run before add_executable
+         finish_vrjuggler_bundle(TARGET_NAME LIB_DIRS) - run after add_executable
+
+       
+
+       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
+       Brandon Newendorp <brandon@newendorp.com>
 
   OptionRequires
        Add an option that depends on one or more variables being true.
