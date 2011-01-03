@@ -86,19 +86,22 @@ find_path(GLOVE5DT_INCLUDE_DIR
 	NAMES
 	fglove.h
 	HINTS
-	${_incsearchultra})
+	${_incsearchultra}
+	${GLOVE5DT_ROOT_DIR})
 
 find_library(GLOVE5DT_LIBRARY_RELEASE
 	NAMES
 	fglove
 	HINTS
-	${_libsearchultra})
+	${_libsearchultra}
+	${GLOVE5DT_ROOT_DIR})
 
 find_library(GLOVE5DT_LIBRARY_DEBUG
 	NAMES
 	fgloved
 	HINTS
-	${_libsearchultra})
+	${_libsearchultra}
+	${GLOVE5DT_ROOT_DIR})
 
 
 select_library_configurations(GLOVE5DT)
