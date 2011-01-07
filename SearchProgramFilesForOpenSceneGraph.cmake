@@ -53,8 +53,8 @@ if(_osgpaths)
 	list(SORT _osgpaths)
 	list(REVERSE _osgpaths)
 
-	# fallback last-ditch effort - use the environment variable
-	list(APPEND _osgpaths "$ENV{OSGHOME}")
+	# Use the environment variable to override
+	set(_osgpaths "$ENV{OSGHOME}" ${_osgpaths})
 	clean_directory_list(_osgpaths)
 
 	list(APPEND CMAKE_PREFIX_PATH ${_osgpaths})
