@@ -35,12 +35,12 @@ find_program(GDB_COMMAND
 	bin
 	libexec)
 
-if(GDB_COMMAND AND NOT GDB_VERSION)
+if(GDB_COMMAND)
 	execute_process(COMMAND gdb --version
 		COMMAND head -n 1
-		COMMAND sed -E "s/.*gdb ([^ ]*).*/\\1/"
-		OUTPUT_VARIABLE GDB_VERSION)
-	set(GDB_VERSION "${GDB_VERSION}" CACHE STRING "Version of GDB detected.")
+		COMMAND sed -r "s/[^0-9]*([0-9]+[0-9.]*).*/\\1/"
+		OUTPUT_VARIABLE GDB_VERSION
+		OUTPUT_STRIP_TRAILING_WHITESPACE)
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
@@ -57,4 +57,4 @@ if(GDB_FOUND)
 	endif()
 endif()
 
-mark_as_advanced(GDB_COMMAND GDB_VERSION)
+mark_as_advanced(GDB_COMMAND)
