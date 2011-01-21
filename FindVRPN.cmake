@@ -34,8 +34,18 @@ set(VRPN_ROOT_DIR
 
 if("${CMAKE_SIZEOF_VOID_P}" MATCHES "8")
 	set(_libsuffixes lib64 lib)
+
+	# 64-bit dir: only set on win64
+	file(TO_CMAKE_PATH "$ENV{ProgramW6432}" _progfiles)
 else()
 	set(_libsuffixes lib)
+	if(NOT "$ENV{ProgramFiles(x86)}" STREQUAL "")
+		# 32-bit dir: only set on win64
+		file(TO_CMAKE_PATH "$ENV{ProgramFiles(x86)}" _progfiles)
+	else()
+		# 32-bit dir on win32, useless to us on win64
+		file(TO_CMAKE_PATH "$ENV{ProgramFiles}" _progfiles)
+	endif()
 endif()
 
 ###
@@ -49,7 +59,9 @@ find_path(VRPN_INCLUDE_DIR
 	include
 	include/vrpn
 	HINTS
-	"${VRPN_ROOT_DIR}")
+	"${VRPN_ROOT_DIR}"
+	PATHS
+	"${_progfiles}/VRPN")
 
 find_library(VRPN_LIBRARY
 	NAMES
@@ -57,7 +69,9 @@ find_library(VRPN_LIBRARY
 	PATH_SUFFIXES
 	${_libsuffixes}
 	HINTS
-	"${VRPN_ROOT_DIR}")
+	"${VRPN_ROOT_DIR}"
+	PATHS
+	"${_progfiles}/VRPN")
 
 find_library(VRPN_SERVER_LIBRARY
 	NAMES
@@ -65,7 +79,9 @@ find_library(VRPN_SERVER_LIBRARY
 	PATH_SUFFIXES
 	${_libsuffixes}
 	HINTS
-	"${VRPN_ROOT_DIR}")
+	"${VRPN_ROOT_DIR}"
+	PATHS
+	"${_progfiles}/VRPN")
 
 ###
 # Dependencies
