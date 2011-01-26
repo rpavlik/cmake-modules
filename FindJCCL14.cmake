@@ -37,8 +37,8 @@
 
 
 set(_HUMAN "JCCL 1.4")
-set(_RELEASE_NAMES jccl-1_4 libjccl-1_4)
-set(_DEBUG_NAMES jccl_d-1_4 libjccl_d-1_4)
+set(_RELEASE_NAMES jccl-1_4 libjccl-1_4 jccl-1_4_0)
+set(_DEBUG_NAMES jccl_d-1_4 libjccl_d-1_4 jccl_d-1_4_0)
 set(_DIR jccl-1.4)
 set(_HEADER jccl/jcclConfig.h)
 set(_FP_PKG_NAME jccl)

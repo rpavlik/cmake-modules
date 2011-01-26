@@ -38,8 +38,8 @@
 
 
 set(_HUMAN "VR Juggler 3.0 OpenGL Core")
-set(_RELEASE_NAMES vrj_ogl-3_0 libvrj_ogl-3_0)
-set(_DEBUG_NAMES vrj_ogl_d-3_0 libvrj_ogl_d-3_0)
+set(_RELEASE_NAMES vrj_ogl-3_0 libvrj_ogl-3_0 vrj_ogl-3_0_0)
+set(_DEBUG_NAMES vrj_ogl_d-3_0 libvrj_ogl_d-3_0 vrj_ogl_d-3_0_0)
 set(_DIR vrjuggler-3.0)
 set(_FP_PKG_NAME vrjuggler-opengl)
 

@@ -45,8 +45,8 @@
 
 
 set(_HUMAN "VR Juggler 3.0 Core")
-set(_RELEASE_NAMES vrj-3_0 libvrj-3_0)
-set(_DEBUG_NAMES vrj_d-3_0 libvrj_d-3_0)
+set(_RELEASE_NAMES vrj-3_0 libvrj-3_0 vrj-3_0_0)
+set(_DEBUG_NAMES vrj_d-3_0 libvrj_d-3_0 vrj_d-3_0_0)
 set(_DIR vrjuggler-3.0)
 set(_HEADER vrj/Kernel/Kernel.h)
 set(_FP_PKG_NAME vrjuggler)
