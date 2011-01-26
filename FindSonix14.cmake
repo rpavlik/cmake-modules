@@ -37,8 +37,8 @@
 
 
 set(_HUMAN "Sonix 1.4")
-set(_RELEASE_NAMES sonix-1_4 libsonix-1_4)
-set(_DEBUG_NAMES sonix_d-1_4 libsonix_d-1_4)
+set(_RELEASE_NAMES sonix-1_4 libsonix-1_4 sonix-1_4_0)
+set(_DEBUG_NAMES sonix_d-1_4 libsonix_d-1_4 sonix_d-1_4_0)
 set(_DIR sonix-1.4)
 set(_HEADER snx/sonix.h)
 set(_FP_PKG_NAME sonix)

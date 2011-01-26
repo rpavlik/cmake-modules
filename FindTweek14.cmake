@@ -37,8 +37,8 @@
 
 
 set(_HUMAN "Tweek 1.4")
-set(_RELEASE_NAMES tweek-1_4 libtweek-1_4)
-set(_DEBUG_NAMES tweek_d-1_4 libtweek_d-1_4)
+set(_RELEASE_NAMES tweek-1_4 libtweek-1_4 tweek-1_4_0)
+set(_DEBUG_NAMES tweek_d-1_4 libtweek_d-1_4 tweek_d-1_4_0)
 set(_DIR tweek-1.4)
 set(_HEADER tweek/tweek.h)
 set(_FP_PKG_NAME tweek)
