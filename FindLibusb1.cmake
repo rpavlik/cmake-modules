@@ -32,7 +32,7 @@ set(LIBUSB1_ROOT_DIR
 	
 if(WIN32)
 	include(ProgramFilesGlob)
-	program_files_glob_fallback(_dirs "LibUSB-Win32")
+	program_files_fallback_glob(_dirs "LibUSB-Win32")
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		if(MSVC)
 			set(_lib_suffixes lib/msvc_x64)
