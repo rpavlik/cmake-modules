@@ -53,13 +53,13 @@
 # and trigger an automatic re-run.
 #
 # Original Author:
-# 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+# 2009-2011 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 # Updated for VR Juggler 3.0 by:
-# Brandon Newendorp <brandon@newendorp.com>
+# Brandon Newendorp <brandon@newendorp.com> and Ryan Pavlik
 #
-# Copyright Iowa State University 2009-2010.
+# Copyright Iowa State University 2009-2011.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -169,7 +169,7 @@ if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "VRJ30" AND NOT VRJ30_FOUND)
 endif()
 
 if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "JCCL14" AND NOT JCCL14_FOUND)
-	find_package(JCCL23 ${_FIND_FLAGS})
+	find_package(JCCL14 ${_FIND_FLAGS})
 endif()
 
 if("${VRJUGGLER30_REQUESTED_COMPONENTS}" MATCHES "GADGETEER20" AND NOT GADGETEER20_FOUND)
@@ -269,7 +269,7 @@ if(VRJUGGLER30_FOUND)
 		"JCCL_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}"
 		"SONIX_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}"
 		"TWEEK_BASE_DIR=${VRJUGGLER30_VJ_BASE_DIR}"
-		"VJ_CFG_DIR=${VRJUGGLER22_VJ_CFG_DIR}")
+		"VJ_CFG_DIR=${VRJUGGLER30_VJ_CFG_DIR}")
 
 	include(GetDirectoryList)
 
@@ -397,7 +397,7 @@ function(install_vrjuggler30_plugins prefix varForFilenames)
 	set(DEST "${prefix}")
 
 	set(out)
-	foreach(plugin ${VRJUGGLER22_BUNDLE_PLUGINS})
+	foreach(plugin ${VRJUGGLER30_BUNDLE_PLUGINS})
 		get_filename_component(full "${plugin}" ABSOLUTE)
 		file(RELATIVE_PATH relloc "${VRJUGGLER30_VJ_BASE_DIR}" "${full}")
 		set(filedest "${DEST}/${relloc}")
