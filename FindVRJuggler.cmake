@@ -113,23 +113,24 @@ if(VRJUGGLER_FIND_30)
 	find_package(VRJuggler30 COMPONENTS ${VRJuggler_FIND_COMPONENTS})
 	if(VRJUGGLER30_FOUND)
 		set(VRJUGGLER_FOUND TRUE)
+
 		set(VRJUGGLER_LIBRARIES ${VRJUGGLER30_LIBRARIES})
 		set(VRJUGGLER_INCLUDE_DIRS ${VRJUGGLER30_INCLUDE_DIRS})
 		set(VRJUGGLER_LIBRARY_DIRS ${VRJUGGLER30_LIBRARY_DIRS})
-		
+
 		set(VRJUGGLER_ENVIRONMENT ${VRJUGGLER30_ENVIRONMENT})
 		set(VRJUGGLER_RUNTIME_LIBRARY_DIRS ${VRJUGGLER30_RUNTIME_LIBRARY_DIRS})
-		
+
 		set(VRJUGGLER_CXX_FLAGS ${VRJUGGLER30_CXX_FLAGS})
 		set(VRJUGGLER_DEFINITIONS ${VRJUGGLER30_DEFINITIONS})
 		set(VRJUGGLER_BUNDLE_PLUGINS ${VRJUGGLER30_BUNDLE_PLUGINS})
 		set(VRJUGGLER_VJ_BASE_DIR ${VRJUGGLER30_VJ_BASE_DIR})
 		set(VRJUGGLER_VERSION 3.0)
-		
+
 		macro(install_vrjuggler_data_files prefix)
 			install_vrjuggler30_data_files("${prefix}" ${ARGN})
 		endmacro()
-		
+
 		macro(install_vrjuggler_plugins prefix varForFilenames)
 			install_vrjuggler30_plugins("${prefix}" ${varForFilenames} ${ARGN})
 		endmacro()
@@ -144,23 +145,24 @@ if(VRJUGGLER_FIND_22 AND (NOT VRJUGGLER_FOUND))
 	find_package(VRJuggler22 COMPONENTS ${VRJuggler_FIND_COMPONENTS})
 	if(VRJUGGLER22_FOUND)
 		set(VRJUGGLER_FOUND TRUE)
+
 		set(VRJUGGLER_LIBRARIES ${VRJUGGLER22_LIBRARIES})
 		set(VRJUGGLER_INCLUDE_DIRS ${VRJUGGLER22_INCLUDE_DIRS})
 		set(VRJUGGLER_LIBRARY_DIRS ${VRJUGGLER22_LIBRARY_DIRS})
-		
+
 		set(VRJUGGLER_ENVIRONMENT ${VRJUGGLER22_ENVIRONMENT})
 		set(VRJUGGLER_RUNTIME_LIBRARY_DIRS ${VRJUGGLER22_RUNTIME_LIBRARY_DIRS})
-		
+
 		set(VRJUGGLER_CXX_FLAGS ${VRJUGGLER22_CXX_FLAGS})
 		set(VRJUGGLER_DEFINITIONS ${VRJUGGLER22_DEFINITIONS})
 		set(VRJUGGLER_BUNDLE_PLUGINS ${VRJUGGLER22_BUNDLE_PLUGINS})
 		set(VRJUGGLER_VJ_BASE_DIR ${VRJUGGLER22_VJ_BASE_DIR})
 		set(VRJUGGLER_VERSION 2.2)
-		
+
 		macro(install_vrjuggler_data_files prefix)
 			install_vrjuggler22_data_files("${prefix}" ${ARGN})
 		endmacro()
-		
+
 		macro(install_vrjuggler_plugins prefix varForFilenames)
 			install_vrjuggler22_plugins("${prefix}" ${varForFilenames} ${ARGN})
 		endmacro()
@@ -173,14 +175,14 @@ find_package_handle_standard_args(VRJuggler
 
 if(VRJUGGLER_FOUND)
 	mark_as_advanced(VRJUGGLER_ROOT_DIR)
-	
+
 	# Set generic component variables, like VPR_LIBRARIES
 	if(VRJUGGLER_VERSION VERSION_EQUAL 2.2)
 		set(_components VRJ22 VRJOGL22 VPR20 TWEEK12 SONIX12 JCCL12)
 	else()
 		set(_components VRJ30 VRJOGL30 VPR22 TWEEK14 SONIX14 JCCL14)
 	endif()
-	
+
 	foreach(comp ${_components})
 		string(LENGTH "${comp}" len)
 		math(EXPR complen "${len} - 2")
