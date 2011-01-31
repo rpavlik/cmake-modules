@@ -2391,12 +2391,12 @@ a few.
        this environment variable, because it cannot auto-detect this change
        and trigger an automatic re-run.
 
-       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       Original Author: 2009-2011 Ryan Pavlik <rpavlik@iastate.edu>
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
-       Brandon Newendorp <brandon@newendorp.com>
+       Brandon Newendorp <brandon@newendorp.com> and Ryan Pavlik
 
-       Copyright Iowa State University 2009-2010.  Distributed under the
+       Copyright Iowa State University 2009-2011.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
