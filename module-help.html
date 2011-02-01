@@ -1249,13 +1249,15 @@
 
   </li>
   <li>
-    <a name="module:LuaTargets"><b><code>LuaTargets</code></b></a>: Copy lua source files as a custom target<br />
+    <a name="module:LuaTargets"><b><code>LuaTargets</code></b></a>: Copy/parse lua source files as a custom target<br />
     <p><br /></p>
 <pre>  include(LuaTargets)<br />  add_lua_target(&lt;target_name&gt; &lt;directory to copy to&gt; [&lt;luafile&gt; &lt;luafile&gt;])<br />    Relative paths for the destination directory are considered with<br />    with respect to CMAKE_CURRENT_BINARY_DIR<br /></pre>
     <p><br /></p>
 <pre>  install_lua_target(&lt;target_name&gt; [arguments to INSTALL(PROGRAMS ...) ])<br /></pre>
     <p><br /></p>
-<p><br /></p>
+<p>Set this variable to specify location of luac, if it is not a target:<br /></p>
+<pre>  LUA_TARGET_LUAC_EXECUTABLE<br /></pre>
+    <p><br /></p>
 <p>Requires CMake 2.6 or newer (uses the 'function' command)<br /></p>
 <p>Original Author: 2009-2010 Ryan Pavlik &lt;rpavlik@iastate.edu&gt; &lt;abiryan@ryand.net&gt; <a href="http://academic.cleardefinition.com">http://academic.cleardefinition.com</a> Iowa State University HCI Graduate Program/VRAC<br /></p>
 <p>Copyright Iowa State University 2009-2010. Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
