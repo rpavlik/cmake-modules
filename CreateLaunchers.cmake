@@ -228,7 +228,12 @@ macro(_launcher_create_target_launcher)
 	if(CMAKE_CONFIGURATION_TYPES)
 		# Multi-config generator - multiple launchers
 		foreach(_config ${CMAKE_CONFIGURATION_TYPES})
-			set(USERFILE_COMMAND "${USERFILE_${_config}_COMMAND}")
+			get_target_property(USERFILE_${_config}_COMMAND
+				${_targetname}
+				LOCATION_${_config})
+			file(TO_NATIVE_PATH
+				"${USERFILE_${_config}_COMMAND}"
+				USERFILE_COMMAND)
 			configure_file("${_launchermoddir}/targetlauncher.${_suffix}.in"
 				"${CMAKE_CURRENT_BINARY_DIR}/launch-${_targetname}-${_config}.${_suffix}"
 				@ONLY)
