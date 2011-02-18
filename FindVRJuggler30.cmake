@@ -447,6 +447,9 @@ function(get_vrjuggler_bundle_sources _target_sources)
 	endif()
 endfunction()
 
+get_filename_component(_vrjuggler30moddir
+	${CMAKE_CURRENT_LIST_FILE}
+	PATH)
 function(fixup_vrjuggler_app_bundle
 	_target
 	_targetInstallDest
@@ -457,9 +460,9 @@ function(fixup_vrjuggler_app_bundle
 		return()
 	endif()
 
-	if(NOT MACOSX_PACKAGE_DIR)
-		set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
-	endif()
+
+	set(PACKAGE_DIR ${_vrjuggler30moddir}/package)
+	set(MACOSX_PACKAGE_DIR ${PACKAGE_DIR}/macosx)
 
 	set(TARGET_LOCATION
 		"${_targetInstallDest}/${_target}${CMAKE_EXECUTABLE_SUFFIX}")
@@ -491,7 +494,7 @@ function(fixup_vrjuggler_app_bundle
 	set(BUNDLE_LIBS ${_extralibs})
 	set(BUNDLE_LIB_DIRS "${VRJUGGLER30_VJ_BASE_DIR}" ${_libdirs})
 
-	configure_file(${MACOSX_PACKAGE_DIR}/fixupbundle.cmake.in
+	configure_file(${PACKAGE_DIR}/fixupbundle.cmake.in
 		${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake
 		@ONLY)
 	install(SCRIPT
