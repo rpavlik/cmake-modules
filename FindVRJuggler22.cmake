@@ -414,20 +414,19 @@ endfunction()
 
 function(get_vrjuggler_bundle_sources _target_sources)
 	if(APPLE)
-		if(NOT MACOSX_PACKAGE_DIR)
-			set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
-		endif()
+		set(_bundledir "${VRJUGGLER22_VJ_CFG_DIR}/../bundle")
+		get_filename_component(_bundledir "${_bundledir}" ABSOLUTE)
 
 		set(_vj_base_dir .)
 		set(_vj_data_dir ${vj_base_dir}/share/vrjuggler-2.2)
 
 		# Append Mac-specific sources to source list
 		set(_vj_bundle_src
-			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
-			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib)
+			${_bundledir}/vrjuggler.icns
+			${_bundledir}/vrjuggler.plist
+			${_bundledir}/en.lproj/MainMenu.nib/classes.nib
+			${_bundledir}/MainMenu.nib/info.nib
+			${_bundledir}/MainMenu.nib/keyedobjects.nib)
 
 		message(STATUS "vjbundlesrc: ${_vj_bundle_src}")
 		set(${_target_sources}
@@ -436,16 +435,16 @@ function(get_vrjuggler_bundle_sources _target_sources)
 			PARENT_SCOPE)
 
 		# Set destination of nib files
-		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib
+		set_source_files_properties(${_bundledir}/MainMenu.nib/classes.nib
+			${_bundledir}/MainMenu.nib/info.nib
+			${_bundledir}/MainMenu.nib/keyedobjects.nib
 			PROPERTIES
 			MACOSX_PACKAGE_LOCATION
 			Resources/en.lproj/MainMenu.nib/)
 
 		# Set destination of Resources
-		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
-			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+		set_source_files_properties(${_bundledir}/vrjuggler.icns
+			${_bundledir}/vrjuggler.plist
 			PROPERTIES
 			MACOSX_PACKAGE_LOCATION
 			Resources/)
