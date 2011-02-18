@@ -3272,7 +3272,8 @@ a few.
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   ResetConfigurations
-       Re-set the available configurations to just RelWithDebInfo and Release
+       Re-set the available configurations to just RelWithDebInfo, Release,
+       and Debug
 
        
 
