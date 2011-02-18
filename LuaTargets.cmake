@@ -30,15 +30,26 @@ set(__add_lua YES)
 include(FileCopyTargets)
 
 function(add_lua_target _target _dest)
-	
+
 	if(NOT ARGN)
 		message(WARNING
 			"In add_lua_target call for target ${_target}, no source files were specified!")
 		return()
 	endif()
-	
+
 	if(NOT LUA_TARGET_LUAC_EXECUTABLE)
-		set(LUA_TARGET_LUAC_EXECUTABLE luac)
+		if(TARGET luac)
+			message(STATUS "luac target found, using that in add_lua_target")
+			set(LUA_TARGET_LUAC_EXECUTABLE luac)
+		else()
+			find_executable(LUA_TARGET_LUAC_EXECUTABLE
+				NAMES
+				luac)
+		endif()
+	endif()
+
+	if(NOT LUA_TARGET_LUAC_EXECUTABLE)
+		message(FATAL_ERROR "Can't find luac: please give LUA_TARGET_LUAC_EXECUTABLE a useful value - currently ${LUA_TARGET_LUAC_EXECUTABLE}")
 	endif()
 
 	set(ALLFILES)
@@ -70,7 +81,10 @@ function(add_lua_target _target _dest)
 		SOURCES ${ARGN}
 		DEPENDS ${ALLFILES})
 	if(TARGET "${LUA_TARGET_LUAC_EXECUTABLE}")
-		add_dependencies(${_target} ${LUA_TARGET_LUAC_EXECUTABLE})
+		get_property(_luac_imported TARGET "${LUA_TARGET_LUAC_EXECUTABLE}" PROPERTY IMPORTED)
+		if(NOT _luac_imported)
+			add_dependencies(${_target} ${LUA_TARGET_LUAC_EXECUTABLE})
+		endif()
 	endif()
 
 	set_property(TARGET ${_target} PROPERTY FILE_COPY_TARGET YES)
