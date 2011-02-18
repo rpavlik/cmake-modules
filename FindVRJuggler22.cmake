@@ -475,8 +475,6 @@ function(fixup_vrjuggler_app_bundle
 
 	set_target_properties(${_target}
 		PROPERTIES
-		MACOSX_BUNDLE
-		true
 		MACOSX_BUNDLE_INFO_PLIST
 		${MACOSX_PACKAGE_DIR}/VRJuggler22BundleInfo.plist.in
 		MACOSX_BUNDLE_ICON_FILE
