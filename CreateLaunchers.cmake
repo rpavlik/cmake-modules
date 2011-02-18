@@ -64,18 +64,28 @@ macro(_launcher_system_settings)
 		# Find user and system name
 		set(SYSTEM_NAME $ENV{USERDOMAIN})
 		set(USER_NAME $ENV{USERNAME})
-
-		if(MSVC100)
+		set(VCPROJ_TYPE vcproj)
+		set(USERFILE_EXTENSION ${SYSTEM_NAME}.${USER_NAME}.user)
+		set(LAUNCHER_LINESEP "&#x0A;")
+		if(MSVC10)
+			set(LAUNCHER_LINESEP "\n")
 			set(USERFILE_VC_VERSION 10.00)
+			set(USERFILE_EXTENSION user)
+			set(VCPROJ_TYPE vcxproj)
 		elseif(MSVC90)
 			set(USERFILE_VC_VERSION 9.00)
 		elseif(MSVC80)
 			set(USERFILE_VC_VERSION 8.00)
 		elseif(MSVC71)
 			set(USERFILE_VC_VERSION 7.10)
+		elseif(MSVC)
+			message(STATUS "MSVC but unrecognized version!")
 		endif()
-
-		set(USERFILE_PLATFORM Win${BITS})
+		if(BITS EQUAL 64)
+			set(USERFILE_PLATFORM x64)
+		else()
+			set(USERFILE_PLATFORM Win${BITS})
+		endif()
 		set(_pathdelim ";")
 		set(_suffix "cmd")
 	else()
@@ -176,7 +186,7 @@ macro(_launcher_process_args)
 	set(USERFILE_ENV_COMMANDS)
 	foreach(_arg "${RUNTIME_LIBRARIES_ENVIRONMENT}" ${ENVIRONMENT})
 		string(CONFIGURE
-			"@USERFILE_ENVIRONMENT@&#x0A;@_arg@"
+			"@USERFILE_ENVIRONMENT@@LAUNCHER_LINESEP@@_arg@"
 			USERFILE_ENVIRONMENT
 			@ONLY)
 		string(CONFIGURE
@@ -189,7 +199,7 @@ endmacro()
 macro(_launcher_produce_vcproj_user)
 	if(MSVC)
 		file(READ
-			"${_launchermoddir}/perconfig.vcproj.user.in"
+			"${_launchermoddir}/perconfig.${VCPROJ_TYPE}.user.in"
 			_perconfig)
 		set(USERFILE_CONFIGSECTIONS)
 		foreach(USERFILE_CONFIGNAME ${CMAKE_CONFIGURATION_TYPES})
@@ -207,8 +217,8 @@ macro(_launcher_produce_vcproj_user)
 		endforeach()
 
 
-		configure_file("${_launchermoddir}/vcproj.user.in"
-			${VCPROJNAME}.vcproj.${SYSTEM_NAME}.${USER_NAME}.user
+		configure_file("${_launchermoddir}/${VCPROJ_TYPE}.user.in"
+			${VCPROJNAME}.${VCPROJ_TYPE}.${USERFILE_EXTENSION}
 			@ONLY)
 	endif()
 
@@ -242,9 +252,6 @@ function(create_default_target_launcher _targetname)
 	_launcher_process_args(${ARGN})
 
 	set(VCPROJNAME "${CMAKE_BINARY_DIR}/ALL_BUILD")
-	_launcher_produce_vcproj_user()
-
-	set(VCPROJNAME "${CMAKE_CURRENT_BINARY_DIR}/${_targetname}")
 	_launcher_produce_vcproj_user()
 
 	_launcher_create_target_launcher()
