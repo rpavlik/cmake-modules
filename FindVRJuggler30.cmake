@@ -247,13 +247,11 @@ if(VRJUGGLER30_FOUND)
 	set(_vrj30_base_dir "${_vrj30_base_dir}" CACHE INTERNAL "" FORCE)
 
 	if(_vrj30_have_base_dir)
-		file(GLOB
-			_poss_dirs
-			${VRJUGGLER30_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
 		find_path(VRJUGGLER30_VJ_CFG_DIR
 			standalone.jconf
 			PATHS
-			${_poss_dirs}
+			${VRJUGGLER30_VJ_BASE_DIR}/share/vrjuggler-3.0/data/configFiles
+			${VRJUGGLER30_VJ_BASE_DIR}/share/vrjuggler/data/configFiles
 			NO_DEFAULT_PATH)
 		mark_as_advanced(VRJUGGLER30_VJ_CFG_DIR)
 	endif()
