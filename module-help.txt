@@ -470,7 +470,7 @@ a few.
            [RUNTIME_LIBRARY_DIRS <dir...>]
            [WORKING_DIRECTORY <dir>]
            [ENVIRONMENT <VAR=value> [<VAR=value>...]])
-           - sets GENERIC_LAUNCHER_COMMAND amd GENERIC_LAUNCHER_FAIL_REGULAR_EXPRESSION
+           - sets GENERIC_LAUNCHER_COMMAND and GENERIC_LAUNCHER_FAIL_REGULAR_EXPRESSION
 
        
 
@@ -2658,6 +2658,41 @@ a few.
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  Findcppunit
+       try to find cppunit library
+
+       
+
+       Cache Variables: (probably not for direct use in your scripts)
+
+         CPPUNIT_INCLUDE_DIR
+         CPPUNIT_LIBRARY
+
+       
+
+       Non-cache variables you might use in your CMakeLists.txt:
+
+         CPPUNIT_FOUND
+         CPPUNIT_INCLUDE_DIRS
+         CPPUNIT_LIBRARIES
+
+       
+
+       Requires these CMake modules:
+
+         SelectLibraryConfigurations (included with CMake >= 2.8.0)
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2009-2011 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2009-2011.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
   Findcutil
        find NVIDIA CUDA and source for the cutil library, building cutil if
        needed.
@@ -3182,39 +3217,6 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-  MakeVRJugglerAppBundle
-       A script to turn a VR Juggler app target into a Mac OS X bundle
-
-       
-
-         add_vrjuggler_bundle_sources(SOURCES_VAR_NAME) - run before add_executable
-         finish_vrjuggler_bundle(TARGET_NAME LIB_DIRS) - run after add_executable
-
-       
-
-       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
-       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
-       University HCI Graduate Program/VRAC
-
-       Copyright Iowa State University 2009-2010.  Distributed under the
-       Boost Software License, Version 1.0.  (See accompanying file
-       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-  MakeVRJugglerAppBundle30
-       A script to turn a VR Juggler app target into a Mac OS X bundle
-
-       
-
-         add_vrjuggler_bundle_sources(SOURCES_VAR_NAME) - run before add_executable
-         finish_vrjuggler_bundle(TARGET_NAME LIB_DIRS) - run after add_executable
-
-       
-
-       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
-       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
-       University HCI Graduate Program/VRAC Updated for VR Juggler 3.0 by:
-       Brandon Newendorp <brandon@newendorp.com>
 
   OptionRequires
        Add an option that depends on one or more variables being true.
