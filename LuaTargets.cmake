@@ -41,7 +41,7 @@ function(add_lua_target _target _dest)
 		if(TARGET luac)
 			set(LUA_TARGET_LUAC_EXECUTABLE luac)
 		else()
-			find_executable(LUA_TARGET_LUAC_EXECUTABLE
+			find_program(LUA_TARGET_LUAC_EXECUTABLE
 				NAMES
 				luac)
 		endif()
@@ -50,6 +50,7 @@ function(add_lua_target _target _dest)
 	if(NOT LUA_TARGET_LUAC_EXECUTABLE)
 		message(FATAL_ERROR "Can't find luac: please give LUA_TARGET_LUAC_EXECUTABLE a useful value - currently ${LUA_TARGET_LUAC_EXECUTABLE}")
 	endif()
+	mark_as_advanced(LUA_TARGET_LUAC_EXECUTABLE)
 
 	set(ALLFILES)
 	set(SOURCES)
