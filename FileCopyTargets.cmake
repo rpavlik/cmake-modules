@@ -67,7 +67,7 @@ function(add_file_copy_target _target _dest)
 			COMMAND
 			${CMAKE_COMMAND}
 			ARGS -E copy "${fullpath}" "${_dest}"
-			MAIN_DEPENDENCY "${fn}"
+			MAIN_DEPENDENCY "${fullpath}"
 			VERBATIM
 			COMMENT "Copying ${fn} to ${absout}")
 		list(APPEND SOURCES "${fullpath}")

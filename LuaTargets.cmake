@@ -75,7 +75,7 @@ function(add_lua_target _target _dest)
 			COMMAND
 			"${LUA_TARGET_LUAC_EXECUTABLE}"
 			ARGS -p "${fullpath}"
-			MAIN_DEPENDENCY "${fn}"
+			MAIN_DEPENDENCY "${fullpath}"
 			VERBATIM
 			COMMENT "Copying ${fn} to ${absout} and parsing...")
 		list(APPEND SOURCES "${fullpath}")
