@@ -39,7 +39,6 @@ function(add_lua_target _target _dest)
 
 	if(NOT LUA_TARGET_LUAC_EXECUTABLE)
 		if(TARGET luac)
-			message(STATUS "luac target found, using that in add_lua_target")
 			set(LUA_TARGET_LUAC_EXECUTABLE luac)
 		else()
 			find_executable(LUA_TARGET_LUAC_EXECUTABLE
@@ -53,32 +52,39 @@ function(add_lua_target _target _dest)
 	endif()
 
 	set(ALLFILES)
+	set(SOURCES)
 	foreach(fn ${ARGN})
+		# Produce an absolute path to the input file
 		if(IS_ABSOLUTE "${fn}")
-			set(fullpath "${fn}")
+			get_filename_component(fullpath "${fn}" ABSOLUTE)
 			get_filename_component(fn "${fn}" NAME)
 		else()
 			get_filename_component(fullpath "${CMAKE_CURRENT_SOURCE_DIR}/${fn}" ABSOLUTE)
 		endif()
-		add_custom_command(OUTPUT "${_dest}/${fn}"
-				COMMAND
-				${CMAKE_COMMAND}
-				ARGS -E make_directory "${_dest}"
-				COMMAND
-				${CMAKE_COMMAND}
-				ARGS -E copy "${fullpath}" "${_dest}"
-				COMMAND
-				"${LUA_TARGET_LUAC_EXECUTABLE}"
-				ARGS -p "${fullpath}"
-				WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-				DEPENDS "${fullpath}"
-				COMMENT "Copying ${fullpath} to ${_dest}/${fn} and parsing...")
-		list(APPEND ALLFILES "${_dest}/${fn}")
+
+		# Clean up output file name
+		get_filename_component(absout "${_dest}/${fn}" ABSOLUTE)
+
+		add_custom_command(OUTPUT "${absout}"
+			COMMAND
+			${CMAKE_COMMAND}
+			ARGS -E make_directory "${_dest}"
+			COMMAND
+			${CMAKE_COMMAND}
+			ARGS -E copy "${fullpath}" "${_dest}"
+			COMMAND
+			"${LUA_TARGET_LUAC_EXECUTABLE}"
+			ARGS -p "${fullpath}"
+			MAIN_DEPENDENCY "${fn}"
+			VERBATIM
+			COMMENT "Copying ${fn} to ${absout} and parsing...")
+		list(APPEND SOURCES "${fullpath}")
+		list(APPEND ALLFILES "${absout}")
 	endforeach()
 
 	# Custom target depending on all the file copy commands
 	add_custom_target(${_target}
-		SOURCES ${ARGN}
+		SOURCES ${SOURCES}
 		DEPENDS ${ALLFILES})
 	if(TARGET "${LUA_TARGET_LUAC_EXECUTABLE}")
 		get_property(_luac_imported TARGET "${LUA_TARGET_LUAC_EXECUTABLE}" PROPERTY IMPORTED)

@@ -47,29 +47,36 @@ function(add_file_copy_target _target _dest)
 	endif()
 
 	set(ALLFILES)
+	set(SOURCES)
 	foreach(fn ${ARGN})
+		# Produce an absolute path to the input file
 		if(IS_ABSOLUTE "${fn}")
-			set(fullpath "${fn}")
+			get_filename_component(fullpath "${fn}" ABSOLUTE)
 			get_filename_component(fn "${fn}" NAME)
 		else()
 			get_filename_component(fullpath "${CMAKE_CURRENT_SOURCE_DIR}/${fn}" ABSOLUTE)
 		endif()
-		add_custom_command(OUTPUT "${_dest}/${fn}"
-				COMMAND
-				${CMAKE_COMMAND}
-				ARGS -E make_directory "${_dest}"
-				COMMAND
-				${CMAKE_COMMAND}
-				ARGS -E copy "${fullpath}" "${_dest}"
-				WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-				DEPENDS "${fullpath}"
-				COMMENT "Copying ${fullpath} to ${_dest}/${fn}")
-		list(APPEND ALLFILES "${_dest}/${fn}")
+
+		# Clean up output file name
+		get_filename_component(absout "${_dest}/${fn}" ABSOLUTE)
+
+		add_custom_command(OUTPUT "${absout}"
+			COMMAND
+			${CMAKE_COMMAND}
+			ARGS -E make_directory "${_dest}"
+			COMMAND
+			${CMAKE_COMMAND}
+			ARGS -E copy "${fullpath}" "${_dest}"
+			MAIN_DEPENDENCY "${fn}"
+			VERBATIM
+			COMMENT "Copying ${fn} to ${absout}")
+		list(APPEND SOURCES "${fullpath}")
+		list(APPEND ALLFILES "${absout}")
 	endforeach()
 
 	# Custom target depending on all the file copy commands
 	add_custom_target(${_target}
-		SOURCES ${ARGN}
+		SOURCES ${SOURCES}
 		DEPENDS ${ALLFILES})
 
 	set_property(TARGET ${_target} PROPERTY FILE_COPY_TARGET YES)
