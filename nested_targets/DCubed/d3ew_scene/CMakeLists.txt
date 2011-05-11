@@ -26,7 +26,6 @@ foreach(filename ansi.hxx
 	ehlc_timer.hxx
 	face.cpp
 	face.hxx
-	files.txt
 	frustum.cpp
 	frustum.hxx
 	hldeb.hxx
