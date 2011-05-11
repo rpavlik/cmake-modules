@@ -144,13 +144,15 @@ elseif(UNIX)
 	string(TOLOWER "${CMAKE_SYSTEM_NAME}" _sysname)
 	file(TO_CMAKE_PATH "$ENV{JTTK_DEV_PATH}" _envloc)
 	prefix_list_glob(_jttklibs
-		"lib/${_sysname}_${BITS}${_compiler}/libJtTk*"
+		"/lib/${_sysname}_${BITS}${_compiler}/libJtTk*"
+		"${JTTK_ROOT_DIR}"
 		"/usr/"
 		"/usr/local/"
 		"/usr/local/siemens/"
 		"/usr/local/ugs/")
 	prefix_list_glob(_jttklibs2
-		"dev/lib/${_sysname}_${BITS}${_compiler}/libJtTk*"
+		"/dev/lib/${_sysname}_${BITS}${_compiler}/libJtTk*"
+		"${JTTK_ROOT_DIR}"
 		"/usr/"
 		"/usr/local/"
 		"/usr/local/siemens/"
