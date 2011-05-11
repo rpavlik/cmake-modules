@@ -40,6 +40,7 @@ function(add_lua_target _target _dest)
 	if(NOT LUA_TARGET_LUAC_EXECUTABLE)
 		if(TARGET luac)
 			set(LUA_TARGET_LUAC_EXECUTABLE luac)
+			mark_as_advanced(LUA_TARGET_LUAC_EXECUTABLE)
 		else()
 			find_program(LUA_TARGET_LUAC_EXECUTABLE
 				NAMES
