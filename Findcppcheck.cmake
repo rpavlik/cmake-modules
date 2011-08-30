@@ -39,6 +39,10 @@ set(CPPCHECK_ROOT_DIR
 set(_oldappbundlesetting ${CMAKE_FIND_APPBUNDLE})
 set(CMAKE_FIND_APPBUNDLE NEVER)
 
+if(CPPCHECK_EXECUTABLE AND NOT EXISTS "${CPPCHECK_EXECUTABLE}")
+	set(CPPCHECK_EXECUTABLE "notfound" CACHE PATH FORCE "")
+endif()
+
 # If we have a custom path, look there first.
 if(CPPCHECK_ROOT_DIR)
 	find_program(CPPCHECK_EXECUTABLE
@@ -57,37 +61,54 @@ find_program(CPPCHECK_EXECUTABLE NAMES cppcheck)
 # Restore original setting for appbundle finding
 set(CMAKE_FIND_APPBUNDLE ${_oldappbundlesetting})
 
+# Find out where our test file is
+get_filename_component(_cppcheckmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
+set(_cppcheckdummyfile "${_cppcheckmoddir}/Findcppcheck.cpp")
+
+function(_cppcheck_test_arg _resultvar _arg)
+	if(NOT CPPCHECK_EXECUTABLE)
+		set(${_resultvar} NO)
+		return()
+	endif()
+	execute_process(COMMAND
+		"${CPPCHECK_EXECUTABLE}"
+		"${_arg}"
+		"--quiet"
+		"${_cppcheckdummyfile}"
+		RESULT_VARIABLE
+		_cppcheck_result
+		OUTPUT_QUIET
+		ERROR_QUIET)
+	if("${_cppcheck_result}" EQUAL 0)
+		set(${_resultvar} YES PARENT_SCOPE)
+	else()
+		set(${_resultvar} NO PARENT_SCOPE)
+	endif()
+endfunction()
+
+function(_cppcheck_set_arg_var _argvar _arg)
+	if("${${_argvar}}" STREQUAL "")
+		_cppcheck_test_arg(_cppcheck_arg "${_arg}")
+		if(_cppcheck_arg)
+			set(${_argvar} "${_arg}" PARENT_SCOPE)
+		endif()
+	endif()
+endfunction()
+
 if(CPPCHECK_EXECUTABLE)
-	# Find out where our test file is
-	get_filename_component(_cppcheckmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
-	set(_cppcheckdummyfile "${_cppcheckmoddir}/Findcppcheck.cpp")
 
 	# Check for the two types of command line arguments by just trying them
-	execute_process(COMMAND
-		"${CPPCHECK_EXECUTABLE}"
-		"--enable=style"
-		"--quiet"
-		"${_cppcheckdummyfile}"
-		RESULT_VARIABLE
-		_cppcheck_new_result
-		OUTPUT_QUIET
-		ERROR_QUIET)
-	execute_process(COMMAND
-		"${CPPCHECK_EXECUTABLE}"
-		"--style"
-		"--quiet"
-		"${_cppcheckdummyfile}"
-		RESULT_VARIABLE
-		_cppcheck_old_result
-		OUTPUT_QUIET
-		ERROR_QUIET)
-	if("${_cppcheck_new_result}" EQUAL 0)
-		# New arguments
-		set(CPPCHECK_UNUSEDFUNC_ARG "--enable=unusedFunctions")
-		set(CPPCHECK_POSSIBLEERROR_ARG "--enable=possibleError")
-		set(CPPCHECK_STYLE_ARG "--enable=style")
-		set(CPPCHECK_QUIET_ARG "--quiet")
-		set(CPPCHECK_INCLUDEPATH_ARG "-I")
+	_cppcheck_set_arg_var(CPPCHECK_STYLE_ARG "--enable=style")
+	_cppcheck_set_arg_var(CPPCHECK_STYLE_ARG "--style")
+	if("${CPPCHECK_STYLE_ARG}" STREQUAL "--enable=style")
+
+		_cppcheck_set_arg_var(CPPCHECK_UNUSEDFUNC_ARG "--enable=unusedFunctions")
+		_cppcheck_set_arg_var(CPPCHECK_INFORMATION_ARG "--enable=information")
+		_cppcheck_set_arg_var(CPPCHECK_MISSINGINCLUDE_ARG "--enable=missingInclude")
+		_cppcheck_set_arg_var(CPPCHECK_POSIX_ARG "--enable=posix")
+		_cppcheck_set_arg_var(CPPCHECK_POSSIBLEERROR_ARG "--enable=possibleError")
+		_cppcheck_set_arg_var(CPPCHECK_POSSIBLEERROR_ARG "--enable=all")
+
 		if(MSVC)
 			set(CPPCHECK_TEMPLATE_ARG --template vs)
 			set(CPPCHECK_FAIL_REGULAR_EXPRESSION "[(]error[)]")
@@ -97,19 +118,14 @@ if(CPPCHECK_EXECUTABLE)
 			set(CPPCHECK_FAIL_REGULAR_EXPRESSION " error: ")
 			set(CPPCHECK_WARN_REGULAR_EXPRESSION " style: ")
 		else()
-			message(STATUS
-				"Warning: FindCppcheck doesn't know how to format error messages for your compiler!")
 			set(CPPCHECK_TEMPLATE_ARG --template gcc)
 			set(CPPCHECK_FAIL_REGULAR_EXPRESSION " error: ")
 			set(CPPCHECK_WARN_REGULAR_EXPRESSION " style: ")
 		endif()
-	elseif("${_cppcheck_old_result}" EQUAL 0)
+	elseif("${CPPCHECK_STYLE_ARG}" STREQUAL "--style")
 		# Old arguments
-		set(CPPCHECK_UNUSEDFUNC_ARG "--unused-functions")
-		set(CPPCHECK_POSSIBLEERROR_ARG "--all")
-		set(CPPCHECK_STYLE_ARG "--style")
-		set(CPPCHECK_QUIET_ARG "--quiet")
-		set(CPPCHECK_INCLUDEPATH_ARG "-I")
+		_cppcheck_set_arg_var(CPPCHECK_UNUSEDFUNC_ARG "--unused-functions")
+		_cppcheck_set_arg_var(CPPCHECK_POSSIBLEERROR_ARG "--all")
 		set(CPPCHECK_FAIL_REGULAR_EXPRESSION "error:")
 		set(CPPCHECK_WARN_REGULAR_EXPRESSION "[(]style[)]")
 	else()
@@ -118,6 +134,8 @@ if(CPPCHECK_EXECUTABLE)
 			"WARNING: Can't detect whether CPPCHECK wants new or old-style arguments!")
 	endif()
 
+	set(CPPCHECK_QUIET_ARG "--quiet")
+	set(CPPCHECK_INCLUDEPATH_ARG "-I")
 
 endif()
 
