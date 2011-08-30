@@ -230,6 +230,7 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
 			STRING
 			"We will build the OpenHaptics HDU lib."
 			FORCE)
+		set(HDAPI_HDU_LIBRARIES ${HDAPI_HDU_LIBRARY})
 	endif()
 endif()
 
@@ -314,6 +315,7 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
 			STRING
 			"We will build the OpenHaptics HLU lib."
 			FORCE)
+		set(HLAPI_HLU_LIBRARIES ${HLAPI_HLU_LIBRARY})
 	endif()
 endif()
 
