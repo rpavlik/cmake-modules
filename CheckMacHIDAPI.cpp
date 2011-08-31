@@ -35,8 +35,6 @@ int main(int argc, char* argv[]) {
 #if defined(__APPLE__)
 	io_object_t _ioObject;
 	IOHIDDeviceInterface122 **_interface;
-	bool _gotdata;
-	int _gotsize;
 	unsigned char _buffer[512];
 	IOReturn result = (*_interface)->setInterruptReportHandlerCallback(_interface,
 															  _buffer, 512,

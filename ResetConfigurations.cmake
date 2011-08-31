@@ -1,4 +1,4 @@
-# - Re-set the available configurations to just RelWithDebInfo and Release
+# - Re-set the available configurations to just RelWithDebInfo, Release, and Debug
 #
 # Requires these CMake modules:
 #  no additional modules required
@@ -21,7 +21,7 @@ endif()
 set(__reset_configurations YES)
 
 if(CMAKE_CONFIGURATION_TYPES)
-	set(CMAKE_CONFIGURATION_TYPES "RelWithDebInfo;Release")
+	set(CMAKE_CONFIGURATION_TYPES "RelWithDebInfo;Release;Debug")
 	set(CMAKE_CONFIGURATION_TYPES
 		"${CMAKE_CONFIGURATION_TYPES}"
 		CACHE

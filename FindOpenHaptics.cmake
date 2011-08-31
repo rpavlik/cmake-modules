@@ -230,6 +230,7 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
 			STRING
 			"We will build the OpenHaptics HDU lib."
 			FORCE)
+		set(HDAPI_HDU_LIBRARIES ${HDAPI_HDU_LIBRARY})
 	endif()
 endif()
 
@@ -314,62 +315,9 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
 			STRING
 			"We will build the OpenHaptics HLU lib."
 			FORCE)
+		set(HLAPI_HLU_LIBRARIES ${HLAPI_HLU_LIBRARY})
 	endif()
 endif()
-
-
-###
-# Unix: check stdc++ version
-###
-
-if(UNIX
-	AND
-	HDAPI_LIBRARY
-	AND
-	HDAPI_PHANToMIO_LIBRARY
-	AND
-	HDAPI_INCLUDE_DIR)
-	find_file(OPENHAPTICS_LINKTEST_FILE
-		FindOpenHaptics.cpp
-		PATHS
-		${CMAKE_MODULE_PATH})
-	mark_as_advanced(OPENHAPTICS_LINKTEST_FILE)
-
-	try_compile(_result
-		${CMAKE_CURRENT_BINARY_DIR}/FindOpenHaptics
-		"${OPENHAPTICS_LINKTEST_FILE}"
-		CMAKE_FLAGS
-		"-DLINK_LIBRARIES=${HDAPI_LIBRARY}\;${HDAPI_PHANToMIO_LIBRARY} -DINCLUDE_DIRECTORIES=${HDAPI_INCLUDE_DIR}")
-	if(NOT _result)
-		set(OPENHAPTICS_LIBSTDCPP_DIR
-			"${OPENHAPTICS_LIBSTDCPP_DIR}"
-			CACHE
-			PATH
-			"The path to search for a libstdc++ with GLIBCXX_3.4.9 defined.")
-		if(OPENHAPTICS_LIBSTDCPP_DIR)
-			mark_as_advanced(OPENHAPTICS_LIBSTDCPP_DIR)
-		endif()
-		find_library(OPENHAPTICS_LIBSTDCPP_LIBRARY
-			libstdc++
-			PATHS
-			${OPENHAPTICS_LIBSTDCPP_DIR}
-			NO_DEFAULT_PATH)
-		if(OPENHAPTICS_LIBSTDCPP_LIBRARY)
-			mark_as_advanced(OPENHAPTICS_LIBSTDCPP_LIBRARY)
-		endif()
-		list(APPEND _deps_check OPENHAPTICS_LIBSTDCPP_LIBRARY)
-		list(APPEND _deps_libs "${OPENHAPTICS_LIBSTDCPP_LIBRARY}")
-
-		get_filename_component(_stdcppdir
-			"${OPENHAPTICS_LIBSTDCPP_LIBRARY}"
-			PATH)
-		list(APPEND
-			OPENHAPTICS_ENVIRONMENT
-			"LD_LIBRARY_PATH=${_stdcppdir}:$LD_LIBRARY_PATH")
-		list(APPEND OPENHAPTICS_RUNTIME_LIBRARY_DIRS "${_stdcppdir}")
-	endif()
-endif()
-
 
 ###
 # Add dependencies: Libraries

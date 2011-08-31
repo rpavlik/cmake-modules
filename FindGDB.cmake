@@ -38,9 +38,9 @@ find_program(GDB_COMMAND
 if(GDB_COMMAND)
 	execute_process(COMMAND gdb --version
 		COMMAND head -n 1
-		COMMAND sed -r "s/[^0-9]*([0-9]+[0-9.]*).*/\\1/"
 		OUTPUT_VARIABLE GDB_VERSION
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
+	string(REGEX REPLACE "[^0-9]*([0-9]+[0-9.]*).*" "\\1" GDB_VERSION "${GDB_VERSION}")
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if

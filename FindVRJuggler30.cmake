@@ -247,13 +247,11 @@ if(VRJUGGLER30_FOUND)
 	set(_vrj30_base_dir "${_vrj30_base_dir}" CACHE INTERNAL "" FORCE)
 
 	if(_vrj30_have_base_dir)
-		file(GLOB
-			_poss_dirs
-			${VRJUGGLER30_VJ_BASE_DIR}/share/vrjuggler*/data/configFiles)
 		find_path(VRJUGGLER30_VJ_CFG_DIR
 			standalone.jconf
 			PATHS
-			${_poss_dirs}
+			${VRJUGGLER30_VJ_BASE_DIR}/share/vrjuggler-3.0/data/configFiles
+			${VRJUGGLER30_VJ_BASE_DIR}/share/vrjuggler/data/configFiles
 			NO_DEFAULT_PATH)
 		mark_as_advanced(VRJUGGLER30_VJ_CFG_DIR)
 	endif()
@@ -412,20 +410,19 @@ endfunction()
 
 function(get_vrjuggler_bundle_sources _target_sources)
 	if(APPLE)
-		if(NOT MACOSX_PACKAGE_DIR)
-			set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
-		endif()
+		set(_bundledir "${VRJUGGLER30_VJ_CFG_DIR}/../bundle")
+		get_filename_component(_bundledir "${_bundledir}" ABSOLUTE)
 
 		set(_vj_base_dir .)
 		set(_vj_data_dir ${vj_base_dir}/share/vrjuggler-3.0)
 
 		# Append Mac-specific sources to source list
 		set(_vj_bundle_src
-			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
-			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib)
+			${_bundledir}/vrjuggler.icns
+			${_bundledir}/vrjuggler.plist
+			${_bundledir}/en.lproj/MainMenu.nib/classes.nib
+			${_bundledir}/MainMenu.nib/info.nib
+			${_bundledir}/MainMenu.nib/keyedobjects.nib)
 
 		message(STATUS "vjbundlesrc: ${_vj_bundle_src}")
 		set(${_target_sources}
@@ -434,22 +431,25 @@ function(get_vrjuggler_bundle_sources _target_sources)
 			PARENT_SCOPE)
 
 		# Set destination of nib files
-		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/classes.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/info.nib
-			${MACOSX_PACKAGE_DIR}/Resources/en.lproj/MainMenu.nib/keyedobjects.nib
+		set_source_files_properties(${_bundledir}/MainMenu.nib/classes.nib
+			${_bundledir}/MainMenu.nib/info.nib
+			${_bundledir}/MainMenu.nib/keyedobjects.nib
 			PROPERTIES
 			MACOSX_PACKAGE_LOCATION
 			Resources/en.lproj/MainMenu.nib/)
 
 		# Set destination of Resources
-		set_source_files_properties(${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.icns
-			${MACOSX_PACKAGE_DIR}/Resources/vrjuggler.plist
+		set_source_files_properties(${_bundledir}/vrjuggler.icns
+			${_bundledir}/vrjuggler.plist
 			PROPERTIES
 			MACOSX_PACKAGE_LOCATION
 			Resources/)
 	endif()
 endfunction()
 
+get_filename_component(_vrjuggler30moddir
+	${CMAKE_CURRENT_LIST_FILE}
+	PATH)
 function(fixup_vrjuggler_app_bundle
 	_target
 	_targetInstallDest
@@ -460,9 +460,9 @@ function(fixup_vrjuggler_app_bundle
 		return()
 	endif()
 
-	if(NOT MACOSX_PACKAGE_DIR)
-		set(MACOSX_PACKAGE_DIR ${CMAKE_SOURCE_DIR}/cmake/package/macosx)
-	endif()
+
+	set(PACKAGE_DIR ${_vrjuggler30moddir}/package)
+	set(MACOSX_PACKAGE_DIR ${PACKAGE_DIR}/macosx)
 
 	set(TARGET_LOCATION
 		"${_targetInstallDest}/${_target}${CMAKE_EXECUTABLE_SUFFIX}")
@@ -472,8 +472,6 @@ function(fixup_vrjuggler_app_bundle
 
 	set_target_properties(${_target}
 		PROPERTIES
-		MACOSX_BUNDLE
-		true
 		MACOSX_BUNDLE_INFO_PLIST
 		${MACOSX_PACKAGE_DIR}/VRJuggler30BundleInfo.plist.in
 		MACOSX_BUNDLE_ICON_FILE
@@ -494,7 +492,7 @@ function(fixup_vrjuggler_app_bundle
 	set(BUNDLE_LIBS ${_extralibs})
 	set(BUNDLE_LIB_DIRS "${VRJUGGLER30_VJ_BASE_DIR}" ${_libdirs})
 
-	configure_file(${MACOSX_PACKAGE_DIR}/fixupbundle.cmake.in
+	configure_file(${PACKAGE_DIR}/fixupbundle.cmake.in
 		${CMAKE_CURRENT_BINARY_DIR}/${_target}-fixupbundle-juggler.cmake
 		@ONLY)
 	install(SCRIPT

@@ -78,7 +78,10 @@ find_path(WINHID_INCLUDE_DIR
 	PATHS
 	"${WINHID_ROOT_DIR}"
 	PATH_SUFFIXES
-	inc/api)
+	inc/api
+	inc/w2k
+	inc/wxp
+	inc/wnet)
 
 find_path(WINHID_CRT_INCLUDE_DIR # otherwise you get weird compile errors
 	NAMES
