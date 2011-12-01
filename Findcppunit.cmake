@@ -45,7 +45,7 @@ include(SelectLibraryConfigurations)
 select_library_configurations(CPPUNIT)
 
 # Might want to look close to the library first for the includes.
-get_filename_component(_libdir "${MYSIMPLEPACKAGE_LIBRARY}" PATH)
+get_filename_component(_libdir "${CPPUNIT_LIBRARY_RELEASE}" PATH)
 
 find_path(CPPUNIT_INCLUDE_DIR
 	NAMES

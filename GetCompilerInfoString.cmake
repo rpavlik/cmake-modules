@@ -106,11 +106,9 @@ function(get_compiler_info_string _var)
 		set(_verstring "gcc${_gccver}")
 
 	else()
-		# Some other compiler we don't handle yet.
-		message(STATUS
-			"WARNING: Not GCC or MSVC, so we invented a messy compiler info string")
+		# Some other compiler we don't handle in more detail yet.
 		string(REGEX REPLACE " " "_" _verstring "${CMAKE_GENERATOR}")
-		set(_verstring "generator:${_verstring}")
+		set(_verstring "${CMAKE_CXX_COMPILER_ID}:generator:${_verstring}")
 	endif()
 
 	# Return _verstring

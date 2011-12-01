@@ -31,9 +31,10 @@ if(NOT WIN32)
 		WIN32)
 	return()
 endif()
-
-if( (NOT WINHID_ROOT_DIR) AND (NOT ENV{DDKROOT} STREQUAL "") )
-	set(WINHID_ROOT_DIR "$ENV{DDKROOT}")
+if(MSVC)
+	if( (NOT WINHID_ROOT_DIR) AND (NOT ENV{DDKROOT} STREQUAL "") )
+		set(WINHID_ROOT_DIR "$ENV{DDKROOT}")
+	endif()
 endif()
 set(WINHID_ROOT_DIR
 	"${WINHID_ROOT_DIR}"
@@ -47,78 +48,100 @@ else()
 	set(_arch i386)
 endif()
 
-include(PrefixListGlob)
-include(CleanDirectoryList)
-prefix_list_glob(_prefixed "*/" "$ENV{SYSTEMDRIVE}/WinDDK/" "c:/WinDDK/")
-clean_directory_list(_prefixed)
+if(MSVC)
+	include(PrefixListGlob)
+	include(CleanDirectoryList)
+	prefix_list_glob(_prefixed "*/" "$ENV{SYSTEMDRIVE}/WinDDK/" "c:/WinDDK/")
+	clean_directory_list(_prefixed)
+	find_library(WINHID_LIBRARY
+		NAMES
+		hid
+		libhid
+		HINTS
+		"${WINHID_ROOT_DIR}"
+		${_prefixed}
+		PATH_SUFFIXES
+		"lib/w2k/${_arch}" # Win2k min requirement
+		"lib/wxp/${_arch}" # WinXP min requirement
+		"lib/wnet/${_arch}" # Win Server 2003 min requirement
+		"lib/wlh/${_arch}" # Win Vista ("Long Horn") min requirement
+		"lib/win7/${_arch}" # Win 7 min requirement
+		)
+		# Might want to look close to the library first for the includes.
+	get_filename_component(_libdir "${WINHID_LIBRARY}" PATH)
+	get_filename_component(_basedir "${_libdir}/../../.." ABSOLUTE)
 
-find_library(WINHID_LIBRARY
-	NAMES
-	hid
-	HINTS
-	"${WINHID_ROOT_DIR}"
-	${_prefixed}
-	PATH_SUFFIXES
-	"lib/w2k/${_arch}" # Win2k min requirement
-	"lib/wxp/${_arch}" # WinXP min requirement
-	"lib/wnet/${_arch}" # Win Server 2003 min requirement
-	"lib/wlh/${_arch}" # Win Vista ("Long Horn") min requirement
-	"lib/win7/${_arch}" # Win 7 min requirement
-	)
-
-# Might want to look close to the library first for the includes.
-get_filename_component(_libdir "${WINHID_LIBRARY}" PATH)
-get_filename_component(_basedir "${_libdir}/../../.." ABSOLUTE)
-
-find_path(WINHID_INCLUDE_DIR
-	NAMES
-	hidsdi.h
-	HINTS
-	"${_basedir}"
-	PATHS
-	"${WINHID_ROOT_DIR}"
-	PATH_SUFFIXES
-	inc/api
-	inc/w2k
-	inc/wxp
-	inc/wnet)
-
-find_path(WINHID_CRT_INCLUDE_DIR # otherwise you get weird compile errors
-	NAMES
-	stdio.h
-	HINTS
-	"${_basedir}"
-	PATHS
-	"${WINHID_ROOT_DIR}"
-	PATH_SUFFIXES
-	inc/crt
-	NO_DEFAULT_PATH)
+	find_path(WINHID_CRT_INCLUDE_DIR # otherwise you get weird compile errors
+		NAMES
+		stdio.h
+		HINTS
+		"${_basedir}"
+		PATHS
+		"${WINHID_ROOT_DIR}"
+		PATH_SUFFIXES
+		inc/crt
+		NO_DEFAULT_PATH)
+	find_path(WINHID_INCLUDE_DIR
+		NAMES
+		hidsdi.h
+		HINTS
+		"${_basedir}"
+		PATHS
+		"${WINHID_ROOT_DIR}"
+		PATH_SUFFIXES
+		inc/ddk
+		inc/api
+		inc/w2k
+		inc/wxp
+		inc/wnet)
+else()
+	find_library(WINHID_LIBRARY
+		NAMES
+		libhid
+		HINTS
+		"${WINHID_ROOT_DIR}"
+		/mingw
+		PATH_SUFFIXES
+		lib
+		lib/w32api)
+	find_path(WINHID_INCLUDE_DIR
+		NAMES
+		hidsdi.h
+		PATHS
+		"${WINHID_ROOT_DIR}"
+		/mingw
+		PATH_SUFFIXES
+		include/w32api/ddk
+		include/ddk
+		ddk)
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(WinHID
 	DEFAULT_MSG
 	WINHID_LIBRARY
-	WINHID_INCLUDE_DIR
-	WINHID_CRT_INCLUDE_DIR)
+	WINHID_INCLUDE_DIR)
 
 if(WINHID_FOUND)
-	set(_winreq "Unknown")
-	if(WINHID_LIBRARY MATCHES "lib/w2k")
-		set(_winreq "Windows 2000")
-	elseif(WINHID_LIBRARY MATCHES "lib/wxp")
-		set(_winreq "Windows XP")
-	elseif(WINHID_LIBRARY MATCHES "lib/wnet")
-		set(_winreq "Windows Server 2003")
-	elseif(WINHID_LIBRARY MATCHES "lib/wlh")
-		set(_winreq "Windows Vista")
-	elseif(WINHID_LIBRARY MATCHES "lib/win7")
-		set(_winreq "Windows 7")
-	endif()
-	if(NOT "${WINHID_MIN_WINDOWS_VER}" STREQUAL "${_winreq}")
-		if(NOT WinHID_FIND_QUIETLY)
-			message(STATUS "Linking against WINHID_LIBRARY will enforce this minimum version: ${_winreq}")
+	if(MSVC)
+		set(_winreq "Unknown")
+		if(WINHID_LIBRARY MATCHES "lib/w2k")
+			set(_winreq "Windows 2000")
+		elseif(WINHID_LIBRARY MATCHES "lib/wxp")
+			set(_winreq "Windows XP")
+		elseif(WINHID_LIBRARY MATCHES "lib/wnet")
+			set(_winreq "Windows Server 2003")
+		elseif(WINHID_LIBRARY MATCHES "lib/wlh")
+			set(_winreq "Windows Vista")
+		elseif(WINHID_LIBRARY MATCHES "lib/win7")
+			set(_winreq "Windows 7")
 		endif()
-		set(WINHID_MIN_WINDOWS_VER "${_winreq}" CACHE INTERNAL "" FORCE)
+		if(NOT "${WINHID_MIN_WINDOWS_VER}" STREQUAL "${_winreq}")
+			if(NOT WinHID_FIND_QUIETLY)
+				message(STATUS "Linking against WINHID_LIBRARY will enforce this minimum version: ${_winreq}")
+			endif()
+			set(WINHID_MIN_WINDOWS_VER "${_winreq}" CACHE INTERNAL "" FORCE)
+		endif()
 	endif()
 	set(WINHID_LIBRARIES "${WINHID_LIBRARY}")
 	set(WINHID_INCLUDE_DIRS "${WINHID_CRT_INCLUDE_DIR}" "${WINHID_INCLUDE_DIR}")
