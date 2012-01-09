@@ -752,6 +752,42 @@ a few.
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindDirectInput
+       try to find DirectInput library (part of DirectX SDK)
+
+       
+
+       Cache Variables: (probably not for direct use in your scripts)
+
+         DIRECTINPUT_DXGUID_LIBRARY
+         DIRECTINPUT_DXERR_LIBRARY
+         DIRECTINPUT_DINPUT_LIBRARY
+         DIRECTINPUT_INCLUDE_DIR
+
+       
+
+       Non-cache variables you should use in your CMakeLists.txt:
+
+         DIRECTINPUT_LIBRARIES
+         DIRECTINPUT_INCLUDE_DIRS
+         DIRECTINPUT_FOUND - if this is not true, do not attempt to use this library
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2011 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2011.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
+
   FindFlagpoll
        try to find Flagpoll application, and offer package-finding services
 
