@@ -1,4 +1,4 @@
-cmake version 2.8.3
+cmake version 2.8.6
 ------------------------------------------------------------------------------
 Introduction
 
@@ -1450,6 +1450,37 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindMarkdown
+       try to find Markdown tool
+
+       
+
+       Cache Variables:
+
+         MARKDOWN_EXECUTABLE
+
+       
+
+       Non-cache variables you might use in your CMakeLists.txt:
+
+         MARKDOWN_FOUND
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2011 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2011.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindOpenCV
        ------------------------------
@@ -3002,20 +3033,20 @@ a few.
        These functions force a re-configure on each git commit so that you
        can trust the values of the variables in your build system.
 
-         get_git_head_revision(<refspecvar> <hashvar> [<additonal arguments to git describe> ...])
+         get_git_head_revision(<refspecvar> <hashvar> [<additional arguments to git describe> ...])
 
        
 
        Returns the refspec and sha hash of the current head revision
 
-         git_describe(<var> [<additonal arguments to git describe> ...])
+         git_describe(<var> [<additional arguments to git describe> ...])
 
        
 
        Returns the results of git describe on the source tree, and adjusting
        the output so that it tests false if an error occurs.
 
-         git_get_exact_tag(<var> [<additonal arguments to git describe> ...])
+         git_get_exact_tag(<var> [<additional arguments to git describe> ...])
 
        
 
@@ -3460,6 +3491,36 @@ a few.
        University HCI Graduate Program/VRAC
 
        Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  UseMarkdown
+       Convert markdown source files to HTML as a custom target
+
+       
+
+         include(UseMarkdown)
+         add_markdown_target(<target_name> <directory to copy to> <markdownfile> [<markdownfile>...] [RENAME <newname>])
+           Relative paths for the destination directory are considered with
+           with respect to CMAKE_CURRENT_BINARY_DIR. The RENAME argument is only
+           valid with a single markdown file as input.
+
+       
+
+         
+         install_markdown_target(<target_name> [extra arguments to INSTALL(FILES ...) ])
+
+       
+
+       
+
+       Requires CMake 2.6 or newer (uses the 'function' command)
+
+       Original Author: 2011 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2011-2012.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
