@@ -1,10 +1,12 @@
 # - Convert markdown source files to HTML as a custom target
 #
-#  include(MarkdownTargets)
-#  add_markdown_target(<target_name> <directory to copy to> <markdownfile> [<markdownfile>...])
+#  include(UseMarkdown)
+#  add_markdown_target(<target_name> <directory to copy to> <markdownfile> [<markdownfile>...] [RENAME <newname>])
 #    Relative paths for the destination directory are considered with
-#    with respect to CMAKE_CURRENT_BINARY_DIR
+#    with respect to CMAKE_CURRENT_BINARY_DIR. The RENAME argument is only
+#    valid with a single markdown file as input.
 #
+#  
 #  install_markdown_target(<target_name> [extra arguments to INSTALL(FILES ...) ])
 #
 #
@@ -15,7 +17,7 @@
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 #
-# Copyright Iowa State University 2011.
+# Copyright Iowa State University 2011-2012.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -45,6 +47,17 @@ function(add_markdown_target _target _dest)
 	if(NOT MARKDOWN_EXECUTABLE)
 		message(FATAL_ERROR "Can't find a markdown conversion tool!")
 	endif()
+	
+	set(NEW_NAME)
+	list(FIND ARGN "RENAME" _renameloc)
+	if(_renameloc GREATER -1)
+		list(LENGTH ARGN _len)
+		if(NOT _len EQUAL 3)
+			message(FATAL_ERROR "Specifying RENAME requires 1 input file and 1 output name!")
+		endif()
+		list(GET ARGN 2 NEW_NAME)
+		list(GET ARGN 0 ARGN)			
+	endif()
 
 	set(ALLFILES)
 	set(SOURCES)
@@ -59,7 +72,11 @@ function(add_markdown_target _target _dest)
 		get_filename_component(fn_noext "${fn}" NAME_WE)
 
 		# Clean up output file name
-		get_filename_component(absout "${_dest}/${fn_noext}.html" ABSOLUTE)
+		if(NEW_NAME)
+			get_filename_component(absout "${_dest}/${NEW_NAME}" ABSOLUTE)
+		else()
+			get_filename_component(absout "${_dest}/${fn_noext}.html" ABSOLUTE)
+		endif()
 
 		add_custom_command(OUTPUT "${absout}"
 			COMMAND
