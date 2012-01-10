@@ -1,5 +1,8 @@
 # - try to find QVRPN library
 #
+# Of course, you may also just choose to make QVRPN a submodule of your
+# project itself.
+#
 # Cache Variables:
 #  QVRPN_LIBRARY
 #  QVRPN_INCLUDE_DIR
