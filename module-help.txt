@@ -696,7 +696,7 @@ a few.
 
          CPPDOM_ROOT_DIR - A directory prefix to search
                            (a path that contains include/ as a subdirectory)
-         CPPDOM_ADDITIONAL_VERSIONS - Additional versions (outside of 0.7.8 to 1.0.0)
+         CPPDOM_ADDITIONAL_VERSIONS - Additional versions (outside of 0.7.8 to 1.2.0)
                                       to use when constructing search names and paths
 
        
@@ -713,11 +713,11 @@ a few.
        change this environment variable, because it cannot auto-detect this
        change and trigger an automatic re-run.
 
-       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       Original Author: 2009-2012 Ryan Pavlik <rpavlik@iastate.edu>
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-       Copyright Iowa State University 2009-2010.  Distributed under the
+       Copyright Iowa State University 2009-2012.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -949,7 +949,7 @@ a few.
 
          GMTL_ROOT_DIR - A directory prefix to search
                          (a path that contains include/ as a subdirectory)
-         GMTL_ADDITIONAL_VERSIONS - Additional versions (outside of 0.5.1 to 0.6.2)
+         GMTL_ADDITIONAL_VERSIONS - Additional versions (outside of 0.5.1 to 0.7.0)
                                     to use when constructing search names and paths
 
        
@@ -966,11 +966,11 @@ a few.
        change this environment variable, because it cannot auto-detect this
        change and trigger an automatic re-run.
 
-       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       Original Author: 2009-2012 Ryan Pavlik <rpavlik@iastate.edu>
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-       Copyright Iowa State University 2009-2010.  Distributed under the
+       Copyright Iowa State University 2009-2012.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -1645,6 +1645,49 @@ a few.
        University HCI Graduate Program/VRAC
 
        Copyright Iowa State University 2009-2010.  Distributed under the
+       Boost Software License, Version 1.0.  (See accompanying file
+       LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindQVRPN
+       try to find QVRPN library
+
+       
+
+       Of course, you may also just choose to make QVRPN a submodule of your
+       project itself.
+
+       Cache Variables:
+
+         QVRPN_LIBRARY
+         QVRPN_INCLUDE_DIR
+
+       
+
+       Non-cache variables you might use in your CMakeLists.txt:
+
+         QVRPN_FOUND
+         QVRPN_LIBRARIES
+         QVRPN_INCLUDE_DIRS
+
+       
+
+       QVRPN_ROOT_DIR is searched preferentially for these files
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Refactored from FindVRPN.cmake by: Juan Sebastian Casallas
+       <casallas@iastate.edu>
+
+       FindVRPN.cmake Original Author: 2009-2010 Ryan Pavlik
+       <rpavlik@iastate.edu> <abiryan@ryand.net>
+       http://academic.cleardefinition.com Iowa State University HCI Graduate
+       Program/VRAC
+
+       Copyright Iowa State University 2009-2012.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -3543,7 +3586,8 @@ a few.
 
        
 
-         
+       
+
          install_markdown_target(<target_name> [extra arguments to INSTALL(FILES ...) ])
 
        
