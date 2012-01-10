@@ -10,7 +10,7 @@
 # Useful configuration variables you might want to add to your cache:
 #  CPPDOM_ROOT_DIR - A directory prefix to search
 #                    (a path that contains include/ as a subdirectory)
-#  CPPDOM_ADDITIONAL_VERSIONS - Additional versions (outside of 0.7.8 to 1.0.0)
+#  CPPDOM_ADDITIONAL_VERSIONS - Additional versions (outside of 0.7.8 to 1.2.0)
 #                               to use when constructing search names and paths
 #
 # This script will use Flagpoll, if found, to provide hints to the location
@@ -26,11 +26,11 @@
 # and trigger an automatic re-run.
 #
 # Original Author:
-# 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+# 2009-2012 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 #
-# Copyright Iowa State University 2009-2010.
+# Copyright Iowa State University 2009-2012.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -41,6 +41,7 @@ set(_FP_PKG_NAME cppdom)
 
 set(CPPDOM_VERSIONS
 	${CPPDOM_ADDITIONAL_VERSIONS}
+	1.2.0
 	1.1.2
 	1.1.1
 	1.1.0
