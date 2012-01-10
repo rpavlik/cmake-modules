@@ -82,8 +82,12 @@ function(install_osg_plugins var)
 		list(APPEND INSTALLEDPLUGINS "${OSG_PATH_TO_PLUGINS}/${name}")
 	endforeach()
 	foreach(plugin ${OSGDB_PLUGINS_DEBUG} ${OSGWRAPPER_PLUGINS_DEBUG})
-		install(FILES "${plugin}" DESTINATION "${OSG_PATH_TO_PLUGINS}"
-			CONFIGURATIONS Debug)
+		install(FILES
+			"${plugin}"
+			DESTINATION
+			"${OSG_PATH_TO_PLUGINS}"
+			CONFIGURATIONS
+			Debug)
 		#get_filename_component(name "${plugin}" NAME)
 		#list(APPEND INSTALLEDPLUGINS "${OSG_PATH_TO_PLUGINS}/${name}")
 	endforeach()

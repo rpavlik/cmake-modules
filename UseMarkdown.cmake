@@ -6,7 +6,7 @@
 #    with respect to CMAKE_CURRENT_BINARY_DIR. The RENAME argument is only
 #    valid with a single markdown file as input.
 #
-#  
+#
 #  install_markdown_target(<target_name> [extra arguments to INSTALL(FILES ...) ])
 #
 #
@@ -47,16 +47,17 @@ function(add_markdown_target _target _dest)
 	if(NOT MARKDOWN_EXECUTABLE)
 		message(FATAL_ERROR "Can't find a markdown conversion tool!")
 	endif()
-	
+
 	set(NEW_NAME)
 	list(FIND ARGN "RENAME" _renameloc)
 	if(_renameloc GREATER -1)
 		list(LENGTH ARGN _len)
 		if(NOT _len EQUAL 3)
-			message(FATAL_ERROR "Specifying RENAME requires 1 input file and 1 output name!")
+			message(FATAL_ERROR
+				"Specifying RENAME requires 1 input file and 1 output name!")
 		endif()
 		list(GET ARGN 2 NEW_NAME)
-		list(GET ARGN 0 ARGN)			
+		list(GET ARGN 0 ARGN)
 	endif()
 
 	set(ALLFILES)
@@ -67,7 +68,9 @@ function(add_markdown_target _target _dest)
 			get_filename_component(fullpath "${fn}" ABSOLUTE)
 			get_filename_component(fn "${fn}" NAME)
 		else()
-			get_filename_component(fullpath "${CMAKE_CURRENT_SOURCE_DIR}/${fn}" ABSOLUTE)
+			get_filename_component(fullpath
+				"${CMAKE_CURRENT_SOURCE_DIR}/${fn}"
+				ABSOLUTE)
 		endif()
 		get_filename_component(fn_noext "${fn}" NAME_WE)
 

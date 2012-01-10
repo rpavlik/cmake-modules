@@ -23,19 +23,27 @@ find_package(CUDA QUIET)
 file(TO_CMAKE_PATH "${CUDA_SDK_ROOT_DIR}/C/common" CUTIL_ROOT_DIR)
 
 if(NOT EXISTS "${CUTIL_ROOT_DIR}/src/cutil.cpp")
-	set(CUDA_SDK_ROOT_DIR SDKDIR-NOTFOUND CACHE PATH "NVIDIA GPU Computing SDK dir" FORCE)
+	set(CUDA_SDK_ROOT_DIR
+		SDKDIR-NOTFOUND
+		CACHE
+		PATH
+		"NVIDIA GPU Computing SDK dir"
+		FORCE)
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(cutil DEFAULT_MSG CUDA_SDK_ROOT_DIR CUDA_FOUND)
+find_package_handle_standard_args(cutil
+	DEFAULT_MSG
+	CUDA_SDK_ROOT_DIR
+	CUDA_FOUND)
 
-if(CUTIL_FOUND)	
+if(CUTIL_FOUND)
 	get_filename_component(_moddir "${CMAKE_CURRENT_LIST_FILE}" PATH)
 	add_subdirectory("${_moddir}/nested_targets/cutil")
-	
-	
+
+
 	function(install_cutil dest)
 		install(TARGETS cutil
 			RUNTIME DESTINATION "${dest}"

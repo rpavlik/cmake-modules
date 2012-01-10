@@ -65,9 +65,7 @@ mark_as_advanced(LYX_COMMAND)
 function(lyx_export _format _extension _outvar)
 	set(_nowhere)
 	set(_curdest _nowhere)
-	set(_val_args
-		EXTRA_DEPS
-		INPUT)
+	set(_val_args EXTRA_DEPS INPUT)
 	set(_bool_args OUTPUT_TO_SOURCE_DIR)
 	foreach(_arg ${_val_args} ${_bool_args})
 		set(${_arg})
@@ -99,7 +97,7 @@ function(lyx_export _format _extension _outvar)
 		else()
 			set(_outname "${CMAKE_CURRENT_SOURCE_DIR}/${_base}.${_extension}")
 		endif()
-		
+
 		list(APPEND _out "${_outname}")
 		if(LYX_COMMAND)
 			add_custom_command(OUTPUT "${_outname}"

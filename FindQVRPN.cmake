@@ -78,5 +78,4 @@ if(QVRPN_FOUND)
 	mark_as_advanced(QVRPN_ROOT_DIR)
 endif()
 
-mark_as_advanced(QVRPN_LIBRARY
-	QVRPN_INCLUDE_DIR)
+mark_as_advanced(QVRPN_LIBRARY QVRPN_INCLUDE_DIR)

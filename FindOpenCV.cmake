@@ -73,7 +73,11 @@ else()
 		otherlibs/_graphics/include)
 
 	# library linkdir suffixes appended to OPENCV_BASE_DIR
-	set(OPENCV_LIBDIR_SUFFIXES lib lib64 OpenCV/lib otherlibs/_graphics/lib)
+	set(OPENCV_LIBDIR_SUFFIXES
+		lib
+		lib64
+		OpenCV/lib
+		otherlibs/_graphics/lib)
 
 
 	#

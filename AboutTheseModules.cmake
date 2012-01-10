@@ -22,7 +22,7 @@
 # need to call:
 #  include(BoostTestTargets)
 #
-# For more information, see the documentation for individual modules, the 
+# For more information, see the documentation for individual modules, the
 # cmake-modules github page, and/or the upstream CMake documentation at
 # http://www.cmake.org/cmake/help/cmake-2-8-docs.html
 #

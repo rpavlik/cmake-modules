@@ -21,7 +21,7 @@ function(option_requires name desc)
 		list(REMOVE_AT args ${_off_found})
 		set(OFF_BY_DEFAULT true)
 	endif()
-	
+
 	set(found)
 	set(missing)
 	foreach(var ${args})
@@ -31,22 +31,23 @@ function(option_requires name desc)
 			list(APPEND missing ${var})
 		endif()
 	endforeach()
-	
+
 	if(NOT missing)
 		set(OK TRUE)
 	else()
 		set(OK FALSE)
 	endif()
-	
+
 	set(default ${OK})
 	if(OFF_BY_DEFAULT)
 		set(default OFF)
 	endif()
-	
+
 	option(${name} "${desc}" ${default})
-	
+
 	if(${name} AND (NOT OK))
-		message(FATAL_ERROR "${name} enabled but these dependencies were not valid: ${missing}")
+		message(FATAL_ERROR
+			"${name} enabled but these dependencies were not valid: ${missing}")
 	endif()
 
 endfunction()

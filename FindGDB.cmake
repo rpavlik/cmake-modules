@@ -36,17 +36,31 @@ find_program(GDB_COMMAND
 	libexec)
 
 if(GDB_COMMAND)
-	execute_process(COMMAND gdb --version
-		COMMAND head -n 1
-		OUTPUT_VARIABLE GDB_VERSION
+	execute_process(COMMAND
+		gdb
+		--version
+		COMMAND
+		head
+		-n
+		1
+		OUTPUT_VARIABLE
+		GDB_VERSION
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
-	string(REGEX REPLACE "[^0-9]*([0-9]+[0-9.]*).*" "\\1" GDB_VERSION "${GDB_VERSION}")
+	string(REGEX
+		REPLACE
+		"[^0-9]*([0-9]+[0-9.]*).*"
+		"\\1"
+		GDB_VERSION
+		"${GDB_VERSION}")
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(GDB DEFAULT_MSG GDB_COMMAND GDB_VERSION)
+find_package_handle_standard_args(GDB
+	DEFAULT_MSG
+	GDB_COMMAND
+	GDB_VERSION)
 
 if(GDB_FOUND)
 	mark_as_advanced(GDB_ROOT_DIR)

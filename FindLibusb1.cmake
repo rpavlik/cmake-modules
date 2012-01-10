@@ -29,7 +29,7 @@ set(LIBUSB1_ROOT_DIR
 	CACHE
 	PATH
 	"Root directory to search for libusb-1")
-	
+
 if(WIN32)
 	include(ProgramFilesGlob)
 	program_files_fallback_glob(_dirs "LibUSB-Win32")
@@ -42,7 +42,7 @@ if(WIN32)
 			set(_lib_suffixes lib/msvc)
 		elseif(COMPILER_IS_GNUCXX)
 			set(_lib_suffixes lib/gcc)
-		endif()	
+		endif()
 	endif()
 else()
 	set(_lib_suffixes)

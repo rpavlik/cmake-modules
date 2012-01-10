@@ -70,7 +70,4 @@ endif()
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(TR1
-	DEFAULT_MSG
-	PLATFORM
-	${_check})
+find_package_handle_standard_args(TR1 DEFAULT_MSG PLATFORM ${_check})

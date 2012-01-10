@@ -42,7 +42,7 @@ get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 function(get_git_head_revision _refspecvar _hashvar)
 	set(GIT_PARENT_DIR "${CMAKE_SOURCE_DIR}")
 	set(GIT_DIR "${GIT_PARENT_DIR}/.git")
-	while(NOT EXISTS "${GIT_DIR}") # .git dir not found, search parent directories
+	while(NOT EXISTS "${GIT_DIR}")	# .git dir not found, search parent directories
 		set(GIT_PREVIOUS_PARENT "${GIT_PARENT_DIR}")
 		get_filename_component(GIT_PARENT_DIR ${GIT_PARENT_DIR} PATH)
 		if(GIT_PARENT_DIR STREQUAL GIT_PREVIOUS_PARENT)
@@ -60,7 +60,9 @@ function(get_git_head_revision _refspecvar _hashvar)
 	set(HEAD_FILE "${GIT_DATA}/HEAD")
 	configure_file("${GIT_DIR}/HEAD" "${HEAD_FILE}" COPYONLY)
 
-	configure_file("${_gitdescmoddir}/GetGitRevisionDescription.cmake.in" "${GIT_DATA}/grabRef.cmake" @ONLY)
+	configure_file("${_gitdescmoddir}/GetGitRevisionDescription.cmake.in"
+		"${GIT_DATA}/grabRef.cmake"
+		@ONLY)
 	include("${GIT_DATA}/grabRef.cmake")
 
 	set(${_refspecvar} "${HEAD_REF}" PARENT_SCOPE)
@@ -73,11 +75,11 @@ function(git_describe _var)
 	endif()
 	get_git_head_revision(refspec hash)
 	if(NOT GIT_FOUND)
-		set(${_var} "GIT-NOTFOUND"  PARENT_SCOPE)
+		set(${_var} "GIT-NOTFOUND" PARENT_SCOPE)
 		return()
 	endif()
 	if(NOT hash)
-		set(${_var} "HEAD-HASH-NOTFOUND"  PARENT_SCOPE)
+		set(${_var} "HEAD-HASH-NOTFOUND" PARENT_SCOPE)
 		return()
 	endif()
 

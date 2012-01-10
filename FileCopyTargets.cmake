@@ -54,7 +54,9 @@ function(add_file_copy_target _target _dest)
 			get_filename_component(fullpath "${fn}" ABSOLUTE)
 			get_filename_component(fn "${fn}" NAME)
 		else()
-			get_filename_component(fullpath "${CMAKE_CURRENT_SOURCE_DIR}/${fn}" ABSOLUTE)
+			get_filename_component(fullpath
+				"${CMAKE_CURRENT_SOURCE_DIR}/${fn}"
+				ABSOLUTE)
 		endif()
 
 		# Clean up output file name

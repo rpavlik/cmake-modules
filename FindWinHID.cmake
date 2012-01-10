@@ -51,7 +51,10 @@ endif()
 if(MSVC)
 	include(PrefixListGlob)
 	include(CleanDirectoryList)
-	prefix_list_glob(_prefixed "*/" "$ENV{SYSTEMDRIVE}/WinDDK/" "c:/WinDDK/")
+	prefix_list_glob(_prefixed
+		"*/"
+		"$ENV{SYSTEMDRIVE}/WinDDK/"
+		"c:/WinDDK/")
 	clean_directory_list(_prefixed)
 	find_library(WINHID_LIBRARY
 		NAMES
@@ -138,13 +141,16 @@ if(WINHID_FOUND)
 		endif()
 		if(NOT "${WINHID_MIN_WINDOWS_VER}" STREQUAL "${_winreq}")
 			if(NOT WinHID_FIND_QUIETLY)
-				message(STATUS "Linking against WINHID_LIBRARY will enforce this minimum version: ${_winreq}")
+				message(STATUS
+					"Linking against WINHID_LIBRARY will enforce this minimum version: ${_winreq}")
 			endif()
 			set(WINHID_MIN_WINDOWS_VER "${_winreq}" CACHE INTERNAL "" FORCE)
 		endif()
 	endif()
 	set(WINHID_LIBRARIES "${WINHID_LIBRARY}")
-	set(WINHID_INCLUDE_DIRS "${WINHID_CRT_INCLUDE_DIR}" "${WINHID_INCLUDE_DIR}")
+	set(WINHID_INCLUDE_DIRS
+		"${WINHID_CRT_INCLUDE_DIR}"
+		"${WINHID_INCLUDE_DIR}")
 	mark_as_advanced(WINHID_ROOT_DIR)
 endif()
 
