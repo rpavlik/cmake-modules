@@ -22,7 +22,7 @@
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 #
-# Copyright Iowa State University 2009-2011.
+# Copyright Iowa State University 2009-2012.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -50,9 +50,7 @@ find_path(QVRPN_INCLUDE_DIR
 	include
 	include/qvrpn
 	HINTS
-	"${QVRPN_ROOT_DIR}"
-	PATHS
-	"${_progfiles}/QVRPN")
+	"${QVRPN_ROOT_DIR}")
 
 find_library(QVRPN_LIBRARY
 	NAMES
@@ -60,16 +58,7 @@ find_library(QVRPN_LIBRARY
 	PATH_SUFFIXES
 	${_libsuffixes}
 	HINTS
-	"${QVRPN_ROOT_DIR}"
-	PATHS
-	"${_progfiles}/QVRPN")
-
-###
-# Dependencies
-###
-set(_deps_libs)
-set(_deps_includes)
-set(_deps_check)
+	"${QVRPN_ROOT_DIR}")
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
@@ -77,12 +66,11 @@ include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(QVRPN
 	DEFAULT_MSG
 	QVRPN_LIBRARY
-	QVRPN_INCLUDE_DIR
-	${_deps_check})
+	QVRPN_INCLUDE_DIR)
 
 if(QVRPN_FOUND)
-	set(QVRPN_INCLUDE_DIRS "${QVRPN_INCLUDE_DIR}" ${_deps_includes})
-	set(QVRPN_LIBRARIES "${QVRPN_LIBRARY}" ${_deps_libs})
+	set(QVRPN_INCLUDE_DIRS "${QVRPN_INCLUDE_DIR}")
+	set(QVRPN_LIBRARIES "${QVRPN_LIBRARY}")
 
 	mark_as_advanced(QVRPN_ROOT_DIR)
 endif()
