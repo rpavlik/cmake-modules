@@ -1,6 +1,7 @@
 # - Use some smarts to try to find OpenSceneGraph in the Program Files dirs
 #
-# Also uses the OSGHOME environment variable as OSG_DIR, if it's found.
+# Also uses the OSG_ROOT and OSGHOME environment variables as OSG_DIR
+# (in that order), if they are found.
 #
 # Usage:
 #  include(SearchProgramFilesForOpenSceneGraph OPTIONAL)
@@ -10,11 +11,11 @@
 #  ProgramFilesGlob
 #
 # Original Author:
-# 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+# 2009-2012 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 #
-# Copyright Iowa State University 2009-2010.
+# Copyright Iowa State University 2009-2012.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -56,7 +57,7 @@ if(_osgpaths)
 	list(REVERSE _osgpaths)
 
 	# Use the environment variable to override
-	set(_osgpaths "$ENV{OSGHOME}" ${_osgpaths})
+	set(_osgpaths "$ENV{OSG_ROOT}" "$ENV{OSGHOME}" ${_osgpaths})
 	clean_directory_list(_osgpaths)
 
 	list(APPEND CMAKE_PREFIX_PATH ${_osgpaths})
