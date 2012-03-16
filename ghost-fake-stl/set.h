@@ -14,4 +14,6 @@
 #pragma once
 
 #include <set>
+#include <functional>
 using std::set;
+using std::less;
