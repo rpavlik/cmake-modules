@@ -57,6 +57,10 @@ function(get_git_head_revision _refspecvar _hashvar)
 	if(NOT EXISTS "${GIT_DATA}")
 		file(MAKE_DIRECTORY "${GIT_DATA}")
 	endif()
+
+	if(NOT EXISTS "${GIT_DIR}/HEAD")
+		return()
+	endif()
 	set(HEAD_FILE "${GIT_DATA}/HEAD")
 	configure_file("${GIT_DIR}/HEAD" "${HEAD_FILE}" COPYONLY)
 
