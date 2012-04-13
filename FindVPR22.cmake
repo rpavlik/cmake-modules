@@ -40,8 +40,8 @@
 # Brandon Newendorp <brandon@newendorp.com>
 
 set(_HUMAN "VPR 2.2")
-set(_RELEASE_NAMES vpr-2_2 libvpr-2_2 vpr-2_2_0)
-set(_DEBUG_NAMES vpr_d-2_2 libvpr_d-2_2 vpr_d-2_2_0)
+set(_RELEASE_NAMES vpr-2_2 libvpr-2_2 vpr-2_2_0 vpr-2_2_1)
+set(_DEBUG_NAMES vpr_d-2_2 libvpr_d-2_2 vpr_d-2_2_0 vpr_d-2_2_1)
 set(_DIR vpr-2.2)
 set(_HEADER vpr/vpr.h)
 set(_FP_PKG_NAME vpr)
