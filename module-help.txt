@@ -788,6 +788,45 @@ a few.
        Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
        or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindDirectX
+       try to find part of DirectX SDK
+
+       
+
+       Cache Variables: (probably not for direct use in your scripts)
+
+         DIRECTX_INCLUDE_DIR
+
+       
+
+       Variables you should use in your CMakeLists.txt:
+
+         DIRECTX_DXGUID_LIBRARY
+         DIRECTX_DXERR_LIBRARY
+         DIRECTX_DINPUT_LIBRARY
+         DIRECTX_D3D9_LIBRARY
+         DIRECTX_D3DXOF_LIBRARY
+         DIRECTX_D3DX9_LIBRARIES
+         DIRECTX_INCLUDE_DIRS
+         DIRECTX_FOUND - if this is not true, do not attempt to use this library
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+         SelectLibraryConfigurations
+
+       
+
+       Original Author: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
+
   FindFlagpoll
        try to find Flagpoll application, and offer package-finding services
 
@@ -1560,12 +1599,16 @@ a few.
 
          HDAPI_INCLUDE_DIR
          HDAPI_LIBRARY
+         HDAPI_LIBRARY_RELEASE
+         HDAPI_LIBRARY_DEBUG
          HDAPI_HDU_INCLUDE_DIR
          HDAPI_HDU_LIBRARY
          HDAPI_HDU_LIBRARY_RELEASE
          HDAPI_HDU_LIBRARY_DEBUG
          HLAPI_INCLUDE_DIR
          HLAPI_LIBRARY
+         HLAPI_LIBRARY_RELEASE
+         HLAPI_LIBRARY_DEBUG
          HLAPI_HLU_INCLUDE_DIR
          HLAPI_HLU_LIBRARY
          HLAPI_HLU_LIBRARY_RELEASE
@@ -1604,7 +1647,7 @@ a few.
 
        
 
-       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       Original Author: 2009-2012 Ryan Pavlik <rpavlik@iastate.edu>
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
@@ -1647,6 +1690,50 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindPerformer
+       try to find the OpenGL Performer library
+
+       
+
+       Users may optionally supply:
+
+         PERFORMER_ROOT_DIR - a prefix to start searching.
+
+       
+
+       Cache Variables: (probably not for direct use in your scripts)
+
+         PERFORMER_INCLUDE_DIR
+         PERFORMER_LIBRARY
+         PERFORMER_PFUI_LIBRARY - doesn't get included in PERFORMER_LIBRARIES
+         PERFORMER_PFDU_UTIL_LIBRARY - doesn't get included in PERFORMER_LIBRARIES
+         PERFORMER_PFV_LIBRARY - doesn't get included in PERFORMER_LIBRARIES
+
+       
+
+       Non-cache variables you might use in your CMakeLists.txt:
+
+         PERFORMER_FOUND
+         PERFORMER_INCLUDE_DIRS
+         PERFORMER_LIBRARIES
+         PERFORMER_RUNTIME_LIBRARY_DIRS
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindQVRPN
        try to find QVRPN library
@@ -2547,6 +2634,43 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindViewPoint
+       try to find Arrington Research ViewPoint EyeTracker SDK
+
+       
+
+       Cache Variables: (probably not for direct use in your scripts)
+
+         VIEWPOINT_INCLUDE_DIR
+         VIEWPOINT_LIBRARY
+         VIEWPOINT_RUNTIME_LIBRARY
+
+       
+
+       Non-cache variables you might use in your CMakeLists.txt:
+
+         VIEWPOINT_FOUND
+         VIEWPOINT_INCLUDE_DIRS
+         VIEWPOINT_LIBRARIES
+         VIEWPOINT_RUNTIME_LIBRARIES - aka the dll for installing
+         VIEWPOINT_RUNTIME_LIBRARY_DIRS
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindVirtuoseAPI
        try to find Haption VirtuoseAPI library and include files
