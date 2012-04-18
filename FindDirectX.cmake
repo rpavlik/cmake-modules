@@ -187,8 +187,7 @@ if(DIRECTX_INCLUDE_DIR)
 		include(CheckCSourceCompiles)
 		set(_dinput_old_includes ${CMAKE_REQUIRED_INCLUDES})
 		set(CMAKE_REQUIRED_INCLUDES "${DIRECTX_INCLUDE_DIR}")
-		check_c_source_compiles(
-			"
+		check_c_source_compiles("
 			#include <dxsdkver.h>
 			#if _DXSDK_BUILD_MAJOR >= ${DXSDK_DEPRECATION_BUILD}
 			#error
@@ -218,14 +217,12 @@ if(DIRECTX_FOUND)
 		"${DIRECTX_DXERR_LIBRARY}"
 		"${DIRECTX_DINPUT_LIBRARY}")
 
-	set(DIRECTX_INCLUDE_DIRS
-		"${DIRECTX_INCLUDE_DIR}")
+	set(DIRECTX_INCLUDE_DIRS "${DIRECTX_INCLUDE_DIR}")
 
 	mark_as_advanced(DIRECTX_ROOT_DIR)
 endif()
 
-mark_as_advanced(
-	DIRECTX_DINPUT_LIBRARY
+mark_as_advanced(DIRECTX_DINPUT_LIBRARY
 	DIRECTX_DXGUID_LIBRARY
 	DIRECTX_DXERR_LIBRARY
 	DIRECTX_D3D9_LIBRARY
