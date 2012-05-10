@@ -37,11 +37,15 @@
 
 
 set(_HUMAN "Tweek 1.4")
-set(_RELEASE_NAMES tweek-1_4 libtweek-1_4 tweek-1_4_0 tweek-1_4_1)
-set(_DEBUG_NAMES tweek_d-1_4 libtweek_d-1_4 tweek_d-1_4_0 tweek_d-1_4_1)
+set(_FP_PKG_NAME sonix)
+set(_RELEASE_NAMES)
+set(_DEBUG_NAMES)
+foreach(VER 1_4 1_4_0 1_4_1 1_4_2)
+	list(APPEND _RELEASE_NAMES ${_FP_PKG_NAME}-${VER})
+	list(APPEND _DEBUG_NAMES ${_FP_PKG_NAME}_d-${VER})
+endforeach()
 set(_DIR tweek-1.4)
 set(_HEADER tweek/tweek.h)
-set(_FP_PKG_NAME tweek)
 
 include(SelectLibraryConfigurations)
 include(CreateImportedTarget)

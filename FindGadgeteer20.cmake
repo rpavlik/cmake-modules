@@ -37,11 +37,15 @@
 # Brandon Newendorp <brandon@newendorp.com>
 
 set(_HUMAN "Gadgeteer 2.0")
-set(_RELEASE_NAMES gadget-2_0 libgadget-2_0 gadget-2_0_0 gadget-2_0_1)
-set(_DEBUG_NAMES gadget_d-2_0 libgadget_d-2_0 gadget_d-2_0_0 gadget_d-2_0_1)
+set(_FP_PKG_NAME gadgeteer)
+set(_RELEASE_NAMES)
+set(_DEBUG_NAMES)
+foreach(VER 2_0 2_0_0 2_0_1 2_0_2)
+	list(APPEND _RELEASE_NAMES gadget-${VER})
+	list(APPEND _DEBUG_NAMES gadget_d-${VER})
+endforeach()
 set(_DIR gadgeteer-2.0)
 set(_HEADER gadget/gadgetConfig.h)
-set(_FP_PKG_NAME gadgeteer)
 
 include(SelectLibraryConfigurations)
 include(CreateImportedTarget)

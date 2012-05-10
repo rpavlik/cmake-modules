@@ -37,11 +37,15 @@
 
 
 set(_HUMAN "Sonix 1.4")
-set(_RELEASE_NAMES sonix-1_4 libsonix-1_4 sonix-1_4_0 sonix-1_4_1)
-set(_DEBUG_NAMES sonix_d-1_4 libsonix_d-1_4 sonix_d-1_4_0 sonix_d-1_4_1)
+set(_FP_PKG_NAME sonix)
+set(_RELEASE_NAMES)
+set(_DEBUG_NAMES)
+foreach(VER 1_4 1_4_0 1_4_1 1_4_2)
+	list(APPEND _RELEASE_NAMES ${_FP_PKG_NAME}-${VER})
+	list(APPEND _DEBUG_NAMES ${_FP_PKG_NAME}_d-${VER})
+endforeach()
 set(_DIR sonix-1.4)
 set(_HEADER snx/sonix.h)
-set(_FP_PKG_NAME sonix)
 
 include(SelectLibraryConfigurations)
 include(CreateImportedTarget)

@@ -38,10 +38,14 @@
 
 
 set(_HUMAN "VR Juggler 3.0 OpenGL Core")
-set(_RELEASE_NAMES vrj_ogl-3_0 libvrj_ogl-3_0 vrj_ogl-3_0_0 vrj_ogl-3_0_1)
-set(_DEBUG_NAMES vrj_ogl_d-3_0 libvrj_ogl_d-3_0 vrj_ogl_d-3_0_0 vrj_ogl_d-3_0_1)
-set(_DIR vrjuggler-3.0)
 set(_FP_PKG_NAME vrjuggler-opengl)
+set(_RELEASE_NAMES)
+set(_DEBUG_NAMES)
+foreach(VER 3_0 3_0_0 3_0_1 3_0_2)
+	list(APPEND _RELEASE_NAMES vrj_ogl-${VER})
+	list(APPEND _DEBUG_NAMES vrj_ogl_d-${VER})
+endforeach()
+set(_DIR vrjuggler-3.0)
 
 include(SelectLibraryConfigurations)
 include(CreateImportedTarget)

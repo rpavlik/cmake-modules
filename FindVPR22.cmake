@@ -40,11 +40,15 @@
 # Brandon Newendorp <brandon@newendorp.com>
 
 set(_HUMAN "VPR 2.2")
-set(_RELEASE_NAMES vpr-2_2 libvpr-2_2 vpr-2_2_0 vpr-2_2_1)
-set(_DEBUG_NAMES vpr_d-2_2 libvpr_d-2_2 vpr_d-2_2_0 vpr_d-2_2_1)
+set(_FP_PKG_NAME vpr)
+set(_RELEASE_NAMES)
+set(_DEBUG_NAMES)
+foreach(VER 2_2 2_2_0 2_2_1 2_2_2)
+	list(APPEND _RELEASE_NAMES ${_FP_PKG_NAME}-${VER})
+	list(APPEND _DEBUG_NAMES ${_FP_PKG_NAME}_d-${VER})
+endforeach()
 set(_DIR vpr-2.2)
 set(_HEADER vpr/vpr.h)
-set(_FP_PKG_NAME vpr)
 
 include(SelectLibraryConfigurations)
 include(CreateImportedTarget)

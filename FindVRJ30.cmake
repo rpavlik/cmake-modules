@@ -45,11 +45,15 @@
 
 
 set(_HUMAN "VR Juggler 3.0 Core")
-set(_RELEASE_NAMES vrj-3_0 libvrj-3_0 vrj-3_0_0 vrj-3_0_1)
-set(_DEBUG_NAMES vrj_d-3_0 libvrj_d-3_0 vrj_d-3_0_0 vrj_d-3_0_1)
+set(_FP_PKG_NAME vrjuggler)
+set(_RELEASE_NAMES)
+set(_DEBUG_NAMES)
+foreach(VER 3_0 3_0_0 3_0_1 3_0_2)
+	list(APPEND _RELEASE_NAMES vrj-${VER})
+	list(APPEND _DEBUG_NAMES vrj_d-${VER})
+endforeach()
 set(_DIR vrjuggler-3.0)
 set(_HEADER vrj/Kernel/Kernel.h)
-set(_FP_PKG_NAME vrjuggler)
 
 include(SelectLibraryConfigurations)
 include(CreateImportedTarget)
