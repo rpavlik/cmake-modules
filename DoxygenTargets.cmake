@@ -213,6 +213,7 @@ function(add_doxygen _doxyfile)
 			else()
 				add_custom_target(${DOC_TARGET} ALL)
 			endif()
+
 		endif()
 
 		if(NOT IS_ABSOLUTE "${OUTPUT_DIRECTORY}")
@@ -227,6 +228,28 @@ function(add_doxygen _doxyfile)
 			ADDITIONAL_MAKE_CLEAN_FILES
 			"${OUTPUT_DIRECTORY}/html"
 			"${OUTPUT_DIRECTORY}/latex")
+
+		if(NOT TARGET ${DOC_TARGET}_open)
+			# Create a target to open the generated HTML file.
+			if(WIN32)
+				set(DOXYGEN_LAUNCHER_COMMAND start "Documentation")
+			elseif(NOT APPLE)
+				set(DOXYGEN_LAUNCHER_COMMAND xdg-open)
+			endif()
+			if(DOXYGEN_LAUNCHER_COMMAND)
+				add_custom_target(${DOC_TARGET}_open
+					COMMAND ${DOXYGEN_LAUNCHER_COMMAND} "${OUTPUT_DIRECTORY}/html/index.html")
+				set_target_properties(${DOC_TARGET}_open
+					PROPERTIES
+					EXCLUDE_FROM_ALL
+					TRUE)
+				set_target_properties(${DOC_TARGET}_open
+					PROPERTIES
+					EXCLUDE_FROM_DEFAULT_BUILD
+					TRUE)
+				add_dependencies(${DOC_TARGET}_open ${DOC_TARGET})
+			endif()
+		endif()
 
 		get_filename_component(_doxyfileabs "${_doxyfile}" ABSOLUTE)
 		get_filename_component(INCLUDE_FILE "${_doxyfileabs}" NAME)
