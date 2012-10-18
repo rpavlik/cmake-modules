@@ -165,7 +165,7 @@ function(create_dashboard_scripts)
 		endif()
 
 		set(_msg)
-		
+
 		if(NOT DASHBOARDSCRIPT_BUILD_CONFIGURATION)
 			set(DASHBOARDSCRIPT_BUILD_CONFIGURATION "RelWithDebInfo")
 		endif()
