@@ -645,6 +645,71 @@ a few.
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindAdrienne
+       try to find Adrienne Electronics Corporation timecode card library
+
+       
+
+       SDK available from the manufacturer: http://www.adrielec.com/
+
+       Cache Variables: (probably not for direct use in your scripts)
+
+         ADRIENNE_INCLUDE_DIR
+         ADRIENNE_LIBRARY
+         ADRIENNE_RUNTIME_LIBRARY
+         ADRIENNE_INCLUDE_FILE
+
+       
+
+       Variables you might use in your CMakeLists.txt:
+
+         ADRIENNE_FOUND
+         ADRIENNE_INCLUDE_DIRS
+         ADRIENNE_LIBRARIES
+         ADRIENNE_RUNTIME_LIBRARIES - the AEC_NTTC.dll file
+         ADRIENNE_RUNTIME_LIBRARY_DIRS
+
+       
+
+         ADRIENNE_INCLUDE_FILENAME - this is probably AEC_NTTC.h, but it might also
+           be AECINTTC.H.
+
+       
+
+         ADRIENNE_INCLUDE_HAS_EXTERN_C - Some (most) versions of the header already
+           wrap their definitions in extern "C" { }, but some do not.
+
+       
+
+         ADRIENNE_DEFINITIONS - defines a quoted ADRIENNE_INCLUDE_FILENAME as above,
+           so you can write a line like #include ADRIENNE_INCLUDE_FILENAME
+           Also defines ADRIENNE_BEFORE_INCLUDE and ADRIENNE_AFTER_INCLUDE to handle
+           adding extern "C" { and } if the header file doesn't do so itself.
+
+       
+
+       Variables that might be set by the user in the gui/command line to
+       help find the library:
+
+         ADRIENNE_ROOT_DIR - root of an Adrienne CD, disk, or extracted/copied contents
+           thereof.
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
+
   FindBluez
        try to find Bluez
 
@@ -804,6 +869,7 @@ a few.
          DIRECTX_DXGUID_LIBRARY
          DIRECTX_DXERR_LIBRARY
          DIRECTX_DINPUT_LIBRARY
+         DIRECTX_DINPUT_INCLUDE_DIR
          DIRECTX_D3D9_LIBRARY
          DIRECTX_D3DXOF_LIBRARY
          DIRECTX_D3DX9_LIBRARIES
@@ -1213,6 +1279,51 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindIDLJ
+       try to find Java's IDLJ Interface Definition Language compiler.
+
+       
+
+       Ideally used with CMake 2.8.5 or newer for Java support using
+       FindJava.cmake and UseJava.cmake
+
+       Variables:
+
+         Java_IDLJ_COMMAND, executable for idlj
+         IDLJ_FOUND, If false, do not try to use this
+
+       
+
+       Function:
+
+         java_idlj(varname idlfile [extra idlj args]) - Generates
+           the Java source files from the IDL file you indicate, and
+           appends filenames suitable to add to a add_jar() call to the
+           variable you specified.
+
+       
+
+       Because the files generated from an IDL file are not entirely
+       predictable, java_idlj runs idlj in the cmake step, rather than the
+       build step, and triggers a CMake re-run when an idl file is modified.
+       Already up-to-date generated source is not re-generated, however.
+
+       Files are generated in a directory created specifically for the
+       particular IDL file and the particular call, in the build directory -
+       there should be no worries about overwriting files or picking up too
+       much with the wildcard.
+
+       You may wish to add the IDL file to your list of sources if you want
+       it to appear in your IDE, but it is not necessary.
+
+       Original Author: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   FindJCCL12
        try to find JCCL 1.2 library
@@ -1718,6 +1829,31 @@ a few.
          PERFORMER_INCLUDE_DIRS
          PERFORMER_LIBRARIES
          PERFORMER_RUNTIME_LIBRARY_DIRS
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindPerlModules
+       try to find perl modules, passed as COMPONENTS
+
+       
+
+       Non-cache variable you might use in your CMakeLists.txt:
+
+         PERLMODULES_FOUND
 
        
 
@@ -2811,6 +2947,48 @@ a few.
        Copyright Iowa State University 2009-2010.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindWindowsSDK
+       Find the Windows SDK aka Platform SDK
+
+       
+
+       Variables:
+
+         WINDOWSSDK_FOUND - if any version of the windows or platform SDK was found that is usable with the current version of visual studio
+         WINDOWSSDK_LATEST_DIR
+         WINDOWSSDK_LATEST_NAME
+         WINDOWSSDK_FOUND_PREFERENCE - if we found an entry indicating a "preferred" SDK listed for this visual studio version
+         WINDOWSSDK_PREFERRED_DIR
+         WINDOWSSDK_PREFERRED_NAME
+
+       
+
+         WINDOWSSDK_DIRS - contains no duplicates, ordered most recent first.
+         WINDOWSSDK_PREFERRED_FIRST_DIRS - contains no duplicates, ordered with preferred first, followed by the rest in descending recency
+
+       
+
+       Functions:
+
+         windowssdk_name_lookup(<directory> <output variable>) - Find the name corresponding with the SDK directory you pass in, or
+            NOTFOUND if not recognized. Your directory must be one of WINDOWSSDK_DIRS for this to work.
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Original Author: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   Findargp
        try to find the argp library/component of glibc
