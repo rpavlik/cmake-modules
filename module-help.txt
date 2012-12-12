@@ -853,6 +853,34 @@ a few.
        Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
        or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+  FindDirectShow
+       Find Microsoft DirectShow sample files, library, and headers.
+
+       
+
+         DIRECTSHOW_INCLUDE_DIRS - where to find needed include file
+         DIRECTSHOW_BASECLASS_DIR- Directory containing the DirectShow baseclass sample code.
+         DIRECTSHOW_FOUND        - True if DirectShow found.
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Initially in VRPN - Distributed under the Boost Software License,
+       Version 1.0.
+
+       Almost entirely re-written by: 2012 Ryan Pavlik <rpavlik@iastate.edu>
+       <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
+       University HCI Graduate Program/VRAC
+
+       Copyright Iowa State University 2012.  Distributed under the Boost
+       Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
+       or copy at http://www.boost.org/LICENSE_1_0.txt)
+
   FindDirectX
        try to find part of DirectX SDK
 
@@ -2749,8 +2777,10 @@ a few.
        Non-cache variables you might use in your CMakeLists.txt:
 
          VRPN_FOUND
-         VRPN_SERVER_LIBRARIES
-         VRPN_LIBRARIES
+         VRPN_SERVER_LIBRARIES - server libraries
+         VRPN_LIBRARIES - client libraries
+         VRPN_CLIENT_DEFINITIONS - definitions if you only use the client library
+         VRPN_DEFINITIONS - Client-only definition if all we found was the client library.
          VRPN_INCLUDE_DIRS
 
        
@@ -2763,11 +2793,11 @@ a few.
 
        
 
-       Original Author: 2009-2010 Ryan Pavlik <rpavlik@iastate.edu>
+       Original Author: 2009-2012 Ryan Pavlik <rpavlik@iastate.edu>
        <abiryan@ryand.net> http://academic.cleardefinition.com Iowa State
        University HCI Graduate Program/VRAC
 
-       Copyright Iowa State University 2009-2010.  Distributed under the
+       Copyright Iowa State University 2009-2012.  Distributed under the
        Boost Software License, Version 1.0.  (See accompanying file
        LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
