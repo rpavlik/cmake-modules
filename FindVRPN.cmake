@@ -7,8 +7,10 @@
 #
 # Non-cache variables you might use in your CMakeLists.txt:
 #  VRPN_FOUND
-#  VRPN_SERVER_LIBRARIES
-#  VRPN_LIBRARIES
+#  VRPN_SERVER_LIBRARIES - server libraries
+#  VRPN_LIBRARIES - client libraries
+#  VRPN_CLIENT_DEFINITIONS - definitions if you only use the client library
+#  VRPN_DEFINITIONS - Client-only definition if all we found was the client library.
 #  VRPN_INCLUDE_DIRS
 #
 # VRPN_ROOT_DIR is searched preferentially for these files
@@ -17,11 +19,11 @@
 #  FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
 #
 # Original Author:
-# 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+# 2009-2012 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 #
-# Copyright Iowa State University 2009-2010.
+# Copyright Iowa State University 2009-2012.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -116,9 +118,19 @@ if(VRPN_FOUND)
 	set(VRPN_LIBRARIES "${VRPN_LIBRARY}" ${_deps_libs})
 	set(VRPN_SERVER_LIBRARIES "${VRPN_SERVER_LIBRARY}" ${_deps_libs})
 
+	if(VRPN_LIBRARY)
+		set(VRPN_CLIENT_DEFINITIONS -DVRPN_CLIENT_ONLY)
+	else()
+		unset(VRPN_CLIENT_DEFINITIONS)
+	endif()
+
+	if(VRPN_LIBRARY AND NOT VRPN_SERVER_LIBRARY)
+		set(VRPN_DEFINITIONS -DVRPN_CLIENT_ONLY)
+	else()
+		unset(VRPN_DEFINITIONS)
+	endif()
+
 	mark_as_advanced(VRPN_ROOT_DIR)
 endif()
 
-mark_as_advanced(VRPN_LIBRARY
-	VRPN_SERVER_LIBRARY
-	VRPN_INCLUDE_DIR)
+mark_as_advanced(VRPN_LIBRARY VRPN_SERVER_LIBRARY VRPN_INCLUDE_DIR)
