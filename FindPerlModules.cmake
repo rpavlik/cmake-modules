@@ -41,16 +41,28 @@ if(PERL_FOUND)
 				OUTPUT_STRIP_TRAILING_WHITESPACE)
 			if(result_code EQUAL 0)
 				if(NOT PerlModules_FIND_QUIETLY)
-					message(STATUS "Checking for perl module ${module} - found at ${filename}")
+					message(STATUS
+						"Checking for perl module ${module} - found at ${filename}")
 				endif()
-				set(${modvarname} "${filename}" CACHE FILEPATH "Location found for module ${module}" FORCE)
+				set(${modvarname}
+					"${filename}"
+					CACHE
+					FILEPATH
+					"Location found for module ${module}"
+					FORCE)
 				mark_as_advanced(${modvarname})
 			else()
 				if(NOT PerlModules_FIND_QUIETLY)
 					message(STATUS "Checking for perl module ${module} - failed")
 				endif()
-				set(${modvarname} "NOTFOUND" CACHE FILEPATH "No location found for module ${module}" FORCE)
-				file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log 
+				set(${modvarname}
+					"NOTFOUND"
+					CACHE
+					FILEPATH
+					"No location found for module ${module}"
+					FORCE)
+				file(APPEND
+					${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
 					"Determining if the Perl module ${module} exists failed with the following error output:\n"
 					"${error_info}\n\n")
 			endif()

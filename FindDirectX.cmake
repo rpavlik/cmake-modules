@@ -84,7 +84,9 @@ endif()
 
 find_path(DIRECTX_INCLUDE_DIR
 	NAMES
-	dxdiag.h dinput.h dxerr8.h
+	dxdiag.h
+	dinput.h
+	dxerr8.h
 	PATHS
 	${DXSDK_DIRS}
 	HINTS
