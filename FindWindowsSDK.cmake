@@ -57,7 +57,16 @@ if(MSVC_VERSION GREATER 1310) # Newer than VS .NET/VS Toolkit 2003
 		endif()
 	endif()
 
-	foreach(_winsdkver v8.0A v7.1 v7.0A v6.1 v6.0A v6.0)
+	if(MSVC_VERSION LESS 1700)
+		# VC 10 and older has broad target support
+		set(_winsdk_vistaonly)
+	else()
+		# VC 11 by default targets Vista and later only, so we can add a few more SDKs that (might?) only work on vista+
+		set(_winsdk_vistaonly
+			v8.0
+			v8.0A)
+	endif()
+	foreach(_winsdkver v7.1 v7.0A v6.1 v6.0A v6.0)
 		get_filename_component(_sdkdir
 			"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows\\${_winsdkver};InstallationFolder]"
 			ABSOLUTE)
