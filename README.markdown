@@ -26,8 +26,9 @@ How to Integrate
 These modules are probably best placed wholesale into a "cmake" subdirectory
 of your project source.
 
-If you use Git, try installing [git-subtree][1],
-so you can easily use this repository for subtree merges, updating simply.
+If you use Git, try installing [git-subtree][1] (included by default on
+Git for Windows and perhaps for your Linux distro), so you can easily
+use this repository for subtree merges, updating simply.
 
 For the initial checkout:
 
