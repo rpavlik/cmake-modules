@@ -73,7 +73,7 @@ Licenses
 
 The modules that I wrote myself are all subject to this license:
 
-> Copyright Iowa State University 2009-2012
+> Copyright Iowa State University 2009-2013
 >
 > Distributed under the Boost Software License, Version 1.0.
 >
