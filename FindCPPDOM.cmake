@@ -68,6 +68,23 @@ include(SelectLibraryConfigurations)
 include(CreateImportedTarget)
 include(CleanLibraryList)
 include(CleanDirectoryList)
+include(FindPackageHandleStandardArgs)
+
+# Handle the case where a recent cppdom is supplying its own cmake config file.
+option(CPPDOM_ATTEMPT_CMAKE_MODULE "Should we attempt to use CPPDOM's own CMake module for configuration?" ON)
+mark_as_advanced(CPPDOM_ATTEMPT_CMAKE_MODULE)
+if(NOT cppdom_FOUND)
+	find_package(cppdom QUIET NO_MODULE)
+	if(cppdom_FOUND)
+		set(CPPDOM_LIBRARIES ${cppdom_LIBRARIES})
+		set(CPPDOM_INCLUDE_DIRS ${cppdom_INCLUDE_DIRS})
+		find_package_handle_standard_args(CPPDOM
+			DEFAULT_MSG
+			CPPDOM_LIBRARIES
+			CPPDOM_INCLUDE_DIRS)
+		return()
+	endif()
+endif()
 
 if(CPPDOM_INCLUDE_DIRS AND CPPDOM_LIBRARIES)
 	# in cache already
@@ -180,7 +197,6 @@ endif()
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(CPPDOM
 	DEFAULT_MSG
 	CPPDOM_LIBRARY
