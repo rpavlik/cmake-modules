@@ -146,11 +146,15 @@ if(WINHID_FOUND)
 			endif()
 			set(WINHID_MIN_WINDOWS_VER "${_winreq}" CACHE INTERNAL "" FORCE)
 		endif()
+
+		set(WINHID_INCLUDE_DIRS
+			"${WINHID_CRT_INCLUDE_DIR}"
+			"${WINHID_INCLUDE_DIR}")
+	else()
+		set(WINHID_INCLUDE_DIRS
+			"${WINHID_INCLUDE_DIR}")
 	endif()
 	set(WINHID_LIBRARIES "${WINHID_LIBRARY}")
-	set(WINHID_INCLUDE_DIRS
-		"${WINHID_CRT_INCLUDE_DIR}"
-		"${WINHID_INCLUDE_DIR}")
 	mark_as_advanced(WINHID_ROOT_DIR)
 endif()
 
