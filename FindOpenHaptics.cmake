@@ -428,7 +428,7 @@ if(OPENHAPTICS_FOUND)
 	# Recurse into the nested targets subdirectory if needed
 	if(_nest_targets)
 		get_filename_component(_moddir "${CMAKE_CURRENT_LIST_FILE}" PATH)
-		add_subdirectory("${_moddir}/nested_targets/OpenHaptics")
+		add_subdirectory("${_moddir}/nested_targets/OpenHaptics" "OpenHapticsNestedTargets")
 	endif()
 
 	set(OPENHAPTICS_LIBRARIES
