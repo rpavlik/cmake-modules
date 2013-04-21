@@ -4,6 +4,9 @@
 #  globally_enable_extra_compiler_warnings() - to modify CMAKE_CXX_FLAGS, etc
 #    to change for all targets declared after the command, instead of per-command
 #
+# Requires:
+# 	CompilerUtils
+# 	TargetUtils
 #
 # Original Author:
 # 2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
@@ -16,68 +19,57 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 if(__enable_extra_compiler_warnings)
-	return()
+    return()
 endif()
 set(__enable_extra_compiler_warnings YES)
 
+include(CompilerUtils)
+include(TargetUtils)
+
 macro(_enable_extra_compiler_warnings_flags)
-	set(_flags)
-	if(MSVC)
-		option(COMPILER_WARNINGS_EXTREME
-			"Use compiler warnings that are probably overkill."
-			off)
-		mark_as_advanced(COMPILER_WARNINGS_EXTREME)
-		set(_flags "/W4")
-		if(COMPILER_WARNINGS_EXTREME)
-			set(_flags "${_flags} /Wall /wd4619 /wd4668 /wd4820 /wd4571 /wd4710")
-		endif()
-	else()
-		include(CheckCXXCompilerFlag)
-		set(_flags)
+    set(c_flags)
+    set(cxx_flags)
+    if(MSVC)
+        option(COMPILER_WARNINGS_EXTREME
+            "Use compiler warnings that are probably overkill."
+            off)
+        mark_as_advanced(COMPILER_WARNINGS_EXTREME)
+        set(c_flags "/W4")
+        if(COMPILER_WARNINGS_EXTREME)
+            set(c_flags "${c_flags} /Wall /wd4619 /wd4668 /wd4820 /wd4571 /wd4710")
+        endif()
+        set(cxx_flags ${c_flags})
+    else()
+        set(c_supported_flags)
+        set(c_unsupported_flags)
+        set(cxx_supported_flags)
+        set(cxx_unsupported_flags)
 
-		check_cxx_compiler_flag(-W SUPPORTS_W_FLAG)
-		if(SUPPORTS_W_FLAG)
-			set(_flags "${_flags} -W")
-		endif()
+        get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
+        foreach(language ${languages})
+            string(TOLOWER ${language} prefix)
+            check_compile_flags(${language} "-W w;-Wall wall;-Wextra wextra;-Weffc++ weffcxx" ${prefix}_supported_flags ${prefix}_unsupported_flags)
+        endforeach()
 
-		check_cxx_compiler_flag(-Wall SUPPORTS_WALL_FLAG)
-		if(SUPPORTS_WALL_FLAG)
-			set(_flags "${_flags} -Wall")
-		endif()
-
-		check_cxx_compiler_flag(-Wextra SUPPORTS_WEXTRA_FLAG)
-		if(SUPPORTS_WEXTRA_FLAG)
-			set(_flags "${_flags} -Wextra")
-		endif()
-
-		check_cxx_compiler_flag(-Weffc++ SUPPORTS_WEFFCXX_FLAG)
-		if(SUPPORTS_WEFFCXX_FLAG)
-			set(_flags "${_flags} -Weffc++")
-		endif()
-	endif()
+        string(REPLACE ";" " " c_flags "${c_supported_flags}")
+        string(REPLACE ";" " " cxx_flags "${cxx_supported_flags}")
+    endif()
 endmacro()
 
 function(enable_extra_compiler_warnings _target)
-	_enable_extra_compiler_warnings_flags()
-	get_target_property(_origflags ${_target} COMPILE_FLAGS)
-	if(_origflags)
-		set_property(TARGET
-			${_target}
-			PROPERTY
-			COMPILE_FLAGS
-			"${_flags} ${_origflags}")
-	else()
-		set_property(TARGET
-			${_target}
-			PROPERTY
-			COMPILE_FLAGS
-			"${_flags}")
-	endif()
-
+    _enable_extra_compiler_warnings_flags()
+    get_property(language TARGET ${_target} PROPERTY LINKER_LANGUAGE)
+    if("${language}" STREQUAL "C")
+        add_target_property(${_target} COMPILE_FLAGS "${c_flags}")
+    elseif("${language}" STREQUAL "CXX")
+        add_target_property(${_target} COMPILE_FLAGS "${cxx_flags}")
+    else()
+        add_target_property(${_target} COMPILE_FLAGS "${c_flags} ${cxx_flags}")
+    endif()
 endfunction()
 
 function(globally_enable_extra_compiler_warnings)
-	_enable_extra_compiler_warnings_flags()
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${_flags}" PARENT_SCOPE)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${_flags}" PARENT_SCOPE)
+    _enable_extra_compiler_warnings_flags()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${c_flags}" PARENT_SCOPE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${cxx_flags}" PARENT_SCOPE)
 endfunction()
