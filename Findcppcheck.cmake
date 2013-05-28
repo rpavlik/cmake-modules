@@ -107,7 +107,7 @@ if(CPPCHECK_EXECUTABLE)
 	if("${CPPCHECK_STYLE_ARG}" STREQUAL "--enable=style")
 
 		_cppcheck_set_arg_var(CPPCHECK_UNUSEDFUNC_ARG
-			"--enable=unusedFunctions")
+			"--enable=unusedFunction")
 		_cppcheck_set_arg_var(CPPCHECK_INFORMATION_ARG "--enable=information")
 		_cppcheck_set_arg_var(CPPCHECK_MISSINGINCLUDE_ARG
 			"--enable=missingInclude")
