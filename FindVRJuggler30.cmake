@@ -416,12 +416,6 @@ function(install_vrjuggler30_data_files prefix)
 		_vj_sound_files
 		"${base}/sounds/*.wav")
 	install(FILES ${_vj_sound_files} DESTINATION "${DEST}/sounds/")
-
-	# calibration.table - needed?
-	file(GLOB
-		_vj_config_files
-		"${base}/configFiles/*.jconf")
-	install(FILES "${base}/calibration.table" DESTINATION "${DEST}")
 endfunction()
 
 macro(_vrjuggler30_plugin_install _VAR)
