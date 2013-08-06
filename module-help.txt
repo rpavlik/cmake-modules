@@ -1,4 +1,4 @@
-cmake version 2.8.6
+cmake version 2.8.11
 ------------------------------------------------------------------------------
 Introduction
 
@@ -3999,12 +3999,4 @@ The following resources are available to get help using CMake:
        at cmake@cmake.org.  The list is member-post-only but one may sign up
        on the CMake web page.  Please first read the full documentation at
        http://www.cmake.org before posting questions to the list.
-
-Summary of helpful links:
-
-  Home: http://www.cmake.org
-  Docs: http://www.cmake.org/HTML/Documentation.html
-  Mail: http://www.cmake.org/HTML/MailingLists.html
-  FAQ:  http://www.cmake.org/Wiki/CMake_FAQ
-
 
