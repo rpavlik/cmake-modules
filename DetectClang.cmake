@@ -18,6 +18,5 @@ endif()
 set(__detect_clang YES)
 
 if(NOT CMAKE_COMPILER_IS_CLANG AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    messagE("ksjhfjskfhd")
     set(CMAKE_COMPILER_IS_CLANG ON)
 endif()
