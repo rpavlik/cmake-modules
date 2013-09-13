@@ -214,7 +214,7 @@ if(VRJUGGLER30_FOUND)
 		# Find the common parent directory of the include dir and the library dir
 		get_filename_component(_absincpath "${${_component}_INCLUDE_DIR}" PATH)
 		if(${_component}_INCLUDE_DIR)
-			get_filename_component(_curpath "${${_component}_LIBRARY}" PATH)
+			get_filename_component(_curpath "${${_component}_LIBRARY_RELEASE}" PATH)
 			get_filename_component(_nextpath "${_curpath}/.." ABSOLUTE)
 			while(NOT _curpath STREQUAL _nextpath)
 				set(_curpath "${_nextpath}")
