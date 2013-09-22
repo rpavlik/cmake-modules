@@ -171,10 +171,10 @@ endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(VRJuggler
-	DEFAULT_MSG
-	VRJUGGLER_VERSION
+	REQUIRED_VARS
 	VRJUGGLER_LIBRARIES
-	VRJUGGLER_FOUND)
+	VERSION_VAR
+	VRJUGGLER_VERSION)
 
 if(VRJUGGLER_FOUND)
 	mark_as_advanced(VRJUGGLER_ROOT_DIR)

@@ -67,19 +67,17 @@ macro(_launcher_system_settings)
 		set(VCPROJ_TYPE vcproj)
 		set(USERFILE_EXTENSION ${SYSTEM_NAME}.${USER_NAME}.user)
 		set(LAUNCHER_LINESEP "&#x0A;")
-		if(MSVC10)
-			set(LAUNCHER_LINESEP "\n")
-			set(USERFILE_VC_VERSION 10.00)
-			set(USERFILE_EXTENSION user)
-			set(VCPROJ_TYPE vcxproj)
-		elseif(MSVC90)
+		if(MSVC90)
 			set(USERFILE_VC_VERSION 9.00)
 		elseif(MSVC80)
 			set(USERFILE_VC_VERSION 8.00)
 		elseif(MSVC71)
 			set(USERFILE_VC_VERSION 7.10)
-		elseif(MSVC)
-			message(STATUS "MSVC but unrecognized version!")
+		elseif(MSVC10 OR (MSVC AND MSVC_VERSION GREATER 1600)) # 2010 or newer
+			set(LAUNCHER_LINESEP "\n")
+			set(USERFILE_VC_VERSION 10.00)
+			set(USERFILE_EXTENSION user)
+			set(VCPROJ_TYPE vcxproj)
 		endif()
 		if(BITS EQUAL 64)
 			set(USERFILE_PLATFORM x64)
@@ -224,6 +222,17 @@ macro(_launcher_produce_vcproj_user)
 
 endmacro()
 
+macro(_launcher_configure_executable _src _tmp _target)
+#    get_filename_component(_targetname "${_target}" NAME)
+    get_filename_component(_targetpath "${_target}" PATH)
+	configure_file("${_src}"
+		"${_tmp}"
+		@ONLY)
+	file(COPY "${_tmp}"
+	    DESTINATION "${_targetpath}"
+	    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_WRITE GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+endmacro()
+
 macro(_launcher_create_target_launcher)
 	if(CMAKE_CONFIGURATION_TYPES)
 		# Multi-config generator - multiple launchers
@@ -234,9 +243,10 @@ macro(_launcher_create_target_launcher)
 			file(TO_NATIVE_PATH
 				"${USERFILE_${_config}_COMMAND}"
 				USERFILE_COMMAND)
-			configure_file("${_launchermoddir}/targetlauncher.${_suffix}.in"
-				"${CMAKE_CURRENT_BINARY_DIR}/launch-${_targetname}-${_config}.${_suffix}"
-				@ONLY)
+			set(_fn "launch-${_targetname}-${_config}.${_suffix}")
+			_launcher_configure_executable("${_launchermoddir}/targetlauncher.${_suffix}.in"
+			    "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/${_fn}"
+			    "${CMAKE_CURRENT_BINARY_DIR}/${_fn}")
 		endforeach()
 	else()
 		# Single-config generator - single launcher
@@ -246,7 +256,8 @@ macro(_launcher_create_target_launcher)
 		file(TO_NATIVE_PATH
 			"${USERFILE_COMMAND}"
 			USERFILE_COMMAND)
-		configure_file("${_launchermoddir}/targetlauncher.${_suffix}.in"
+		_launcher_configure_executable("${_launchermoddir}/targetlauncher.${_suffix}.in"
+		    "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/launch-${_targetname}.${_suffix}"
 			"${CMAKE_CURRENT_BINARY_DIR}/launch-${_targetname}.${_suffix}"
 			@ONLY)
 	endif()
@@ -291,9 +302,9 @@ function(create_generic_launcher _launchername)
 			"Program terminated with signal")
 	endif()
 
-	configure_file("${_launchermoddir}/genericlauncher.${_suffix}.in"
-		"${_launchername}"
-		@ONLY)
+	_launcher_configure_executable("${_launchermoddir}/genericlauncher.${_suffix}.in"
+	    "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/genericlauncher.${_suffix}.in"
+		"${_launchername}")
 endfunction()
 
 function(guess_runtime_library_dirs _var)

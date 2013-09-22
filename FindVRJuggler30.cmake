@@ -209,10 +209,23 @@ if(VRJUGGLER30_FOUND)
 
 	set(_vjbase)
 	set(_vjbaseclean)
-	foreach(_lib ${VPR22_LIBRARY} ${VRJ30_LIBRARY} ${VRJOGL30_LIBRARY} ${JCCL14_LIBRARY} ${GADGETEER20_LIBRARY})
-		get_filename_component(_libpath "${_lib}" PATH)
-		get_filename_component(_abspath "${_libpath}/.." ABSOLUTE)
-		list(APPEND _vjbase "${_abspath}")
+	foreach(_component VPR22 VRJ30 VRJOGL30 JCCL14 GADGETEER20)
+
+		# Find the common parent directory of the include dir and the library dir
+		get_filename_component(_absincpath "${${_component}_INCLUDE_DIR}" PATH)
+		if(${_component}_INCLUDE_DIR)
+			get_filename_component(_curpath "${${_component}_LIBRARY_RELEASE}" PATH)
+			get_filename_component(_nextpath "${_curpath}/.." ABSOLUTE)
+			while(NOT _curpath STREQUAL _nextpath)
+				set(_curpath "${_nextpath}")
+				string(LENGTH "${_curpath}" _pathlen)
+				if("${_absincpath}" MATCHES "^${_curpath}.*")
+					list(APPEND _vjbase "${_curpath}")
+					break()
+				endif()
+				get_filename_component(_nextpath "${_curpath}/.." ABSOLUTE)
+			endwhile()
+		endif()
 	endforeach()
 
 	clean_directory_list(_vjbase)
@@ -403,12 +416,6 @@ function(install_vrjuggler30_data_files prefix)
 		_vj_sound_files
 		"${base}/sounds/*.wav")
 	install(FILES ${_vj_sound_files} DESTINATION "${DEST}/sounds/")
-
-	# calibration.table - needed?
-	file(GLOB
-		_vj_config_files
-		"${base}/configFiles/*.jconf")
-	install(FILES "${base}/calibration.table" DESTINATION "${DEST}")
 endfunction()
 
 macro(_vrjuggler30_plugin_install _VAR)
