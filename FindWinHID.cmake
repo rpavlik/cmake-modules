@@ -44,8 +44,10 @@ set(WINHID_ROOT_DIR
 
 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
 	set(_arch amd64)
+	set(_arch8 x64)
 else()
 	set(_arch i386)
+	set(_arch8 x86)
 endif()
 
 if(MSVC)
@@ -54,6 +56,7 @@ if(MSVC)
 	prefix_list_glob(_prefixed
 		"*/"
 		"$ENV{SYSTEMDRIVE}/WinDDK/"
+		"$ENV{ProgramFiles}/Windows Kits/"
 		"c:/WinDDK/")
 	clean_directory_list(_prefixed)
 	find_library(WINHID_LIBRARY
@@ -68,11 +71,21 @@ if(MSVC)
 		"lib/wxp/${_arch}" # WinXP min requirement
 		"lib/wnet/${_arch}" # Win Server 2003 min requirement
 		"lib/wlh/${_arch}" # Win Vista ("Long Horn") min requirement
+		"lib/wlh/um/${_arch8}" # Win Vista ("Long Horn") min requirement
 		"lib/win7/${_arch}" # Win 7 min requirement
+		"lib/win7/um/${_arch8}" # Win 7 min requirement
+		"lib/win8/${_arch}" # Win 8 min requirement
+		"lib/win8/um/${_arch8}" # Win 8 min requirement
 		)
-		# Might want to look close to the library first for the includes.
-	get_filename_component(_libdir "${WINHID_LIBRARY}" PATH)
-	get_filename_component(_basedir "${_libdir}/../../.." ABSOLUTE)
+	# Might want to look close to the library first for the includes.
+	if(WINHID_LIBRARY)
+		set(_prevdir)
+		get_filename_component(_basedir "${WINHID_LIBRARY}" PATH)
+		while(NOT IS_DIRECTORY "${_basedir}/lib" AND NOT (_basedir STREQUAL _prevdir))
+			set(_prevdir "${_basedir}")
+			get_filename_component(_basedir "${_basedir}/.." ABSOLUTE)
+		endwhile()
+	endif()
 
 	find_path(WINHID_CRT_INCLUDE_DIR # otherwise you get weird compile errors
 		NAMES
@@ -92,6 +105,7 @@ if(MSVC)
 		PATHS
 		"${WINHID_ROOT_DIR}"
 		PATH_SUFFIXES
+		include/shared
 		inc/ddk
 		inc/api
 		inc/w2k
@@ -138,6 +152,8 @@ if(WINHID_FOUND)
 			set(_winreq "Windows Vista")
 		elseif(WINHID_LIBRARY MATCHES "lib/win7")
 			set(_winreq "Windows 7")
+		elseif(WINHID_LIBRARY MATCHES "lib/win8")
+			set(_winreq "Windows 8 (Possibly?)")
 		endif()
 		if(NOT "${WINHID_MIN_WINDOWS_VER}" STREQUAL "${_winreq}")
 			if(NOT WinHID_FIND_QUIETLY)
@@ -146,15 +162,17 @@ if(WINHID_FOUND)
 			endif()
 			set(WINHID_MIN_WINDOWS_VER "${_winreq}" CACHE INTERNAL "" FORCE)
 		endif()
-
+	endif()
+	set(WINHID_LIBRARIES "${WINHID_LIBRARY}")
+	if(WINHID_CRT_INCLUDE_DIR)
 		set(WINHID_INCLUDE_DIRS
 			"${WINHID_CRT_INCLUDE_DIR}"
 			"${WINHID_INCLUDE_DIR}")
 	else()
+		# Don't need that CRT include dir for WDK 8+
 		set(WINHID_INCLUDE_DIRS
 			"${WINHID_INCLUDE_DIR}")
 	endif()
-	set(WINHID_LIBRARIES "${WINHID_LIBRARY}")
 	mark_as_advanced(WINHID_ROOT_DIR)
 endif()
 
