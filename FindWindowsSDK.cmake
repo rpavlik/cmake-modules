@@ -85,21 +85,15 @@ if(MSVC_VERSION GREATER 1200)
 		"8F9E5EF3-A9A5-491B-A889-C58EFFECE8B3_Microsoft Platform SDK for Windows Server 2003 SP1")
 		string(SUBSTRING "${_platformsdkinfo}" 0 36 _platformsdkguid)
 		string(SUBSTRING "${_platformsdkinfo}" 37 -1 _platformsdkname)
-		get_filename_component(_sdkdir
-			"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\MicrosoftSDK\\InstalledSDKs\\${_platformsdkguid};Install Dir]"
-			ABSOLUTE)
-		if(EXISTS "${_sdkdir}")
-			list(APPEND _win_sdk_dirs "${_sdkdir}")
-			list(APPEND _win_sdk_versanddirs "${_platformsdkname}" "${_sdkdir}")
-		endif()
-
-		get_filename_component(_sdkdir
-			"[HKEY_CURRENT_USER\\Software\\Microsoft\\MicrosoftSDK\\InstalledSDKs\\${_platformsdkguid};Install Dir]"
-			ABSOLUTE)
-		if(EXISTS "${_sdkdir}")
-			list(APPEND _win_sdk_dirs "${_sdkdir}")
-			list(APPEND _win_sdk_versanddirs "${_platformsdkname}" "${_sdkdir}")
-		endif()
+		foreach(HIVE HKEY_LOCAL_MACHINE HKEY_CURRENT_USER)
+			get_filename_component(_sdkdir
+				"[${HIVE}\\SOFTWARE\\Microsoft\\MicrosoftSDK\\InstalledSDKs\\${_platformsdkguid};Install Dir]"
+				ABSOLUTE)
+			if(EXISTS "${_sdkdir}")
+				list(APPEND _win_sdk_dirs "${_sdkdir}")
+				list(APPEND _win_sdk_versanddirs "${_platformsdkname}" "${_sdkdir}")
+			endif()
+		endforeach()
 	endforeach()
 endif()
 
