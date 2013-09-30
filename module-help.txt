@@ -1,4 +1,4 @@
-cmake version 2.8.11
+cmake version 2.8.11.1
 ------------------------------------------------------------------------------
 Introduction
 
@@ -1352,6 +1352,46 @@ a few.
        Copyright Iowa State University 2012.  Distributed under the Boost
        Software License, Version 1.0.  (See accompanying file LICENSE_1_0.txt
        or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+  FindInterSense
+       try to find InterSense library
+
+       
+
+       Cache Variables: (probably not for direct use in your scripts)
+
+         INTERSENSE_INCLUDE_DIR
+         INTERSENSE_ISENSEC_DIR - location of the isense.c "import library" substitute.
+         INTERSENSE_LIBRARY
+
+       
+
+       Non-cache variables you might use in your CMakeLists.txt:
+
+         INTERSENSE_FOUND
+         INTERSENSE_INCLUDE_DIRS
+         INTERSENSE_LIBRARIES
+
+       
+
+       Requires these CMake modules:
+
+         FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
+
+       
+
+       Author: 2013 Eric Marsh <bits@wemarsh.com> http://wemarsh.com/
+       Kognitiv Neuroinformatik, Universität Bremen
+
+       (building on Ryan Pavlik's templates)
+
+       2013 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+       http://academic.cleardefinition.com Iowa State University HCI Graduate
+       Program/VRAC
+
+       Distributed under the Boost Software License, Version 1.0.  (See
+       accompanying file LICENSE_1_0.txt or copy at
+       http://www.boost.org/LICENSE_1_0.txt)
 
   FindJCCL12
        try to find JCCL 1.2 library

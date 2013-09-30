@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><title>module-help - cmake</title></head><body>
-<h2><a name="section_Index"></a>Master Index CMake 2.8.11</h2>
+<h2><a name="section_Index"></a>Master Index CMake 2.8.11.1</h2>
 <ul>
   <li><a href="#section_Introduction"><b>Introduction</b></a></li>
   <li><a href="#section_Description"><b>Description</b></a></li>
@@ -57,6 +57,7 @@
     <li><a href="#module:FindGlove5DT"><b><code>FindGlove5DT</code></b></a></li>
     <li><a href="#module:FindHIDAPI"><b><code>FindHIDAPI</code></b></a></li>
     <li><a href="#module:FindIDLJ"><b><code>FindIDLJ</code></b></a></li>
+    <li><a href="#module:FindInterSense"><b><code>FindInterSense</code></b></a></li>
     <li><a href="#module:FindJCCL12"><b><code>FindJCCL12</code></b></a></li>
     <li><a href="#module:FindJCCL14"><b><code>FindJCCL14</code></b></a></li>
     <li><a href="#module:FindJtTk"><b><code>FindJtTk</code></b></a></li>
@@ -683,6 +684,24 @@
 <p>You may wish to add the IDL file to your list of sources if you want it to appear in your IDE, but it is not necessary.<br /></p>
 <p>Original Author: 2012 Ryan Pavlik &lt;rpavlik@iastate.edu&gt; &lt;abiryan@ryand.net&gt; <a href="http://academic.cleardefinition.com">http://academic.cleardefinition.com</a> Iowa State University HCI Graduate Program/VRAC<br /></p>
 <p>Copyright Iowa State University 2012. Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
+
+  </li>
+  <li>
+    <a name="module:FindInterSense"></a><b><code>FindInterSense</code></b>: try to find InterSense library<br />
+    <p><br /></p>
+<p>Cache Variables: (probably not for direct use in your scripts)<br /></p>
+<pre>  INTERSENSE_INCLUDE_DIR<br />  INTERSENSE_ISENSEC_DIR - location of the isense.c "import library" substitute.<br />  INTERSENSE_LIBRARY<br /></pre>
+    <p><br /></p>
+<p>Non-cache variables you might use in your CMakeLists.txt:<br /></p>
+<pre>  INTERSENSE_FOUND<br />  INTERSENSE_INCLUDE_DIRS<br />  INTERSENSE_LIBRARIES<br /></pre>
+    <p><br /></p>
+<p>Requires these CMake modules:<br /></p>
+<pre>  FindPackageHandleStandardArgs (known included with CMake &gt;=2.6.2)<br /></pre>
+    <p><br /></p>
+<p>Author: 2013 Eric Marsh &lt;bits@wemarsh.com&gt; <a href="http://wemarsh.com/">http://wemarsh.com/</a> Kognitiv Neuroinformatik, Universität Bremen<br /></p>
+<p>(building on Ryan Pavlik's templates)<br /></p>
+<p>2013 Ryan Pavlik &lt;rpavlik@iastate.edu&gt; &lt;abiryan@ryand.net&gt; <a href="http://academic.cleardefinition.com">http://academic.cleardefinition.com</a> Iowa State University HCI Graduate Program/VRAC<br /></p>
+<p>Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
 
   </li>
   <li>
