@@ -186,6 +186,18 @@ find_library(DIRECTX_D3DX9_LIBRARY_DEBUG
 	PATH_SUFFIXES
 	${_lib_suffixes})
 
+find_library(DIRECTX_XINPUT_LIBRARY
+	NAMES
+    Xinput9_1_0
+	Xinput
+	PATHS
+	${DXSDK_DIRS}
+	HINTS
+	"${_dxsdk_lib_dir}"
+	"${DIRECTX_ROOT_DIR}"
+	PATH_SUFFIXES
+	${_lib_suffixes})
+
 include(SelectLibraryConfigurations)
 select_library_configurations(DIRECTX_D3DX9)
 
