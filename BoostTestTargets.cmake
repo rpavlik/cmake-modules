@@ -94,7 +94,7 @@ function(add_boost_test _name)
 		return()
 	endif()
 	if("${CMAKE_VERSION}" VERSION_LESS "2.8.0")
-		if(NOT "${_boost_test_cmakever_pestered}x" EQUALS "${CMAKE_VERSION}x")
+		if(NOT "${_boost_test_cmakever_pestered}x" EQUAL "${CMAKE_VERSION}x")
 			message(STATUS
 				"Not adding boost::test targets - CMake 2.8.0 or newer required, using ${CMAKE_VERSION}")
 			set(_boost_test_cmakever_pestered
