@@ -40,7 +40,7 @@ set(__get_git_revision_description YES)
 get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 
 function(get_git_head_revision _refspecvar _hashvar)
-	set(GIT_PARENT_DIR "${CMAKE_SOURCE_DIR}")
+	set(GIT_PARENT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 	set(GIT_DIR "${GIT_PARENT_DIR}/.git")
 	while(NOT EXISTS "${GIT_DIR}")	# .git dir not found, search parent directories
 		set(GIT_PREVIOUS_PARENT "${GIT_PARENT_DIR}")
