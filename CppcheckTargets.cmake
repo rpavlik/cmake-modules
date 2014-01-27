@@ -27,19 +27,29 @@ endif()
 set(__add_cppcheck YES)
 
 if(NOT CPPCHECK_FOUND)
-	find_package(cppcheck QUIET)
+	find_package(cppcheck)
 endif()
 
-if(CPPCHECK_FOUND)
-	if(NOT TARGET all_cppcheck)
-		add_custom_target(all_cppcheck)
-		set_target_properties(all_cppcheck PROPERTIES EXCLUDE_FROM_ALL TRUE)
-	endif()
+if(NOT CPPCHECK_FOUND)
+  add_custom_target(cppcheck
+    COMMENT "cppcheck executable not found")
+  set_target_properties(cppcheck PROPERTIES EXCLUDE_FROM_ALL TRUE)
+elseif(CPPCHECK_VERSION VERSION_LESS 1.53.0)
+  add_custom_target(cppcheck
+    COMMENT "Need at least cppcheck 1.53, found ${CPPCHECK_VERSION}")
+  set_target_properties(cppcheck PROPERTIES EXCLUDE_FROM_ALL TRUE)
+  set(CPPCHECK_FOUND)
+endif()
+
+if(NOT TARGET cppcheck)
+  add_custom_target(cppcheck)
 endif()
 
 function(add_cppcheck_sources _targetname)
 	if(CPPCHECK_FOUND)
-		set(_cppcheck_args)
+		set(_cppcheck_args --force -I ${CMAKE_SOURCE_DIR}
+                  --error-exitcode=2 --inline-suppr
+                  --suppress=unmatchedSuppression ${CPPCHECK_EXTRA_ARGS})
 		set(_input ${ARGN})
 		list(FIND _input UNUSED_FUNCTIONS _unused_func)
 		if("${_unused_func}" GREATER "-1")
@@ -113,9 +123,7 @@ function(add_cppcheck_sources _targetname)
 			FAIL_REGULAR_EXPRESSION
 			"${CPPCHECK_FAIL_REGULAR_EXPRESSION}")
 
-		add_custom_command(TARGET
-			all_cppcheck
-			PRE_BUILD
+		add_custom_target(${_targetname}_cppcheck
 			COMMAND
 			${CPPCHECK_EXECUTABLE}
 			${CPPCHECK_QUIET_ARG}
@@ -127,6 +135,7 @@ function(add_cppcheck_sources _targetname)
 			COMMENT
 			"${_targetname}_cppcheck: Running cppcheck on target ${_targetname}..."
 			VERBATIM)
+               add_dependencies(cppcheck ${_targetname}_cppcheck)
 	endif()
 endfunction()
 
@@ -136,7 +145,9 @@ function(add_cppcheck _name)
 			"add_cppcheck given a target name that does not exist: '${_name}' !")
 	endif()
 	if(CPPCHECK_FOUND)
-		set(_cppcheck_args)
+		set(_cppcheck_args --force -I ${CMAKE_SOURCE_DIR}
+                  --error-exitcode=2 --inline-suppr
+                  --suppress=unmatchedSuppression ${CPPCHECK_EXTRA_ARGS})
 
 		list(FIND ARGN UNUSED_FUNCTIONS _unused_func)
 		if("${_unused_func}" GREATER "-1")
@@ -194,9 +205,7 @@ function(add_cppcheck _name)
 			FAIL_REGULAR_EXPRESSION
 			"${CPPCHECK_FAIL_REGULAR_EXPRESSION}")
 
-		add_custom_command(TARGET
-			all_cppcheck
-			PRE_BUILD
+		add_custom_target(${_name}_cppcheck
 			COMMAND
 			${CPPCHECK_EXECUTABLE}
 			${CPPCHECK_QUIET_ARG}
@@ -208,6 +217,7 @@ function(add_cppcheck _name)
 			COMMENT
 			"${_name}_cppcheck: Running cppcheck on target ${_name}..."
 			VERBATIM)
+               add_dependencies(cppcheck ${_name}_cppcheck)
 	endif()
 
 endfunction()
