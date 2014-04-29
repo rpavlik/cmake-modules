@@ -62,9 +62,15 @@ if(MSVC_VERSION GREATER 1310) # Newer than VS .NET/VS Toolkit 2003
 		set(_winsdk_vistaonly)
 	else()
 		# VC 11 by default targets Vista and later only, so we can add a few more SDKs that (might?) only work on vista+
-		set(_winsdk_vistaonly
-			v8.0
-			v8.0A)
+		if("${CMAKE_VS_PLATFORM_TOOLSET}" MATCHES "_xp")
+			# This is the XP-compatible v110 toolset
+		elseif("${CMAKE_VS_PLATFORM_TOOLSET}" STREQUAL "v100")
+			# This is the VS2010 toolset
+		else()
+			set(_winsdk_vistaonly
+				v8.0
+				v8.0A)
+		endif()
 	endif()
 	foreach(_winsdkver v7.1 v7.0A v6.1 v6.0A v6.0)
 		get_filename_component(_sdkdir
@@ -85,21 +91,15 @@ if(MSVC_VERSION GREATER 1200)
 		"8F9E5EF3-A9A5-491B-A889-C58EFFECE8B3_Microsoft Platform SDK for Windows Server 2003 SP1")
 		string(SUBSTRING "${_platformsdkinfo}" 0 36 _platformsdkguid)
 		string(SUBSTRING "${_platformsdkinfo}" 37 -1 _platformsdkname)
-		get_filename_component(_sdkdir
-			"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\MicrosoftSDK\\InstalledSDKs\\${_platformsdkguid};Install Dir]"
-			ABSOLUTE)
-		if(EXISTS "${_sdkdir}")
-			list(APPEND _win_sdk_dirs "${_sdkdir}")
-			list(APPEND _win_sdk_versanddirs "${_platformsdkname}" "${_sdkdir}")
-		endif()
-
-		get_filename_component(_sdkdir
-			"[HKEY_CURRENT_USER\\Software\\Microsoft\\MicrosoftSDK\\InstalledSDKs\\${_platformsdkguid};Install Dir]"
-			ABSOLUTE)
-		if(EXISTS "${_sdkdir}")
-			list(APPEND _win_sdk_dirs "${_sdkdir}")
-			list(APPEND _win_sdk_versanddirs "${_platformsdkname}" "${_sdkdir}")
-		endif()
+		foreach(HIVE HKEY_LOCAL_MACHINE HKEY_CURRENT_USER)
+			get_filename_component(_sdkdir
+				"[${HIVE}\\SOFTWARE\\Microsoft\\MicrosoftSDK\\InstalledSDKs\\${_platformsdkguid};Install Dir]"
+				ABSOLUTE)
+			if(EXISTS "${_sdkdir}")
+				list(APPEND _win_sdk_dirs "${_sdkdir}")
+				list(APPEND _win_sdk_versanddirs "${_platformsdkname}" "${_sdkdir}")
+			endif()
+		endforeach()
 	endforeach()
 endif()
 
