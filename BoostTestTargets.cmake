@@ -242,7 +242,7 @@ function(add_boost_test _name)
 				${_test_command} ${Boost_TEST_FLAGS}
 			)
 			if(FAIL_REGULAR_EXPRESSION)
-				set_tests_properties(${_name}-${_test}
+				set_tests_properties(${_name}-boost_test
 					PROPERTIES
 					FAIL_REGULAR_EXPRESSION
 					"${FAIL_REGULAR_EXPRESSION}")
