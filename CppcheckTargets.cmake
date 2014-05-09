@@ -1,9 +1,9 @@
 # - Run cppcheck on c++ source files as a custom target and a test
 #
 #  include(CppcheckTargets)
-#  add_cppcheck(<target-name> [UNUSED_FUNCTIONS] [STYLE] [POSSIBLE_ERROR] [FAIL_ON_WARNINGS]) -
+#  add_cppcheck(<target-name> [UNUSED_FUNCTIONS] [STYLE] [POSSIBLE_ERROR] [FORCE] [FAIL_ON_WARNINGS]) -
 #    Create a target to check a target's sources with cppcheck and the indicated options
-#  add_cppcheck_sources(<target-name> [UNUSED_FUNCTIONS] [STYLE] [POSSIBLE_ERROR] [FAIL_ON_WARNINGS]) -
+#  add_cppcheck_sources(<target-name> [UNUSED_FUNCTIONS] [STYLE] [POSSIBLE_ERROR] [FORCE] [FAIL_ON_WARNINGS]) -
 #    Create a target to check standalone sources with cppcheck and the indicated options
 #
 # Requires these CMake modules:
@@ -57,6 +57,12 @@ function(add_cppcheck_sources _targetname)
 		if("${_poss_err}" GREATER "-1")
 			list(APPEND _cppcheck_args ${CPPCHECK_POSSIBLEERROR_ARG})
 			list(REMOVE_AT _input ${_poss_err})
+		endif()
+
+		list(FIND _input FORCE _force)
+		if("${_force}" GREATER "-1")
+			list(APPEND _cppcheck_args "--force")
+			list(REMOVE_AT _input ${_force})
 		endif()
 
 		list(FIND _input FAIL_ON_WARNINGS _fail_on_warn)
@@ -153,6 +159,11 @@ function(add_cppcheck _name)
 			list(APPEND _cppcheck_args ${CPPCHECK_POSSIBLEERROR_ARG})
 		endif()
 
+		list(FIND ARGN FORCE _force)
+		if("${_force}" GREATER "-1")
+			list(APPEND _cppcheck_args "--force")
+		endif()
+
 		list(FIND _input FAIL_ON_WARNINGS _fail_on_warn)
 		if("${_fail_on_warn}" GREATER "-1")
 			list(APPEND
@@ -160,6 +171,12 @@ function(add_cppcheck _name)
 				${CPPCHECK_WARN_REGULAR_EXPRESSION})
 			list(REMOVE_AT _input ${_unused_func})
 		endif()
+
+		get_target_property(_cppcheck_includes "${_name}" INCLUDE_DIRECTORIES)
+		set(_includes)
+		foreach(_include ${_cppcheck_includes})
+			list(APPEND _includes "-I${_include}")
+		endforeach()
 
 		get_target_property(_cppcheck_sources "${_name}" SOURCES)
 		set(_files)
@@ -202,6 +219,7 @@ function(add_cppcheck _name)
 			${CPPCHECK_QUIET_ARG}
 			${CPPCHECK_TEMPLATE_ARG}
 			${_cppcheck_args}
+			${_includes}
 			${_files}
 			WORKING_DIRECTORY
 			"${CMAKE_CURRENT_SOURCE_DIR}"
