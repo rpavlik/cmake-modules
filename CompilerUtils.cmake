@@ -1,12 +1,8 @@
 # - Handy functions regarding compilers
 #
 #  check_compile_flags(<language> <flagslist> <SUPPORTED> <UNSUPPORTED>)
-#   - for every compile flag, checks whether it is supported by the enabled compiler
+#   - for every compile flag, checks whether it is supported by the compiler enabled for the given language
 #   - supported languages are C and CXX
-#   - flags should be given as a list of pairs (space separated), for which
-#   the first item is the compile flag iself, while the second should be
-#   a literal which uniquely identifies the given flag
-#   Eg. "-flag1 flag1; /flag2 flag2; -flag3=on flag3_on"
 #
 # Original Author:
 # 2013 Bruno Dutra <brunocodutra@gmail.com>
@@ -20,16 +16,18 @@ if(__compiler_utils)
 endif()
 set(__compiler_utils YES)
 
-function(check_compile_flags _language _flags _supported _unsupported)
+function(check_compile_flags _language _flags _supported)
     include(CheckCCompilerFlag)
     include(CheckCXXCompilerFlag)
     set(supported)
-    set(unsupported)
-    foreach(item ${_flags})
-        string(REGEX REPLACE "([^ ]+) .+" "\\1" flag ${item})
-        string(REGEX REPLACE "[^ ]+ (.+)" "supports_\\1_${_language}_flag" flag_name ${item})
-        string(TOUPPER ${flag_name} flag_name)
-
+    foreach(flag ${_flags})
+        string(TOUPPER "${flag}" flag_name)
+        string(REGEX REPLACE "^/" "" flag_name "${flag_name}") 
+        string(REGEX REPLACE "^-" "" flag_name "${flag_name}") 
+        string(REGEX REPLACE "[-]" "_" flag_name "${flag_name}") 
+        string(REGEX REPLACE "[^A-z]" "" flag_name "${flag_name}") 
+        set(flag_name "HAS_${flag_name}")
+        
         if("${_language}" STREQUAL "C")
             check_c_compiler_flag(${flag} ${flag_name})
         elseif("${_language}" STREQUAL "CXX")
@@ -37,14 +35,17 @@ function(check_compile_flags _language _flags _supported _unsupported)
         else()
             message(FATAL_ERROR "unsupported language: ${_language}")
         endif()
+        
         if(${flag_name})
-            set(supported "${supported}" "${flag}")
-        else()
-            set(unsupported "${unsupported}" "${flag}")
+            set(supported "${supported} ${flag}")
         endif()
     endforeach()
 
     set(${_supported} ${supported} PARENT_SCOPE)
-    set(${_unsupported} ${unsupported} PARENT_SCOPE)
 endfunction()
 
+function(pedantic_compiler_flags _language _pedantic_flags)
+        check_compile_flags(${_language} "-/Za;-pedantic-errors" supported_flags)
+        
+        set(${_pedantic_flags} ${supported_flags} PARENT_SCOPE)
+endfunction()
