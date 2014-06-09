@@ -1,13 +1,12 @@
 # - Handy functions regarding compilers
 #
 #  check_compile_flags(<language> <flagslist> <SUPPORTED> <UNSUPPORTED>)
-#    for every compile flag, checks if the compiler for the given language
-#    supports it and sorts it out in the appropriate output list
-#    supported languages are C and CXX
-#    flags should be given in a list of pairs (space separated), for which
-#    the first item is the compile flag iself, while the second should be
-#    an identifier that uniquely identifies the given flag
-#    Eg. "-flag1 flag1; /flag2 flag2; -flag3=on flag3_on"
+#   - for every compile flag, checks whether it is supported by the enabled compiler
+#   - supported languages are C and CXX
+#   - flags should be given as a list of pairs (space separated), for which
+#   the first item is the compile flag iself, while the second should be
+#   a literal which uniquely identifies the given flag
+#   Eg. "-flag1 flag1; /flag2 flag2; -flag3=on flag3_on"
 #
 # Original Author:
 # 2013 Bruno Dutra <brunocodutra@gmail.com>

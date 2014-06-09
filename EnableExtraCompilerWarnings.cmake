@@ -1,12 +1,12 @@
 # - Add flags to compile with extra warnings
 #
 #  enable_extra_compiler_warnings(<targetname>)
-#  globally_enable_extra_compiler_warnings() - to modify CMAKE_CXX_FLAGS, etc
+#  globally_enable_extra_compiler_warnings() - modifies CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 #    to change for all targets declared after the command, instead of per-command
 #
 # Requires:
-# 	CompilerUtils
-# 	TargetUtils
+#   CompilerUtils
+#   TargetUtils
 #
 # Original Author:
 # 2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>

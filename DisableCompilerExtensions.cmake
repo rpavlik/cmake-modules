@@ -2,7 +2,7 @@
 #
 #  disable_compiler_extensions(<targetname>)
 #  globally_disable_compiler_extensions() - modifies CMAKE_C[XX]_FLAGS
-#    disable extensions for all c/c++ targets declared subsequently
+#   disable extensions for all c/c++ targets declared thereafter
 #
 # Requires:
 #   DetectClang
