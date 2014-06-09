@@ -1,6 +1,6 @@
 # - Detects whether the toolchain in use is clang
 #
-#  Defines CMAKE_COMPILER_IS_CLANG if the toolchain in use is clang
+#  Defines CMAKE_<LANG>_COMPILER_IS_CLANG if the toolchain in use for <LANG> is clang
 #
 # Original Author:
 # 2013 Bruno Dutra <brunocodutra@gmail.com>
@@ -14,6 +14,9 @@ if(__detect_clang)
 endif()
 set(__detect_clang YES)
 
-if(NOT CMAKE_COMPILER_IS_CLANG AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set(CMAKE_COMPILER_IS_CLANG ON)
-endif()
+set(LANGUAGES "C;CXX")
+foreach(LANG ${LANGUAGES})
+    if(NOT CMAKE_${LANG}_COMPILER_IS_CLANG AND CMAKE_${LANG}_COMPILER_ID STREQUAL Clang)
+        set(CMAKE_${LANG}_COMPILER_IS_CLANG TRUE)
+    endif()
+endforeach()
