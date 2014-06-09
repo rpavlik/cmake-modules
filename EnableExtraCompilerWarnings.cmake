@@ -17,6 +17,8 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+#
+# 2013 Bruno Dutra <brunocodutra@gmail.com>
 
 if(__enable_extra_compiler_warnings)
     return()
