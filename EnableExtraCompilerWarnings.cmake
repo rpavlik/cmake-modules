@@ -65,8 +65,6 @@ function(enable_extra_compiler_warnings _target)
         add_target_property(${_target} COMPILE_FLAGS "${c_flags}")
     elseif("${language}" STREQUAL "CXX")
         add_target_property(${_target} COMPILE_FLAGS "${cxx_flags}")
-    else()
-        add_target_property(${_target} COMPILE_FLAGS "${c_flags} ${cxx_flags}")
     endif()
 endfunction()
 
