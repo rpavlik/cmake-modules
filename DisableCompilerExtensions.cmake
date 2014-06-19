@@ -1,11 +1,12 @@
 # - Add flags to compile without compiler specific and extensions
 #
 #  disable_compiler_extensions(<targetname>)
-#  globally_disable_compiler_extensions() - modifies CMAKE_C[XX]_FLAGS
-#   disable extensions for all c/c++ targets declared thereafter
+#  globally_disable_compiler_extensions([lang1 [lang2 [...]]]) - modifies CMAKE_C[XX]_FLAGS
+#   globally disables extensions for the languages specified 
+#   if no language is specified, disables extensions for all enabled languages
 #
 # Requires:
-#   DetectClang
+#   CompilerUtils
 #   TargetUtils
 #
 # Original Author:
@@ -20,72 +21,30 @@ if(__disable_compiler_extensions)
 endif()
 set(__disable_compiler_extensions YES)
 
-include(DetectClang)
+include(CompilerUtils)
 include(TargetUtils)
 
-macro(_disable_compiler_extensions_flags)
-    set(_flags)
-    if(MSVC)
-        set(c_flags "/Za")
-        set(cxx_flags ${c_flags})
-    else()
-        set(c_supported_flags)
-        set(c_unsupported_flags c_flags)
-        set(cxx_supported_flags)
-        set(cxx_unsupported_flags cxx_flags)
-
-        get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
-        foreach(language ${languages})
-            string(TOLOWER ${language} prefix)
-            check_compile_flags(${language} "-pedantic-errors pedantic_errors" ${prefix}_supported_flags ${prefix}_unsupported_flags)
-        endforeach()
-
-        string(REPLACE ";" " " c_flags "${c_supported_flags}")
-        string(REPLACE ";" " " cxx_flags "${cxx_supported_flags}")
-    endif()
-endmacro()
-
-macro(_decay_to_base_standard _language _flags)
-    if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG)
-        string(REGEX REPLACE "-std=gnu" "-std=c" ${_flags} "${${_flags}}")
-        if("${_language}" STREQUAL "C")
-            set(language_regex "c")
-            set(default_standard "c89")
-        elseif("${_language}" STREQUAL "CXX")
-            set(language_regex "c\\+\\+")
-            set(default_standard "c++98")
-        else()
-            message(FATAL_ERROR "unsupported language: ${_language}")
-        endif()
-    endif()
-
-    if(CMAKE_COMPILER_IS_GNUCXX)
-        if(NOT "${${_flags}}" MATCHES "(-std=${language_regex})|(-ansi)")
-            set(${_flags} "-ansi ${${_flags}}")
-        endif()
-    elseif(CMAKE_COMPILER_IS_CLANG)
-        if(NOT "${${_flags}}" MATCHES "-std=${language_regex}")
-            set(${_flags} "-std=${default_standard} ${${_flags}}")
-        endif()
-    endif()
+macro(_disable_compiler_extensions _language _flags)
+    string(REGEX REPLACE "std=gnu" "std=c" ${_flags} "${${_flags}}")
+    pedantic_compiler_flags(${_language} pedantic_flags)
+    set(${_flags} "${pedantic_flags} ${${_flags}}")
 endmacro()
 
 function(disable_compiler_extensions _target)
-    _disable_compiler_extensions_flags()
     get_property(language TARGET ${_target} PROPERTY LINKER_LANGUAGE)
-    if("${language}" STREQUAL "C")
-        add_target_property(${_target} COMPILE_FLAGS "${c_flags}")
-    elseif("${language}" STREQUAL "CXX")
-        add_target_property(${_target} COMPILE_FLAGS "${cxx_flags}")
-    else()
-        add_target_property(${_target} COMPILE_FLAGS "${c_flags} ${cxx_flags}")
-    endif()
+    get_target_property(compile_flags ${_target} COMPILE_FLAGS)
+    _disable_compiler_extensions(${language} compile_flags)
+    set_target_property(${_target} COMPILE_FLAGS ${compile_flags})
 endfunction()
 
 function(globally_disable_compiler_extensions)
-        _disable_compiler_extensions_flags()
-        _decay_to_base_standard(C CMAKE_C_FLAGS)
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${c_flags}" PARENT_SCOPE)
-        _decay_to_base_standard(CXX CMAKE_CXX_FLAGS)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${cxx_flags}" PARENT_SCOPE)
+    if(${ARGC})
+        set(languages ${ARGV})
+    else()
+        get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
+    endif()
+    foreach(language ${languages})
+        _disable_compiler_extensions(${language} CMAKE_${language}_FLAGS)
+        set(CMAKE_${language}_FLAGS ${CMAKE_${language}_FLAGS} PARENT_SCOPE)
+    endforeach()
 endfunction()
