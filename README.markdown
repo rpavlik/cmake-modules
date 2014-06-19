@@ -27,8 +27,8 @@ These modules are probably best placed wholesale into a "cmake" subdirectory
 of your project source.
 
 If you use Git, try installing [git-subtree][1] (included by default on
-Git for Windows and perhaps for your Linux distro), so you can easily
-use this repository for subtree merges, updating simply.
+Git for Windows and perhaps for your Linux distro, especially post-1.9.1), so
+you can easily use this repository for subtree merges, updating simply.
 
 For the initial checkout:
 
@@ -56,7 +56,7 @@ How to Use
 At the minimum, all you have to do is add a line like this near the top
 of your root CMakeLists.txt file (but not before your project() call):
 
-	list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+	list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 You might also want the extra automatic features/fixes included with the
 modules, for that, just add another line following the first one:
@@ -73,7 +73,7 @@ Licenses
 
 The modules that I wrote myself are all subject to this license:
 
-> Copyright Iowa State University 2009-2013
+> Copyright Iowa State University 2009-2014
 >
 > Distributed under the Boost Software License, Version 1.0.
 >
