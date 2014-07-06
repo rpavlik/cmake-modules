@@ -90,7 +90,7 @@ function(language_dialect_flags _language _dialect _language_dialect_flags)
     set(${_language_dialect_flags} ${${_language_dialect_flags}} PARENT_SCOPE)
 endfunction()
 
-function(extra_compiler_warnings _language _extra_warnings)
+function(extra_compiler_warnings_flags _language _extra_warnings)
     if(${_language}_COMPILER_IS_MSVC)
         option(COMPILER_WARNINGS_EXTREME
             "Use compiler warnings that are probably overkill."
