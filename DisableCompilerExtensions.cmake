@@ -1,7 +1,7 @@
-# - Add flags to compile without compiler specific and extensions
+# - Add flags to disable compiler extensions
 #
 #  disable_compiler_extensions(<targetname>)
-#  globally_disable_compiler_extensions([lang1 [lang2 [...]]]) - modifies CMAKE_C[XX]_FLAGS
+#  globally_disable_compiler_extensions([<language1> [<language2> [...]]]) - modifies CMAKE_C[XX]_FLAGS
 #   globally disables extensions for the languages specified 
 #   if no language is specified, disables extensions for all enabled languages
 #
