@@ -198,22 +198,8 @@ function(add_doxygen _doxyfile)
 	endif()
 
 	if(DOXYGEN_FOUND)
-		if(NOT TARGET ${DOC_TARGET})
-
-			if(NOT IN_DASHBOARD_SCRIPT)
-				add_custom_target(${DOC_TARGET})
-				set_target_properties(${DOC_TARGET}
-					PROPERTIES
-					EXCLUDE_FROM_ALL
-					TRUE)
-				set_target_properties(${DOC_TARGET}
-					PROPERTIES
-					EXCLUDE_FROM_DEFAULT_BUILD
-					TRUE)
-			else()
-				add_custom_target(${DOC_TARGET} ALL)
-			endif()
-
+		if(TARGET ${DOC_TARGET})
+			message(FATAL_ERROR "Documentation target ${DOC_TARGET} already exists!")
 		endif()
 
 		if(NOT IS_ABSOLUTE "${OUTPUT_DIRECTORY}")
@@ -232,13 +218,14 @@ function(add_doxygen _doxyfile)
 		if(NOT TARGET ${DOC_TARGET}_open)
 			# Create a target to open the generated HTML file.
 			if(WIN32)
-				set(DOXYGEN_LAUNCHER_COMMAND start "Documentation")
+				set(DOXYGEN_LAUNCHER_COMMAND start)
 			elseif(NOT APPLE)
 				set(DOXYGEN_LAUNCHER_COMMAND xdg-open)
 			endif()
 			if(DOXYGEN_LAUNCHER_COMMAND)
 				add_custom_target(${DOC_TARGET}_open
-					COMMAND ${DOXYGEN_LAUNCHER_COMMAND} "${OUTPUT_DIRECTORY}/html/index.html")
+					COMMAND ${DOXYGEN_LAUNCHER_COMMAND} "${OUTPUT_DIRECTORY}/html/index.html"
+					VERBATIM)
 				set_target_properties(${DOC_TARGET}_open
 					PROPERTIES
 					EXCLUDE_FROM_ALL
@@ -287,14 +274,19 @@ function(add_doxygen _doxyfile)
 		endif()
 
 		configure_file("${_doxygenmoddir}/DoxygenTargets.doxyfile.in"
-			"${CMAKE_CURRENT_BINARY_DIR}/${_doxyfile}.additional"
+			"${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.additional"
 			@ONLY)
 
-		add_custom_command(TARGET
-			${DOC_TARGET}
+		if(IN_DASHBOARD_SCRIPT)
+			set(ALL_IN_DASHBOARD ALL)
+		else()
+			set(ALL_IN_DASHBOARD)
+		endif()
+
+		add_custom_target(${DOC_TARGET} ${ALL_IN_DASHBOARD}
 			COMMAND
-			${DOXYGEN_EXECUTABLE}
-			"${CMAKE_CURRENT_BINARY_DIR}/${_doxyfile}.additional"
+			"${DOXYGEN_EXECUTABLE}"
+			"${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.additional"
 			WORKING_DIRECTORY
 			"${CMAKE_CURRENT_SOURCE_DIR}"
 			#MAIN_DEPENDENCY ${DOC_TARGET}
@@ -302,6 +294,16 @@ function(add_doxygen _doxyfile)
 			"Running Doxygen with configuration ${_doxyfile}..."
 			VERBATIM)
 
+		if(NOT IN_DASHBOARD_SCRIPT)
+			set_target_properties(${DOC_TARGET}
+				PROPERTIES
+				EXCLUDE_FROM_ALL
+				TRUE)
+			set_target_properties(${DOC_TARGET}
+				PROPERTIES
+				EXCLUDE_FROM_DEFAULT_BUILD
+				TRUE)
+		endif()
 		if(MAKE_PDF)
 			add_custom_command(TARGET
 				${DOC_TARGET}
