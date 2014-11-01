@@ -1,9 +1,12 @@
 # - Add flags to compile with extra warnings
 #
 #  enable_extra_compiler_warnings(<targetname>)
-#  globally_enable_extra_compiler_warnings() - to modify CMAKE_CXX_FLAGS, etc
+#  globally_enable_extra_compiler_warnings() - modifies CMAKE_C_FLAGS and CMAKE_CXX_FLAGS
 #    to change for all targets declared after the command, instead of per-command
 #
+# Requires:
+#   CompilerUtils
+#   TargetUtils
 #
 # Original Author:
 # 2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
@@ -14,70 +17,31 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+#
+# 2013 Bruno Dutra <brunocodutra@gmail.com>
 
 if(__enable_extra_compiler_warnings)
-	return()
+    return()
 endif()
 set(__enable_extra_compiler_warnings YES)
 
-macro(_enable_extra_compiler_warnings_flags)
-	set(_flags)
-	if(MSVC)
-		option(COMPILER_WARNINGS_EXTREME
-			"Use compiler warnings that are probably overkill."
-			off)
-		mark_as_advanced(COMPILER_WARNINGS_EXTREME)
-		set(_flags "/W4")
-		if(COMPILER_WARNINGS_EXTREME)
-			set(_flags "${_flags} /Wall /wd4619 /wd4668 /wd4820 /wd4571 /wd4710")
-		endif()
-	else()
-		include(CheckCXXCompilerFlag)
-		set(_flags)
-
-		check_cxx_compiler_flag(-W SUPPORTS_W_FLAG)
-		if(SUPPORTS_W_FLAG)
-			set(_flags "${_flags} -W")
-		endif()
-
-		check_cxx_compiler_flag(-Wall SUPPORTS_WALL_FLAG)
-		if(SUPPORTS_WALL_FLAG)
-			set(_flags "${_flags} -Wall")
-		endif()
-
-		check_cxx_compiler_flag(-Wextra SUPPORTS_WEXTRA_FLAG)
-		if(SUPPORTS_WEXTRA_FLAG)
-			set(_flags "${_flags} -Wextra")
-		endif()
-
-		check_cxx_compiler_flag(-Weffc++ SUPPORTS_WEFFCXX_FLAG)
-		if(SUPPORTS_WEFFCXX_FLAG)
-			set(_flags "${_flags} -Weffc++")
-		endif()
-	endif()
-endmacro()
+include(CompilerUtils)
+include(TargetUtils)
 
 function(enable_extra_compiler_warnings _target)
-	_enable_extra_compiler_warnings_flags()
-	get_target_property(_origflags ${_target} COMPILE_FLAGS)
-	if(_origflags)
-		set_property(TARGET
-			${_target}
-			PROPERTY
-			COMPILE_FLAGS
-			"${_flags} ${_origflags}")
-	else()
-		set_property(TARGET
-			${_target}
-			PROPERTY
-			COMPILE_FLAGS
-			"${_flags}")
-	endif()
-
+    get_property(language TARGET ${_target} PROPERTY LINKER_LANGUAGE)
+    extra_compiler_warnings_flags(${language} flags)
+    add_target_property(${_target} COMPILE_FLAGS ${flags})
 endfunction()
 
 function(globally_enable_extra_compiler_warnings)
-	_enable_extra_compiler_warnings_flags()
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${_flags}" PARENT_SCOPE)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${_flags}" PARENT_SCOPE)
+    if(${ARGC})
+        set(languages ${ARGV})
+    else()
+        get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
+    endif()
+    foreach(language ${languages})
+        extra_compiler_warnings_flags(${language} flags)
+        set(CMAKE_${language}_FLAGS "${CMAKE_${language}_FLAGS} ${flags}" PARENT_SCOPE)
+    endforeach()
 endfunction()
