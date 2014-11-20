@@ -43,13 +43,15 @@ set(WINHID_ROOT_DIR
 	"Directory to search")
 
 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
-	set(_arch amd64)
-	set(_arch8 x64)
+	set(_arch amd64) # what the architecture used to be called
+	set(_arch8 x64) # what the WDK for Win8+ calls this architecture
 else()
-	set(_arch i386)
-	set(_arch8 x86)
+	set(_arch i386) # what the architecture used to be called
+	set(_arch8 x86) # what the WDK for Win8+ calls this architecture
 endif()
 
+set(_deps_check)
+set(_need_crt_dir)
 if(MSVC)
 	include(PrefixListGlob)
 	include(CleanDirectoryList)
@@ -87,16 +89,21 @@ if(MSVC)
 		endwhile()
 	endif()
 
-	find_path(WINHID_CRT_INCLUDE_DIR # otherwise you get weird compile errors
-		NAMES
-		stdio.h
-		HINTS
-		"${_basedir}"
-		PATHS
-		"${WINHID_ROOT_DIR}"
-		PATH_SUFFIXES
-		inc/crt
-		NO_DEFAULT_PATH)
+	if(WINHID_LIBRARY AND EXISTS "${_basedir}/inc")
+		find_path(WINHID_CRT_INCLUDE_DIR # otherwise you get weird compile errors
+			NAMES
+			stdio.h
+			HINTS
+			"${_basedir}"
+			PATHS
+			"${WINHID_ROOT_DIR}"
+			PATH_SUFFIXES
+			inc/crt
+			NO_DEFAULT_PATH)
+		list(APPEND _deps_check WINHID_CRT_INCLUDE_DIR)
+		set(_need_crt_dir ON)
+	endif()
+
 	find_path(WINHID_INCLUDE_DIR
 		NAMES
 		hidsdi.h
@@ -105,12 +112,12 @@ if(MSVC)
 		PATHS
 		"${WINHID_ROOT_DIR}"
 		PATH_SUFFIXES
-		include/shared
 		inc/ddk
 		inc/api
 		inc/w2k
 		inc/wxp
-		inc/wnet)
+		inc/wnet
+		include/shared)
 else()
 	find_library(WINHID_LIBRARY
 		NAMES
@@ -137,7 +144,8 @@ include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(WinHID
 	DEFAULT_MSG
 	WINHID_LIBRARY
-	WINHID_INCLUDE_DIR)
+	WINHID_INCLUDE_DIR
+	${_deps_check})
 
 if(WINHID_FOUND)
 	if(MSVC)
@@ -164,7 +172,7 @@ if(WINHID_FOUND)
 		endif()
 	endif()
 	set(WINHID_LIBRARIES "${WINHID_LIBRARY}")
-	if(WINHID_CRT_INCLUDE_DIR)
+	if(_need_crt_dir)
 		set(WINHID_INCLUDE_DIRS
 			"${WINHID_CRT_INCLUDE_DIR}"
 			"${WINHID_INCLUDE_DIR}")
