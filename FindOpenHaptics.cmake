@@ -236,9 +236,9 @@ find_library(HDAPI_HDU_LIBRARY_DEBUG
 select_library_configurations(HDAPI_HDU)
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
-    if(HDAPI_HDU_SOURCE_DIR AND NOT EXISTS "${HDAPI_HDU_SOURCE_DIR}/hdu.cpp")
-        unset(HDAPI_HDU_SOURCE_DIR)
-    endif()
+	if(HDAPI_HDU_SOURCE_DIR AND NOT EXISTS "${HDAPI_HDU_SOURCE_DIR}/hdu.cpp")
+		unset(HDAPI_HDU_SOURCE_DIR)
+	endif()
 	find_path(HDAPI_HDU_SOURCE_DIR
 		NAMES
 		hdu.cpp
@@ -334,9 +334,9 @@ find_library(HLAPI_HLU_LIBRARY_DEBUG
 select_library_configurations(HLAPI_HLU)
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
-    if(HLAPI_HLU_SOURCE_DIR AND NOT EXISTS "${HLAPI_HLU_SOURCE_DIR}/hlu.cpp")
-        unset(HLAPI_HLU_SOURCE_DIR)
-    endif()
+	if(HLAPI_HLU_SOURCE_DIR AND NOT EXISTS "${HLAPI_HLU_SOURCE_DIR}/hlu.cpp")
+		unset(HLAPI_HLU_SOURCE_DIR)
+	endif()
 	find_path(HLAPI_HLU_SOURCE_DIR
 		NAMES
 		hlu.cpp
