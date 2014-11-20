@@ -2,6 +2,9 @@
 #
 #  include(DoxygenTargets)
 #  add_doxygen(<doxyfile> [OUTPUT_DIRECTORY <outputdir>]
+#   [EXTRA_INPUT <single path or quoted list of paths>]
+#   [EXTRA_STRIP_FROM_PATH <single path or quoted list of paths>]
+#   [EXTRA_STRIP_FROM_INC_PATH <single path or quoted list of paths>]
 #   [INSTALL_DESTINATION <installdir>
 #   [INSTALL_COMPONENT <installcomponent>]
 #   [INSTALL_PDF_NAME <installpdfname>] ]
@@ -147,6 +150,9 @@ function(add_doxygen _doxyfile)
 	set(_curdest _nowhere)
 	set(_val_args
 		OUTPUT_DIRECTORY
+		EXTRA_INPUT
+		EXTRA_STRIP_FROM_PATH
+		EXTRA_STRIP_FROM_INC_PATH
 		DOC_TARGET
 		INSTALL_DESTINATION
 		INSTALL_COMPONENT
@@ -274,7 +280,7 @@ function(add_doxygen _doxyfile)
 		endif()
 
 		configure_file("${_doxygenmoddir}/DoxygenTargets.doxyfile.in"
-			"${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.additional"
+			"${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.${DOC_TARGET}.additional"
 			@ONLY)
 
 		if(IN_DASHBOARD_SCRIPT)
@@ -286,7 +292,7 @@ function(add_doxygen _doxyfile)
 		add_custom_target(${DOC_TARGET} ${ALL_IN_DASHBOARD}
 			COMMAND
 			"${DOXYGEN_EXECUTABLE}"
-			"${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.additional"
+			"${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.${DOC_TARGET}.additional"
 			WORKING_DIRECTORY
 			"${CMAKE_CURRENT_SOURCE_DIR}"
 			#MAIN_DEPENDENCY ${DOC_TARGET}
