@@ -62,7 +62,8 @@ find_path(LIBUSB1_INCLUDE_DIR
 	HINTS
 	"${LIBUSB1_ROOT_DIR}"
 	PATH_SUFFIXES
-	include)
+	include
+	libusb-1.0)
 
 find_library(LIBUSB1_LIBRARY
 	NAMES
