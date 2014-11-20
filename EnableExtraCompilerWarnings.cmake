@@ -50,10 +50,6 @@ macro(_enable_extra_compiler_warnings_flags)
 			set(_flags "${_flags} -Wextra")
 		endif()
 
-		check_cxx_compiler_flag(-Weffc++ SUPPORTS_WEFFCXX_FLAG)
-		if(SUPPORTS_WEFFCXX_FLAG)
-			set(_flags "${_flags} -Weffc++")
-		endif()
 	endif()
 endmacro()
 
