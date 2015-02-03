@@ -62,6 +62,17 @@ if(PDFLATEX_COMPILER)
 	set(DOXYGEN_PDFLATEX "YES")
 endif()
 
+set(_PF86 "ProgramFiles(x86)")
+find_program(DOXYGEN_MSCGEN_EXECUTABLE
+	mscgen
+	PATHS
+	"$ENV{ProgramFiles}/Mscgen"
+	"$ENV{${_PF86}}/Mscgen"
+	"$ENV{ProgramW6432}/Mscgen")
+if(DOXYGEN_MSCGEN_EXECUTABLE)
+	mark_as_advanced(DOXYGEN_MSCGEN_EXECUTABLE)
+endif()
+
 # An optional single-file install that supports cmake older than 2.8.0
 # For internal use
 function(_dt_install_file target filename dest rename)
@@ -269,6 +280,10 @@ function(add_doxygen _doxyfile)
 		else()
 			set(HAVE_DOT NO)
 			set(DOT_PATH)
+		endif()
+
+		if(DOXYGEN_MSCGEN_EXECUTABLE)
+			get_filename_component(MSCGEN_PATH "${DOXYGEN_MSCGEN_EXECUTABLE}" PATH)
 		endif()
 
 		# See http://www.cmake.org/pipermail/cmake/2006-August/010786.html
