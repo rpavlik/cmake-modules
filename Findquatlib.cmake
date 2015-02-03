@@ -60,7 +60,9 @@ else()
 		include
 		PATHS
 		"${_progfiles}/VRPN"
-		"${_progfiles}/quatlib")
+		"${_progfiles}/quatlib"
+		C:/usr/local
+		/usr/local)
 
 	# Look for the library.
 	find_library(QUATLIB_LIBRARY
@@ -73,7 +75,9 @@ else()
 		${_libsuffixes}
 		PATHS
 		"${_progfiles}/VRPN"
-		"${_progfiles}/quatlib")
+		"${_progfiles}/quatlib"
+		C:/usr/local
+		/usr/local)
 endif()
 
 # handle the QUIETLY and REQUIRED arguments and set QUATLIB_FOUND to TRUE if
