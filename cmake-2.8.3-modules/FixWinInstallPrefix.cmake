@@ -1,6 +1,6 @@
 # - Automatically fix CMAKE_INSTALL_PREFIX to be bit-appropriate on Win
 #
-# This is a workaround for CMake bug #9992 in at least <=2.8.0 - see
+# This is a workaround for CMake bug #9992 in <2.8.3 - see
 # http://public.kitware.com/Bug/view.php?id=9992
 #
 # It runs automatically when included on a Windows build (passes if(WIN32)) -
