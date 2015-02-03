@@ -262,6 +262,9 @@ if(DIRECTX_INCLUDE_DIR)
 			DIRECTX_SDK_SUPPORTS_COMPILER)
 		set(DIRECTX_EXTRA_CHECK DIRECTX_SDK_SUPPORTS_COMPILER)
 		set(CMAKE_REQUIRED_INCLUDES "${_dinput_old_includes}")
+	else()
+		# Until proven otherwise.
+		set(DIRECTX_SDK_SUPPORTS_COMPILER TRUE)
 	endif()
 endif()
 
