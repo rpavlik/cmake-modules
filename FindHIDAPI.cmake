@@ -24,10 +24,12 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 find_library(HIDAPI_LIBRARY
-	NAMES hidapi)
+	NAMES hidapi hidapi-libusb)
 
 find_path(HIDAPI_INCLUDE_DIR
-	NAMES hidapi.h)
+	NAMES hidapi.h
+	PATH_SUFFIXES
+	hidapi)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(HIDAPI
