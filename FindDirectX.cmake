@@ -40,7 +40,8 @@ set(DIRECTX_ROOT_DIR
 
 if(MSVC)
 	file(TO_CMAKE_PATH "$ENV{ProgramFiles}" _PROG_FILES)
-	file(TO_CMAKE_PATH "$ENV{ProgramFiles(x86)}" _PROG_FILES_X86)
+	set(_PF86 "ProgramFiles(x86)")
+	file(TO_CMAKE_PATH "$ENV{${_PF86}}" _PROG_FILES_X86)
 	if(_PROG_FILES_X86)
 		set(_PROG_FILES "${_PROG_FILES_X86}")
 	endif()

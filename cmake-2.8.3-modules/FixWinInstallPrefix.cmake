@@ -27,7 +27,8 @@ if(WIN32)
 	file(TO_CMAKE_PATH "$ENV{ProgramFiles}" _PROG_FILES)
 
 	# 32-bit dir: only set on win64
-	file(TO_CMAKE_PATH "$ENV{ProgramFiles(x86)}" _PROG_FILES_X86)
+    set(_PF86 "ProgramFiles(x86)")
+	file(TO_CMAKE_PATH "$ENV{${_PF86}}" _PROG_FILES_X86)
 
 	# 64-bit dir: only set on win64
 	file(TO_CMAKE_PATH "$ENV{ProgramW6432}" _PROG_FILES_W6432)

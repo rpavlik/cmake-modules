@@ -22,7 +22,7 @@ if(__program_files_glob)
 endif()
 set(__program_files_glob YES)
 
-function(program_files_glob var pattern)
+macro(_program_files_glob_var_prep)
 	# caution - ENV{ProgramFiles} on Win64 is adjusted to point to the arch
 	# of the running executable which, since CMake is 32-bit on Windows as
 	# I write this, will always be = $ENV{ProgramFiles(x86)}.
@@ -32,11 +32,15 @@ function(program_files_glob var pattern)
 	file(TO_CMAKE_PATH "$ENV{ProgramFiles}" _PROG_FILES)
 
 	# 32-bit dir: only set on win64
-	file(TO_CMAKE_PATH "$ENV{ProgramFiles(x86)}" _PROG_FILES_X86)
+	set(_PF86 "ProgramFiles(x86)")
+	file(TO_CMAKE_PATH "$ENV{${_PF86}}" _PROG_FILES_X86)
 
 	# 64-bit dir: only set on win64
 	file(TO_CMAKE_PATH "$ENV{ProgramW6432}" _PROG_FILES_W6432)
+endmacro()
 
+function(program_files_glob var pattern)
+	_program_files_glob_var_prep()
 	if(CMAKE_SIZEOF_VOID_P MATCHES "8")
 		# 64-bit build on win64
 		set(_PROGFILESDIRS "${_PROG_FILES_W6432}")
@@ -56,20 +60,7 @@ function(program_files_glob var pattern)
 endfunction()
 
 function(program_files_fallback_glob var pattern)
-	# caution - ENV{ProgramFiles} on Win64 is adjusted to point to the arch
-	# of the running executable which, since CMake is 32-bit on Windows as
-	# I write this, will always be = $ENV{ProgramFiles(x86)}.
-	# Thus, we only use this environment variable if we are on a 32 machine
-
-	# 32-bit dir on win32, useless to us on win64
-	file(TO_CMAKE_PATH "$ENV{ProgramFiles}" _PROG_FILES)
-
-	# 32-bit dir: only set on win64
-	file(TO_CMAKE_PATH "$ENV{ProgramFiles(x86)}" _PROG_FILES_X86)
-
-	# 64-bit dir: only set on win64
-	file(TO_CMAKE_PATH "$ENV{ProgramW6432}" _PROG_FILES_W6432)
-
+	_program_files_glob_var_prep()
 	if(CMAKE_SIZEOF_VOID_P MATCHES "8")
 		# 64-bit build on win64
 		# look in the "32 bit" (c:\program files (x86)\) directory as a
