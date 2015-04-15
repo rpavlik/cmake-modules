@@ -1,5 +1,6 @@
 # - Set a number of variables to indicate things about the current CPU and OS
 #
+#  CPU_COUNT
 #  CPU_INTEL
 #  CPU_EXE_64BIT
 #  CPU_EXE_32BIT
@@ -35,6 +36,31 @@ function(get_cpu_details)
 		"Should we display results of the CPU info check?"
 		NO)
 	mark_as_advanced(CPUDETAILS_VERBOSE)
+
+	### See http://www.kitware.com/blog/home/post/63
+	if(NOT DEFINED CPU_COUNT)
+		# Unknown:
+		set(CPU_COUNT 1)
+		# Linux:
+		set(cpuinfo_file "/proc/cpuinfo")
+		if(EXISTS "${cpuinfo_file}")
+			file(STRINGS "${cpuinfo_file}" procs REGEX "^processor.: [0-9]+$")
+			list(LENGTH procs CPU_COUNT)
+		endif()
+		# Mac:
+		if(APPLE)
+			find_program(cmd_sys_pro "system_profiler")
+			if(cmd_sys_pro)
+				execute_process(COMMAND ${cmd_sys_pro} OUTPUT_VARIABLE info)
+				string(REGEX REPLACE "^.*Total Number Of Cores: ([0-9]+).*$" "\\1"
+				CPU_COUNT "${info}")
+			endif()
+		endif()
+		# Windows:
+		if(WIN32)
+			set(CPU_COUNT "$ENV{NUMBER_OF_PROCESSORS}")
+		endif()
+	endif()
 
 	###
 	# CPU_INTEL
@@ -144,6 +170,7 @@ function(get_cpu_details)
 		"Intel x86 or x86_64 architecture machine?")
 
 	foreach(_var
+		CPU_COUNT
 		CPU_EXE_64BIT
 		CPU_EXE_32BIT
 		CPU_HAS_SSE
@@ -157,6 +184,7 @@ function(get_cpu_details)
 
 	if(CPUDETAILS_VERBOSE)
 		foreach(_var
+			CPU_COUNT
 			CPU_INTEL
 			CPU_EXE_64BIT
 			CPU_EXE_32BIT
