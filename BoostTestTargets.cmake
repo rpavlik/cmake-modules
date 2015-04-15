@@ -93,19 +93,6 @@ function(add_boost_test _name)
 	if(NOT BUILD_TESTING)
 		return()
 	endif()
-	if("${CMAKE_VERSION}" VERSION_LESS "2.8.0")
-		if(NOT "${_boost_test_cmakever_pestered}x" EQUAL "${CMAKE_VERSION}x")
-			message(STATUS
-				"Not adding boost::test targets - CMake 2.8.0 or newer required, using ${CMAKE_VERSION}")
-			set(_boost_test_cmakever_pestered
-				"${CMAKE_VERSION}"
-				CACHE
-				INTERNAL
-				""
-				FORCE)
-		endif()
-		return()
-	endif()
 
 	# parse arguments
 	set(_nowhere)
@@ -238,12 +225,10 @@ function(add_boost_test _name)
 
 		if(TESTS AND ( "${Boost_VERSION}" VERSION_GREATER "103799" ))
 			foreach(_test ${TESTS})
-				add_test(NAME
+				add_test(
 					${_name}-${_test}
-					COMMAND
-					${_test_command}
-					--run_test=${_test}
-					${Boost_TEST_FLAGS})
+					${_test_command} --run_test=${_test} ${Boost_TEST_FLAGS}
+				)
 				if(FAIL_REGULAR_EXPRESSION)
 					set_tests_properties(${_name}-${_test}
 						PROPERTIES
@@ -252,13 +237,12 @@ function(add_boost_test _name)
 				endif()
 			endforeach()
 		else()
-			add_test(NAME
+			add_test(
 				${_name}-boost_test
-				COMMAND
-				${_test_command}
-				${Boost_TEST_FLAGS})
+				${_test_command} ${Boost_TEST_FLAGS}
+			)
 			if(FAIL_REGULAR_EXPRESSION)
-				set_tests_properties(${_name}-${_test}
+				set_tests_properties(${_name}-boost_test
 					PROPERTIES
 					FAIL_REGULAR_EXPRESSION
 					"${FAIL_REGULAR_EXPRESSION}")
