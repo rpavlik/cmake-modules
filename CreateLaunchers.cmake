@@ -114,12 +114,14 @@ macro(_launcher_process_args)
 		ARGS
 		RUNTIME_LIBRARY_DIRS
 		WORKING_DIRECTORY
-		ENVIRONMENT)
+		ENVIRONMENT
+		TARGET_PLATFORM)
 	set(_bool_args FORWARD_ARGS)
 	foreach(_arg ${_val_args} ${_bool_args})
 		set(${_arg})
 	endforeach()
 	foreach(_element ${ARGN})
+		string(REPLACE ";" "\\;" _element "${_element}")
 		list(FIND _val_args "${_element}" _val_arg_find)
 		list(FIND _bool_args "${_element}" _bool_arg_find)
 		if("${_val_arg_find}" GREATER "-1")
@@ -158,22 +160,31 @@ macro(_launcher_process_args)
 		set(FWD_ARGS)
 	endif()
 
+	if(TARGET_PLATFORM)
+		set(USERFILE_PLATFORM ${TARGET_PLATFORM})
+	endif()
+
 	set(USERFILE_WORKING_DIRECTORY "${WORKING_DIRECTORY}")
 	set(USERFILE_COMMAND_ARGUMENTS "${ARGS}")
 	set(LAUNCHERSCRIPT_COMMAND_ARGUMENTS "${ARGS} ${FWD_ARGS}")
 
 	if(WIN32)
-		set(RUNTIME_LIBRARIES_ENVIRONMENT "PATH=${_runtime_lib_dirs};%PATH%")
+		if(_runtime_lib_dirs)
+			set(RUNTIME_LIBRARIES_ENVIRONMENT "PATH=${_runtime_lib_dirs};%PATH%")
+		endif()
 		file(READ
 			"${_launchermoddir}/launcher.env.cmd.in"
 			_cmdenv)
 	else()
-		if(APPLE)
-			set(RUNTIME_LIBRARIES_ENVIRONMENT
-				"DYLD_LIBRARY_PATH=${_runtime_lib_dirs}:$DYLD_LIBRARY_PATH")
-		else()
-			set(RUNTIME_LIBRARIES_ENVIRONMENT
-				"LD_LIBRARY_PATH=${_runtime_lib_dirs}:$LD_LIBRARY_PATH")
+		if(_runtime_lib_dirs)
+			if(APPLE)
+
+				set(RUNTIME_LIBRARIES_ENVIRONMENT
+					"DYLD_LIBRARY_PATH=${_runtime_lib_dirs}:$DYLD_LIBRARY_PATH")
+			else()
+				set(RUNTIME_LIBRARIES_ENVIRONMENT
+					"LD_LIBRARY_PATH=${_runtime_lib_dirs}:$LD_LIBRARY_PATH")
+			endif()
 		endif()
 		file(READ
 			"${_launchermoddir}/launcher.env.sh.in"
@@ -183,10 +194,12 @@ macro(_launcher_process_args)
 
 	set(USERFILE_ENV_COMMANDS)
 	foreach(_arg "${RUNTIME_LIBRARIES_ENVIRONMENT}" ${ENVIRONMENT})
-		string(CONFIGURE
-			"@USERFILE_ENVIRONMENT@@LAUNCHER_LINESEP@@_arg@"
-			USERFILE_ENVIRONMENT
-			@ONLY)
+		if(_arg)
+			string(CONFIGURE
+				"@USERFILE_ENVIRONMENT@@LAUNCHER_LINESEP@@_arg@"
+				USERFILE_ENVIRONMENT
+				@ONLY)
+		endif()
 		string(CONFIGURE
 			"@USERFILE_ENV_COMMANDS@${_cmdenv}"
 			USERFILE_ENV_COMMANDS
