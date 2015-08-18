@@ -2,8 +2,9 @@
 # Find the SDL2 headers and libraries
 #
 #  SDL2::SDL2 - Imported target to use for building a library
-#  SDL2::SDL2main - Imported target to use if you want SDL and SDLmain.
+#  SDL2::SDL2main - Imported interface target to use if you want SDL and SDLmain.
 #  SDL2_FOUND - True if SDL2 was found.
+#  SDL2_DYNAMIC - If we found a DLL version of SDL (meaning you might want to copy a DLL from SDL2::SDL2)
 #
 # Original Author:
 # 2015 Ryan Pavlik <ryan.pavlik@gmail.com> <abiryan@ryand.net>
@@ -97,6 +98,12 @@ if(WIN32 OR ANDROID OR IOS)
 		PATH_SUFFIXES lib ${SDL2_LIB_PATH_SUFFIX})
 endif()
 
+
+if(MINGW AND NOT SDL2PC_FOUND)
+	find_library(SDL2_MINGW_LIBRARY mingw32)
+	find_library(SDL2_MWINDOWS_LIBRARY mwindows)
+endif()
+
 if(SDL2_PREFIX)
 	# Restore things the way they used to be.
 	set(CMAKE_PREFIX_PATH ${SDL2_ORIGPREFIXPATH})
@@ -113,6 +120,7 @@ find_package_handle_standard_args(SDL2
 
 if(SDL2_FOUND)
 	if(WIN32 AND SDL2_RUNTIME_LIBRARY)
+		set(SDL2_DYNAMIC TRUE)
 		add_library(SDL2::SDL2 SHARED IMPORTED)
 		set_target_properties(SDL2::SDL2
 			PROPERTIES
@@ -128,15 +136,31 @@ if(SDL2_FOUND)
 			INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIR}"
 		)
 	endif()
-	add_library(SDL2::SDL2main STATIC IMPORTED)
+	add_library(SDL2::SDL2main INTERFACE IMPORTED)
 	set(SDL2MAIN_LIBRARIES SDL2::SDL2)
 	if(SDL2_SDLMAIN_LIBRARY)
-		set_target_properties(SDL2::SDL2main
+		add_library(SDL2::SDL2main_real STATIC IMPORTED)
+		set_target_properties(SDL2::SDL2main_real
 			PROPERTIES
 			IMPORTED_LOCATION "${SDL2_SDLMAIN_LIBRARY}")
+		list(APPEND SDL2MAIN_LIBRARIES SDL2::SDL2main_real)
 	endif()
 	if(MINGW)
-		list(APPEND SDL2MAIN_LIBRARIES mingw32 mwindows)
+		# MinGW requires some additional libraries to appear earlier in the link line.
+		if(SDL2PC_LIBRARIES)
+			# Use pkgconfig-suggested extra libraries if available.
+			list(REMOVE_ITEM SDL2PC_LIBRARIES SDL2main SDL2)
+			set(SDL2MAIN_LIBRARIES ${SDL2PC_LIBRARIES} ${SDL2MAIN_LIBRARIES})
+		else()
+			# fall back to extra libraries specified in pkg-config in
+			# an official binary distro of SDL2 for MinGW I downloaded
+			if(SDL2_MINGW_LIBRARY)
+				set(SDL2MAIN_LIBRARIES ${SDL2_MINGW_LIBRARY} ${SDL2MAIN_LIBRARIES})
+			endif()
+			if(SDL2_MWINDOWS_LIBRARY)
+				set(SDL2MAIN_LIBRARIES ${SDL2_MWINDOWS_LIBRARY} ${SDL2MAIN_LIBRARIES})
+			endif()
+		endif()
 		set_target_properties(SDL2::SDL2main
 			PROPERTIES
 			INTERFACE_COMPILE_DEFINITIONS "main=SDL_main")
@@ -147,4 +171,9 @@ if(SDL2_FOUND)
 	mark_as_advanced(SDL2_ROOT_DIR)
 endif()
 
-mark_as_advanced(SDL2_LIBRARY SDL2_RUNTIME_LIBRARY SDL2_INCLUDE_DIR SDL2_SDLMAIN_LIBRARY)
+mark_as_advanced(SDL2_LIBRARY
+	SDL2_RUNTIME_LIBRARY
+	SDL2_INCLUDE_DIR
+	SDL2_SDLMAIN_LIBRARY
+	SDL2_MINGW_LIBRARY
+	SDL2_MWINDOWS_LIBRARY)
