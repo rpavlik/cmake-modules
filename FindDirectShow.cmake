@@ -21,8 +21,12 @@
 
 # Look for one of the sample files.
 
-find_package(WindowsSDK)
-find_package(DirectX QUIET)
+set(_ds_quiet)
+if(DirectShow_FIND_QUIETLY)
+    set(_ds_quiet QUIET)
+endif()
+find_package(WindowsSDK ${_ds_quiet})
+find_package(DirectX ${_ds_quiet})
 
 set(DIRECTSHOW_WINDOWSSDK_ROOT
 	"${DIRECTSHOW_WINDOWSSDK_ROOT}"
