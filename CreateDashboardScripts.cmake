@@ -16,7 +16,8 @@
 # Requires these CMake modules:
 #  GetCompilerInfoString
 #
-# Requires CMake 2.6 or newer (uses the 'function' command)
+# Requires CMake 2.6 or newer (uses the 'function' command),
+# as well as FindGit.cmake (included with 2.8.2, may be backported)
 #
 # Original Author:
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
@@ -118,13 +119,21 @@ if(NOT IN_DASHBOARD_SCRIPT)
 
 	if(NOT "1.${CMAKE_VERSION}" VERSION_LESS "1.2.8.0")
 		if(IS_DIRECTORY "${CMAKE_SOURCE_DIRECTORY}/.git")
-			find_program(DASHBOARDSCRIPT_GIT_EXECUTABLE NAMES git git.cmd)
-			if(DASHBOARDSCRIPT_GIT_EXECUTABLE)
-
+			if(NOT GIT_FOUND)
+				find_package(Git QUIET)
+			endif()
+			# If we have a valid git we found ourselves in older version of the module,
+			# let the regular FindGit module (since 2.8.2) know.
+			if(DASHBOARDSCRIPT_GIT_EXECUTABLE AND EXISTS "${DASHBOARDSCRIPT_GIT_EXECUTABLE}" AND NOT GIT_FOUND)
+				set(GIT_EXECUTABLE "${DASHBOARDSCRIPT_GIT_EXECUTABLE}" CACHE FILEPATH "Git executable" FORCE)
+				find_package(Git QUIET)
+			endif()
+			unset(DASHBOARDSCRIPT_GIT_EXECUTABLE)
+			unset(DASHBOARDSCRIPT_GIT_EXECUTABLE CACHE)
+			if(GIT_FOUND)
 				set(UPDATE_TYPE "git")
-				set(UPDATE_COMMAND "${DASHBOARDSCRIPT_GIT_EXECUTABLE}")
+				set(UPDATE_COMMAND "${GIT_EXECUTABLE}")
 				set(UPDATE_OPTIONS "")
-				mark_as_advanced(DASHBOARDSCRIPT_GIT_EXECUTABLE)
 			endif()
 		endif()
 	endif()
