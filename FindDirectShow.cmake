@@ -23,7 +23,7 @@
 
 set(_ds_quiet)
 if(DirectShow_FIND_QUIETLY)
-    set(_ds_quiet QUIET)
+	set(_ds_quiet QUIET)
 endif()
 find_package(WindowsSDK ${_ds_quiet})
 find_package(DirectX ${_ds_quiet})
