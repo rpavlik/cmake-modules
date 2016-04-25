@@ -116,7 +116,7 @@ if(NOT WIN32)
 endif()
 
 if(WIN32)
-	find_package(Libusb1 ${_vrpn_quiet})
+	find_package(Libusb1 QUIET)
 	if(LIBUSB1_FOUND)
 		list(APPEND _deps_libs ${LIBUSB1_LIBRARIES})
 		list(APPEND _deps_includes ${LIBUSB1_INCLUDE_DIRS})
