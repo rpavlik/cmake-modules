@@ -14,6 +14,8 @@
 #  FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
 #  PrefixListGlob
 #  CleanDirectoryList
+#  MinGWSearchPathExtras
+#  FindWindowsSDK
 #
 # Original Author:
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
