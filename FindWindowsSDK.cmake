@@ -30,8 +30,16 @@
 #  get_windowssdk_library_dirs(<directory> <output variable>) - Find the architecture-appropriate
 #     library directories corresponding to the SDK directory you pass in (or NOTFOUND if none)
 #
+#  get_windowssdk_library_dirs_multiple(<output variable> <directory> ...) - Find the architecture-appropriate
+#     library directories corresponding to the SDK directories you pass in, in order, skipping those not found. NOTFOUND if none at all.
+#     Good for passing WINDOWSSDK_DIRS or WINDOWSSDK_DIRS to if you really just want a file and don't care where from.
+#
 #  get_windowssdk_include_dirs(<directory> <output variable>) - Find the
 #     include directories corresponding to the SDK directory you pass in (or NOTFOUND if none)
+#
+#  get_windowssdk_include_dirs_multiple(<output variable> <directory> ...) - Find the
+#     include directories corresponding to the SDK directories you pass in, in order, skipping those not found. NOTFOUND if none at all.
+#     Good for passing WINDOWSSDK_DIRS or WINDOWSSDK_DIRS to if you really just want a file and don't care where from.
 #
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
@@ -575,6 +583,36 @@ if(WINDOWSSDK_FOUND)
 			file(GLOB _headers "${_winsdk_dir}/${_suffix}/*.h")
 			if(_headers)
 				list(APPEND _result "${_winsdk_dir}/${_suffix}")
+			endif()
+		endforeach()
+		if(NOT _result)
+			set(_result NOTFOUND)
+		else()
+			list(REMOVE_DUPLICATES _result)
+		endif()
+		set(${_var} ${_result} PARENT_SCOPE)
+	endfunction()
+	function(get_windowssdk_library_dirs_multiple _var)
+		set(_result)
+		foreach(_sdkdir ${ARGN})
+			get_windowssdk_library_dirs("${_sdkdir}" _current_sdk_libdirs)
+			if(_current_sdk_libdirs)
+				list(APPEND _result ${_current_sdk_libdirs})
+			endif()
+		endforeach()
+		if(NOT _result)
+			set(_result NOTFOUND)
+		else()
+			list(REMOVE_DUPLICATES _result)
+		endif()
+		set(${_var} ${_result} PARENT_SCOPE)
+	endfunction()
+	function(get_windowssdk_include_dirs_multiple _var)
+		set(_result)
+		foreach(_sdkdir ${ARGN})
+			get_windowssdk_include_dirs("${_sdkdir}" _current_sdk_incdirs)
+			if(_current_sdk_libdirs)
+				list(APPEND _result ${_current_sdk_incdirs})
 			endif()
 		endforeach()
 		if(NOT _result)
