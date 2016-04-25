@@ -64,7 +64,12 @@ macro(_winsdk_announce)
 	endif()
 endmacro()
 
-set(_winsdk_win10vers 10.0.10056.0 10.0.10240.0)
+set(_winsdk_win10vers
+	10.0.10586.0 # TH2 aka Win10 1511
+	10.0.10240.0 # Win10 RTM
+	10.0.10150.0 # just ucrt
+	10.0.10056.0
+)
 
 if(WindowsSDK_FIND_COMPONENTS MATCHES "tools")
 	set(_WINDOWSSDK_IGNOREMSVC ON)
@@ -186,6 +191,24 @@ function(_winsdk_check_windows_kits_registry _winkit_name _winkit_build _winkit_
 	_winsdk_conditional_append("${_winkit_name}" "${_winkit_build}" "${_sdkdir}")
 endfunction()
 
+# Given a name for identification purposes and the build number
+# corresponding to a Windows 10 SDK packaged as a "Windows Kit", look for it
+# in HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots
+# Doesn't hurt to also try _winsdk_check_microsoft_sdks_registry for these:
+# sometimes you get keys in both parts of the registry (in the wow64 portion especially),
+# and the non-"Windows Kits" location is often more descriptive.
+function(_winsdk_check_win10_kits _winkit_build)
+	get_filename_component(_sdkdir
+		"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots;KitsRoot10]"
+		ABSOLUTE)
+	if(("${_sdkdir}" MATCHES "registry") OR (NOT EXISTS "${_sdkdir}"))
+		return() # not found
+	endif()
+	if(EXISTS "${_sdkdir}/Include/${_winkit_build}/um")
+		_winsdk_conditional_append("Windows Kits 10 (Build ${_winkit_build})" "${_winkit_build}" "${_sdkdir}")
+	endif()
+endfunction()
+
 # Given a name for indentification purposes, the build number, and the associated package GUID,
 # look in the registry under both HKLM and HKCU in \\SOFTWARE\\Microsoft\\MicrosoftSDK\\InstalledSDKs\\
 # for that guid and the SDK it points to.
@@ -214,7 +237,7 @@ if(MSVC AND NOT _WINDOWSSDK_IGNOREMSVC)
 		# OK, we're VC11 or newer and not using a backlevel or XP-compatible toolset.
 		# These versions have no XP (and possibly Vista pre-SP1) support
 		set(_winsdk_vistaonly_ok ON)
-		if(_WINDOWSSDK_ANNOUNCE)
+		if(_WINDOWSSDK_ANNOUNCE AND NOT WINDOWSSDK_DIRS)
 			message(STATUS "FindWindowsSDK: Detected Visual Studio 2012 or newer, not using the _xp toolset variant: including SDK versions that drop XP support in search!")
 		endif()
 	endif()
@@ -285,8 +308,11 @@ if(_winsdk_msvc_greater_1310) # Newer than VS .NET/VS Toolkit 2003
 		_winsdk_check_microsoft_sdks_registry(v10.0A)
 
 		# Windows Software Development Kit (SDK) for Windows 10
+		# Several different versions living in the same directory - if nothing else we can assume RTM (10240)
 		_winsdk_check_microsoft_sdks_registry(v10.0 10.0.10240.0)
-		_winsdk_check_windows_kits_registry("Windows Kits 10" 10.0.10240.0 KitsRoot10)
+		foreach(_win10build ${_winsdk_win10vers})
+			_winsdk_check_win10_kits(${_win10build})
+		endforeach()
 	endif() # vista-only and 2013+
 
 	# Included in Visual Studio 2013
