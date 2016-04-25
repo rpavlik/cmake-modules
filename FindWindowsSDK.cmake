@@ -237,7 +237,8 @@ if(MSVC AND NOT _WINDOWSSDK_IGNOREMSVC)
 		# OK, we're VC11 or newer and not using a backlevel or XP-compatible toolset.
 		# These versions have no XP (and possibly Vista pre-SP1) support
 		set(_winsdk_vistaonly_ok ON)
-		if(_WINDOWSSDK_ANNOUNCE AND NOT WINDOWSSDK_DIRS)
+		if(_WINDOWSSDK_ANNOUNCE AND NOT _WINDOWSSDK_VISTAONLY_PESTERED)
+			set(_WINDOWSSDK_VISTAONLY_PESTERED ON CACHE INTERNAL "" FORCE)
 			message(STATUS "FindWindowsSDK: Detected Visual Studio 2012 or newer, not using the _xp toolset variant: including SDK versions that drop XP support in search!")
 		endif()
 	endif()
@@ -532,6 +533,7 @@ if(WINDOWSSDK_FOUND)
 			endif()
 		endforeach()
 
+		# Look in each Win10+ SDK version for the components
 		foreach(_win10ver ${_winsdk_win10vers})
 			foreach(_component um km ucrt mmos)
 				list(APPEND _suffixes "lib/${_win10ver}/${_component}/${_winsdk_arch8}")
