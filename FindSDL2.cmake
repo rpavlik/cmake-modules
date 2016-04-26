@@ -201,7 +201,7 @@ if(SDL2_FOUND)
 			set_target_properties(SDL2::SDL2main_real
 				PROPERTIES
 				IMPORTED_LOCATION "${SDL2_SDLMAIN_LIBRARY}")
-			list(APPEND SDL2MAIN_LIBRARIES SDL2::SDL2main_real)
+			set(SDL2MAIN_LIBRARIES SDL2::SDL2main_real ${SDL2MAIN_LIBRARIES})
 		endif()
 		if(MINGW)
 			# MinGW requires some additional libraries to appear earlier in the link line.
