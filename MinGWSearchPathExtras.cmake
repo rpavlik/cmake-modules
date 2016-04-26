@@ -6,6 +6,7 @@
 # Variables: (all are internal cache variables)
 #  MINGWSEARCH_INCLUDE_DIRS - use under PATHS in your find_path() commands
 #  MINGWSEARCH_LIBRARY_DIRS - use under PATHS in your find_library() commands
+#  MINGWSEARCH_PREFIXES - suitable for temporary use in CMAKE_FIND_ROOT_PATH or CMAKE_PREFIX_PATH.
 #  MINGWSEARCH_TARGET_TRIPLE - something like x86_64-w64-mingw32 or i686-w64-mingw32, use as you see fit.
 #
 # Original Author:
@@ -39,6 +40,7 @@ if(MINGW AND NOT MINGWSEARCH_COMPLETED)
     # Clear the working variables.
     set(MINGWSEARCH_INCLUDE_DIRS_WORK)
     set(MINGWSEARCH_LIBRARY_DIRS_WORK)
+    set(MINGWSEARCH_PREFIXES_WORK)
     set(_mingw_target_triple)
 
     # Try to find the string like x86_64-w64-mingw32 by parsing the implicit link directories...
@@ -49,13 +51,17 @@ if(MINGW AND NOT MINGWSEARCH_COMPLETED)
             set(_mingw_target_triple ${CMAKE_MATCH_1})
             get_filename_component(_mingw_internal_basedir "${_link_dir}" PATH)
             # Try adding the parallel include dir
-            _mingwsearch_conditional_add(MINGWSEARCH_INCLUDE_DIRS_WORK "${_mingw_internal_basedir}/include")
+            if(IS_DIRECTORY "${_mingw_internal_basedir}/include")
+                _mingwsearch_conditional_add(MINGWSEARCH_INCLUDE_DIRS_WORK "${_mingw_internal_basedir}/include")
+                _mingwsearch_conditional_add(MINGWSEARCH_PREFIXES_WORK "${_mingw_internal_basedir}")
+            endif()
             if(NOT CMAKE_CROSSCOMPILING)
                 # Try going up a level, since the directory with the target is usually a sibling to the main prefix.
                 get_filename_component(_mingw_main_basedir_candidate "${_mingw_internal_basedir}/.." ABSOLUTE)
-                if(NOT ("${_mingw_main_basedir_candidate}" STREQUAL "${_mingw_internal_basedir}"))
+                if(IS_DIRECTORY "${_mingw_main_basedir_candidate}/include" AND NOT ("${_mingw_main_basedir_candidate}" STREQUAL "${_mingw_internal_basedir}"))
                     # If we could go up a level, add that include dir too.
                     _mingwsearch_conditional_add(MINGWSEARCH_INCLUDE_DIRS_WORK "${_mingw_main_basedir_candidate}/include")
+                    _mingwsearch_conditional_add(MINGWSEARCH_PREFIXES_WORK "${_mingw_main_basedir_candidate}")
                 endif()
             endif()
         endif()
@@ -72,6 +78,11 @@ if(MINGW AND NOT MINGWSEARCH_COMPLETED)
     if(MINGWSEARCH_LIBRARY_DIRS_WORK)
         set(MINGWSEARCH_LIBRARY_DIRS "${MINGWSEARCH_LIBRARY_DIRS_WORK}" CACHE INTERNAL "" FORCE)
         #message(STATUS "MINGWSEARCH_LIBRARY_DIRS ${MINGWSEARCH_LIBRARY_DIRS}")
+    endif()
+
+    if(MINGWSEARCH_PREFIXES_WORK)
+        set(MINGWSEARCH_PREFIXES "${MINGWSEARCH_PREFIXES_WORK}" CACHE INTERNAL "" FORCE)
+        #message(STATUS "MINGWSEARCH_PREFIXES ${MINGWSEARCH_PREFIXES}")
     endif()
 
     if(_mingw_target_triple)
