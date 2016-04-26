@@ -192,15 +192,15 @@ if(SDL2_FOUND)
 			)
 		endif()
 
-        if(APPLE)
-            # Need Cocoa here, is always a framework
-            find_library(SDL2_COCOA_LIBRARY Cocoa)
-            list(APPEND SDL2_EXTRA_REQUIRED SDL2_COCOA_LIBRARY)
-            if(SDL2_COCOA_LIBRARY)
-                set_target_properties(SDL2::SDL2 PROPERTIES
-                        IMPORTED_LINK_INTERFACE_LIBRARIES ${SDL2_COCOA_LIBRARY})
-            endif()
-        endif()
+		if(APPLE)
+			# Need Cocoa here, is always a framework
+			find_library(SDL2_COCOA_LIBRARY Cocoa)
+			list(APPEND SDL2_EXTRA_REQUIRED SDL2_COCOA_LIBRARY)
+			if(SDL2_COCOA_LIBRARY)
+				set_target_properties(SDL2::SDL2 PROPERTIES
+						IMPORTED_LINK_INTERFACE_LIBRARIES ${SDL2_COCOA_LIBRARY})
+			endif()
+		endif()
 
 
 		# Compute what to do with SDL2main
