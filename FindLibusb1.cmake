@@ -35,11 +35,11 @@ if(WIN32)
 	program_files_fallback_glob(_dirs "LibUSB-Win32")
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		if(MSVC)
-			set(_lib_suffixes lib/msvc_x64)
+			set(_lib_suffixes lib/msvc_x64 MS64/static)
 		endif()
 	else()
 		if(MSVC)
-			set(_lib_suffixes lib/msvc)
+			set(_lib_suffixes lib/msvc MS32/static)
 		elseif(COMPILER_IS_GNUCXX)
 			set(_lib_suffixes lib/gcc)
 		endif()
@@ -62,16 +62,20 @@ find_path(LIBUSB1_INCLUDE_DIR
 	HINTS
 	"${LIBUSB1_ROOT_DIR}"
 	PATH_SUFFIXES
+	include/libusb-1.0
 	include
 	libusb-1.0)
 
 find_library(LIBUSB1_LIBRARY
 	NAMES
+	libusb-1.0
 	usb-1.0
 	PATHS
 	${PC_LIBUSB1_LIBRARY_DIRS}
 	${PC_LIBUSB1_LIBDIR}
 	${_dirs}
+	HINTS
+	"${LIBUSB1_ROOT_DIR}"
 	PATH_SUFFIXES
 	${_lib_suffixes})
 
