@@ -97,7 +97,7 @@ if(jsoncpp_FOUND)
 	# part of the string to indicate if we found jsoncpp_lib_static
 	if(TARGET jsoncpp_lib_static)
 		list(APPEND __jsoncpp_info_string "[T]")
-		_jsoncpp_apply_map_config(jsoncpp_lib)
+		_jsoncpp_apply_map_config(jsoncpp_lib_static)
 	else()
 		list(APPEND __jsoncpp_info_string "[]")
 	endif()
