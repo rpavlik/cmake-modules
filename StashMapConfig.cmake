@@ -6,10 +6,8 @@
 #
 #  stash_map_config(<config> <new list of configs for map imported>) and unstash_map_config(<config>)
 #
-# Saves and restores the value (or unset-ness) of CMAKE_MAP_IMPORTED_CONFIG_${config}
-# - if not already between a stash and unstash call for this config. (That is,
-# this is NOT a push/pop!) Calling while already between another pair is detected,
-# however, and is a no-op for relative safety.
+# Saves+changes and restores the value (or unset-ness) of CMAKE_MAP_IMPORTED_CONFIG_${config}.
+# Re-entrant calls OK - this does actually "push" and "pop"
 #
 #  stash_common_map_config() and unstash_common_map_config()
 #
@@ -26,42 +24,41 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 macro(stash_map_config config)
+    string(TOUPPER "${config}" smc_config)
+    string(TOUPPER "${ARGN}" smc_new)
     # Re-entrancy protection - push an entry onto a list
-    list(APPEND smc_IN_MAP_CONFIG_STASH_${config} yes)
-    list(LENGTH smc_IN_MAP_CONFIG_STASH_${config} smc_IN_MAP_CONFIG_STASH_LEN)
-    if(smc_IN_MAP_CONFIG_STASH_LEN GREATER 1)
-        # Not the first stash, get out without doing anything.
-        return()
-    endif()
+    list(APPEND smc_IN_MAP_CONFIG_STASH_${smc_config} yes)
+    list(LENGTH smc_IN_MAP_CONFIG_STASH_${smc_config} smc_IN_MAP_CONFIG_STASH_LEN)
 
     # Actually perform the saving and replacement of CMAKE_MAP_IMPORTED_CONFIG_${config}
-    if(DEFINED CMAKE_MAP_IMPORTED_CONFIG_${config})
-        set(smc_OLD_CMAKE_MAP_IMPORTED_CONFIG_${config} ${CMAKE_MAP_IMPORTED_CONFIG_${config}})
+    set(smc_var smc_OLD_CMAKE_MAP_IMPORTED_CONFIG_${smc_config}_${smc_IN_MAP_CONFIG_STASH_LEN})
+    message(STATUS "Stashing to ${smc_var}")
+    if(DEFINED CMAKE_MAP_IMPORTED_CONFIG_${smc_config})
+        set(${smc_var} ${CMAKE_MAP_IMPORTED_CONFIG_${smc_config}})
     else()
-        unset(smc_OLD_CMAKE_MAP_IMPORTED_CONFIG_${config})
+        unset(${smc_var})
     endif()
-    set(CMAKE_MAP_IMPORTED_CONFIG_${config} ${ARGN})
+    set(CMAKE_MAP_IMPORTED_CONFIG_${smc_config} ${smc_new})
 endmacro()
 
 macro(unstash_map_config config)
-    if(NOT DEFINED smc_IN_MAP_CONFIG_STASH_${config})
+    string(TOUPPER "${config}" smc_config)
+    if(NOT DEFINED smc_IN_MAP_CONFIG_STASH_${smc_config})
         # Nobody actually called the matching stash...
         return()
     endif()
+    # Get stack size so we know which entries to restore.
+    list(LENGTH smc_IN_MAP_CONFIG_STASH_${smc_config} smc_IN_MAP_CONFIG_STASH_LEN)
     # Other half of re-entrancy protection - pop an entry off a list
-    list(REMOVE_AT smc_IN_MAP_CONFIG_STASH_${config} -1)
-    list(LENGTH smc_IN_MAP_CONFIG_STASH_${config} smc_IN_MAP_CONFIG_STASH_LEN)
-    if(smc_IN_MAP_CONFIG_STASH_LEN GREATER 0)
-        # someone still in here, get out without doing anything more.
-        return()
-    endif()
+    list(REMOVE_AT smc_IN_MAP_CONFIG_STASH_${smc_config} -1)
 
-    # Restoration of CMAKE_MAP_IMPORTED_CONFIG_${config} if we indeed are the last ones out.
-    if(DEFINED smc_OLD_CMAKE_MAP_IMPORTED_CONFIG_${config})
-        set(CMAKE_MAP_IMPORTED_CONFIG_${config} ${smc_OLD_CMAKE_MAP_IMPORTED_CONFIG_${config}})
-        unset(smc_OLD_CMAKE_MAP_IMPORTED_CONFIG_${config})
+    # Restoration of CMAKE_MAP_IMPORTED_CONFIG_${config}
+    set(smc_var smc_OLD_CMAKE_MAP_IMPORTED_CONFIG_${smc_config}_${smc_IN_MAP_CONFIG_STASH_LEN})
+    if(DEFINED ${smc_var})
+        set(CMAKE_MAP_IMPORTED_CONFIG_${smc_config} ${${smc_var}})
+        unset(${smc_var})
     else()
-        unset(CMAKE_MAP_IMPORTED_CONFIG_${config})
+        unset(CMAKE_MAP_IMPORTED_CONFIG_${smc_config})
     endif()
 endmacro()
 
