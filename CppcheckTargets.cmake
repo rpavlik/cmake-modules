@@ -9,7 +9,7 @@
 # Requires these CMake modules:
 #  Findcppcheck
 #
-# Requires CMake 2.6 or newer (uses the 'function' command)
+# Requires CMake 2.8 or newer (uses VERSION_LESS)
 #
 # Original Author:
 # 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
