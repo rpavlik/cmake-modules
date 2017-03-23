@@ -31,14 +31,14 @@ if(NOT CPPCHECK_FOUND)
 endif()
 
 if(NOT CPPCHECK_FOUND)
-  add_custom_target(all_cppcheck
-    COMMENT "cppcheck executable not found")
-  set_target_properties(all_cppcheck PROPERTIES EXCLUDE_FROM_ALL TRUE)
+	add_custom_target(all_cppcheck
+		COMMENT "cppcheck executable not found")
+	set_target_properties(all_cppcheck PROPERTIES EXCLUDE_FROM_ALL TRUE)
 elseif(CPPCHECK_VERSION VERSION_LESS 1.53.0)
-  add_custom_target(all_cppcheck
-    COMMENT "Need at least cppcheck 1.53, found ${CPPCHECK_VERSION}")
-  set_target_properties(all_cppcheck PROPERTIES EXCLUDE_FROM_ALL TRUE)
-  set(CPPCHECK_FOUND)
+	add_custom_target(all_cppcheck
+		COMMENT "Need at least cppcheck 1.53, found ${CPPCHECK_VERSION}")
+	set_target_properties(all_cppcheck PROPERTIES EXCLUDE_FROM_ALL TRUE)
+	set(CPPCHECK_FOUND)
 endif()
 
 if(NOT TARGET all_cppcheck)
@@ -47,8 +47,7 @@ endif()
 
 function(add_cppcheck_sources _targetname)
 	if(CPPCHECK_FOUND)
-		set(_cppcheck_args -I ${CMAKE_SOURCE_DIR}
-                  ${CPPCHECK_EXTRA_ARGS})
+		set(_cppcheck_args -I ${CMAKE_SOURCE_DIR} ${CPPCHECK_EXTRA_ARGS})
 		set(_input ${ARGN})
 		list(FIND _input UNUSED_FUNCTIONS _unused_func)
 		if("${_unused_func}" GREATER "-1")
@@ -150,8 +149,7 @@ function(add_cppcheck _name)
 			"add_cppcheck given a target name that does not exist: '${_name}' !")
 	endif()
 	if(CPPCHECK_FOUND)
-		set(_cppcheck_args -I ${CMAKE_SOURCE_DIR}
-                  ${CPPCHECK_EXTRA_ARGS})
+		set(_cppcheck_args -I ${CMAKE_SOURCE_DIR} ${CPPCHECK_EXTRA_ARGS})
 
 		list(FIND ARGN UNUSED_FUNCTIONS _unused_func)
 		if("${_unused_func}" GREATER "-1")
@@ -233,7 +231,7 @@ function(add_cppcheck _name)
 			COMMENT
 			"${_name}_cppcheck: Running cppcheck on target ${_name}..."
 			VERBATIM)
-               add_dependencies(all_cppcheck ${_name}_cppcheck)
+		add_dependencies(all_cppcheck ${_name}_cppcheck)
 	endif()
 
 endfunction()
