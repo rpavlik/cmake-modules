@@ -73,7 +73,9 @@ macro(_winsdk_announce)
 endmacro()
 
 set(_winsdk_win10vers
-	10.0.15063.0 # Redstone 2 aka Win10 1703 "Creators' Update"
+	10.0.17133.0 # Redstone 4 aka Win10 1803 "April 1018 Update"
+	10.0.16299.0 # Redstone 3 aka Win10 1709 "Fall Creators Update"
+	10.0.15063.0 # Redstone 2 aka Win10 1703 "Creators Update"
 	10.0.14393.0 # Redstone aka Win10 1607 "Anniversary Update"
 	10.0.10586.0 # TH2 aka Win10 1511
 	10.0.10240.0 # Win10 RTM
