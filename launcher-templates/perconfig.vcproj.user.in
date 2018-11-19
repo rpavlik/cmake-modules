@@ -2,7 +2,7 @@
 			Name="@USERFILE_CONFIGNAME@|@USERFILE_PLATFORM@"
 			>
 			<DebugSettings
-				Command="${USERFILE_@USERFILE_CONFIGNAME@_COMMAND}"
+				Command="@USERFILE_COMMAND@"
 				WorkingDirectory="@USERFILE_WORKING_DIRECTORY@"
 				CommandArguments="@USERFILE_COMMAND_ARGUMENTS@"
 				Attach="false"
