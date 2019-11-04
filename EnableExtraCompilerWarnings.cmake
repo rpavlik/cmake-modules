@@ -8,7 +8,12 @@
 # Original Author:
 # 2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
-# Iowa State University HCI Graduate Program/VRAC
+# Iowa State University - HCI Graduate Program/VRAC
+#
+# Additional Author:
+# 2013 Kevin M. Godby <kevin@godby.org>
+# http://kevin.godby.org/
+# Iowa State University - HCI Graduate Program/VRAC
 #
 # Copyright Iowa State University 2009-2010.
 # Distributed under the Boost Software License, Version 1.0.
@@ -19,6 +24,15 @@ if(__enable_extra_compiler_warnings)
 	return()
 endif()
 set(__enable_extra_compiler_warnings YES)
+
+macro(_check_warning_flag _flag _flags)
+	include(CheckCXXCompilerFlag)
+	string(REGEX REPLACE "[^A-Za-z0-9]" "" _flagvar "${_flag}")
+	check_cxx_compiler_flag(${_flag} SUPPORTS_WARNING_${_flagvar})
+	if(SUPPORTS_WARNING_${_flagvar})
+		set(_flags "${_flags} ${_flag}")
+	endif()
+endmacro()
 
 macro(_enable_extra_compiler_warnings_flags)
 	set(_flags)
@@ -34,31 +48,51 @@ macro(_enable_extra_compiler_warnings_flags)
 	else()
 		include(CheckCXXCompilerFlag)
 		set(_flags)
-
-		check_cxx_compiler_flag(-W SUPPORTS_W_FLAG)
-		if(SUPPORTS_W_FLAG)
-			set(_flags "${_flags} -W")
-		endif()
-
-		check_cxx_compiler_flag(-Wall SUPPORTS_WALL_FLAG)
-		if(SUPPORTS_WALL_FLAG)
-			set(_flags "${_flags} -Wall")
-		endif()
-
-		check_cxx_compiler_flag(-Wextra SUPPORTS_WEXTRA_FLAG)
-		if(SUPPORTS_WEXTRA_FLAG)
-			set(_flags "${_flags} -Wextra")
-		endif()
-
-		if(SUPPORTS_WALL_FLAG)
-			# At least GCC includes -Wmaybe-uninitialized in -Wall, which
-			# unneccesarily whines about boost::optional (by it's nature
-			# it's a "maybe" warning - prone to noisy false-positives)
-			check_cxx_compiler_flag(-Wno-maybe-uninitialized SUPPORTS_WNO_MAYBE_UNINITIALIZED_FLAG)
-			if(SUPPORTS_WNO_MAYBE_UNINITIALIZED_FLAG)
-				set(_flags "${_flags} -Wno-maybe-uninitialized")
-			endif()
-		endif()
+		_check_warning_flag(-W "${_flags}")
+		_check_warning_flag(-Wall "${_flags}")
+		_check_warning_flag(-pedantic "${_flags}")
+        _check_warning_flag(-Wbool-conversion "${_flags}")
+		_check_warning_flag(-Wcast-align "${_flags}")
+		_check_warning_flag(-Wchar-subscripts "${_flags}")
+		_check_warning_flag(-Wconversion "${_flags}")
+		_check_warning_flag(-Wdisabled-optimization "${_flags}")
+		_check_warning_flag(-Wdocumentation "${_flags}")
+		# _check_warning_flag(-Weffc++ "${_flags}")
+		_check_warning_flag(-Wempty-body "${_flags}")
+		_check_warning_flag(-Wfloat-equal "${_flags}")
+		_check_warning_flag(-Wformat=2 "${_flags}")
+		_check_warning_flag(-Wformat-security "${_flags}")
+		_check_warning_flag(-Wheader-guard "${_flags}")
+		_check_warning_flag(-Wimplicit-fallthrough "${_flags}")
+		_check_warning_flag(-Winit-self "${_flags}")
+		_check_warning_flag(-Winline "${_flags}")
+		_check_warning_flag(-Winvalid-pch "${_flags}")
+		_check_warning_flag(-Wlogical-not-parentheses "${_flags}")
+		_check_warning_flag(-Wloop-analysis "${_flags}")
+		_check_warning_flag(-Wmissing-format-attribute "${_flags}")
+		_check_warning_flag(-Wmissing-include-dirs "${_flags}")
+		_check_warning_flag(-Wno-long-long "${_flags}")
+		_check_warning_flag(-Wnon-virtual-dtor "${_flags}")
+		_check_warning_flag(-Wold-style-cast "${_flags}")
+		_check_warning_flag(-Wpacked "${_flags}")
+		_check_warning_flag(-Wpointer-arith "${_flags}")
+		_check_warning_flag(-Wredundant-decls "${_flags}")
+		_check_warning_flag(-Wshadow "${_flags}")
+		_check_warning_flag(-Wsizeof-array-argument "${_flags}")
+		_check_warning_flag(-Wstrict-overflow=4 "${_flags}")
+		_check_warning_flag(-Wstring-conversion "${_flags}")
+		_check_warning_flag(-Wsuggest-attribute=const "${_flags}")
+		_check_warning_flag(-Wswitch-enum "${_flags}")
+		_check_warning_flag(-Wswitch "${_flags}")
+		_check_warning_flag(-Wtrigraphs "${_flags}")
+		_check_warning_flag(-Wundef "${_flags}")
+		_check_warning_flag(-Wunique-enum "${_flags}")
+		_check_warning_flag(-Wuninitialized "${_flags}")
+		_check_warning_flag(-Wunknown-pragmas "${_flags}")
+		_check_warning_flag(-Wunused "${_flags}")
+		_check_warning_flag(-Wunused-label "${_flags}")
+		_check_warning_flag(-Wunused-parameter "${_flags}")
+		_check_warning_flag(-Wwrite-strings "${_flags}")
 	endif()
 endmacro()
 
