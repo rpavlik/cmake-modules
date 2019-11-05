@@ -143,7 +143,7 @@ function(add_cppcheck_sources _targetname)
 			COMMENT
 			"${_targetname}_cppcheck: Running cppcheck on target ${_targetname}..."
 			VERBATIM)
-               add_dependencies(cppcheck ${_targetname}_cppcheck)
+		add_dependencies(cppcheck ${_targetname}_cppcheck)
 	endif()
 endfunction()
 
