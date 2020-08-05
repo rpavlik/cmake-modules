@@ -12,6 +12,11 @@
 # Returns the results of git describe on the source tree, and adjusting
 # the output so that it tests false if an error occurs.
 #
+#  git_describe_working_tree(<var> [<additional arguments to git describe> ...])
+#
+# Returns the results of git describe on the working tree (--dirty option),
+# and adjusting the output so that it tests false if an error occurs.
+#
 #  git_get_exact_tag(<var> [<additional arguments to git describe> ...])
 #
 # Returns the results of git describe --exact-match on the source tree,
@@ -168,6 +173,35 @@ function(git_describe _var)
 		"${GIT_EXECUTABLE}"
 		describe --tags --always
 		${hash}
+		${ARGN}
+		WORKING_DIRECTORY
+		"${CMAKE_CURRENT_SOURCE_DIR}"
+		RESULT_VARIABLE
+		res
+		OUTPUT_VARIABLE
+		out
+		ERROR_QUIET
+		OUTPUT_STRIP_TRAILING_WHITESPACE)
+	if(NOT res EQUAL 0)
+		set(out "${out}-${res}-NOTFOUND")
+	endif()
+
+	set(${_var} "${out}" PARENT_SCOPE)
+endfunction()
+
+function(git_describe_working_tree _var)
+	if(NOT GIT_FOUND)
+		find_package(Git QUIET)
+	endif()
+	if(NOT GIT_FOUND)
+		set(${_var} "GIT-NOTFOUND" PARENT_SCOPE)
+		return()
+	endif()
+
+	execute_process(COMMAND
+		"${GIT_EXECUTABLE}"
+		describe
+		--dirty
 		${ARGN}
 		WORKING_DIRECTORY
 		"${CMAKE_CURRENT_SOURCE_DIR}"
