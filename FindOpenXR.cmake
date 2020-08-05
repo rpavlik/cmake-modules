@@ -1,10 +1,10 @@
-# Copyright 2019 Collabora, Ltd.
+# Copyright 2019-2020 Collabora, Ltd.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 # Original Author:
-# 2019 Ryan Pavlik <ryan.pavlik@collabora.com>
+# 2019-2020 Ryan Pavlik <ryan.pavlik@collabora.com>
 
 #.rst:
 # FindOpenXR
@@ -33,7 +33,7 @@
 #
 
 # Normalize paths
-foreach(PATHVAR OPENXR_SDK_DIR OPENXR_SDK_BUILD_DIR)
+foreach(PATHVAR OPENXR_SDK_SRC_DIR OPENXR_SDK_BUILD_DIR)
     if(${${PATHVAR}})
         file(TO_CMAKE_PATH ${${PATHVAR}} ${PATHVAR})
     endif()
@@ -77,7 +77,7 @@ set(_oxr_registry_search_dirs)
 # Macro to extend search locations given a source dir.
 macro(_oxr_handle_potential_root_src_dir _dir)
     list(APPEND _oxr_include_search_dirs "${_dir}/include"
-                "${_dir}/specification/out/${OPENXR_OUT_DIR}")
+         "${_dir}/specification/out/${OPENXR_OUT_DIR}")
     list(APPEND _oxr_registry_search_dirs "${_dir}/specification/registry/")
     list(APPEND _oxr_specscripts_search_dirs "${_dir}/specification/scripts/")
     list(APPEND _oxr_sdkscripts_search_dirs "${_dir}/src/scripts/")
@@ -130,9 +130,10 @@ if(OPENXR_SDK_SRC_DIR)
 endif()
 
 # Guesses of sibling directories by name - last resort.
-foreach(_dir "${CMAKE_SOURCE_DIR}/../OpenXR-SDK"
-        "${CMAKE_SOURCE_DIR}/../OpenXR-SDK-Source"
-        "${CMAKE_SOURCE_DIR}/../openxr")
+foreach(
+    _dir
+    "${CMAKE_SOURCE_DIR}/../OpenXR-SDK"
+    "${CMAKE_SOURCE_DIR}/../OpenXR-SDK-Source" "${CMAKE_SOURCE_DIR}/../openxr")
     _oxr_handle_potential_root_src_dir(${_dir})
     _oxr_handle_potential_root_build_dir(${_dir}/build)
 endforeach()
@@ -211,7 +212,7 @@ foreach(_comp IN LISTS OpenXR_FIND_COMPONENTS)
 
     if(${_comp} STREQUAL "headers")
         list(APPEND _oxr_component_required_vars OPENXR_OPENXR_INCLUDE_DIR
-                    OPENXR_PLATFORM_DEFINES_INCLUDE_DIR)
+             OPENXR_PLATFORM_DEFINES_INCLUDE_DIR)
         if(EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr.h"
            AND EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr_platform.h"
            AND EXISTS
@@ -278,11 +279,10 @@ unset(_comp)
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
     OpenXR
-    REQUIRED_VARS
-    ${_oxr_component_required_vars}
+    REQUIRED_VARS ${_oxr_component_required_vars}
     HANDLE_COMPONENTS
     FAIL_MESSAGE
-    "Could NOT find the requested OpenXR components, try setting OPENXR_SDK_SRC_DIR and/or OPENXR_SDK_BUILD_DIR"
+        "Could NOT find the requested OpenXR components, try setting OPENXR_SDK_SRC_DIR and/or OPENXR_SDK_BUILD_DIR"
 )
 
 ###
@@ -304,9 +304,8 @@ if(OpenXR_headers_FOUND)
     # This is not duplication: interface system dirs just marks as system.
     set_target_properties(
         OpenXR::Headers
-        PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES
-                   "${OPENXR_INCLUDE_DIRS}" INTERFACE_INCLUDE_DIRECTORIES
-                   "${OPENXR_INCLUDE_DIRS}")
+        PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${OPENXR_INCLUDE_DIRS}"
+                   INTERFACE_INCLUDE_DIRECTORIES "${OPENXR_INCLUDE_DIRS}")
 
     # This target just provides the headers, without any prototypes.
     # Finding and loading the loader at runtime is your problem.
@@ -337,7 +336,7 @@ if(OpenXR_loader_FOUND AND OpenXR_headers_FOUND)
     endif()
     set_target_properties(
         OpenXR::Loader
-        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C" IMPORTED_LOCATION
-                   "${OPENXR_loader_LIBRARY}" INTERFACE_LINK_LIBRARIES
-                   "${_oxr_loader_interface_libs}")
+        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+                   IMPORTED_LOCATION "${OPENXR_loader_LIBRARY}"
+                   INTERFACE_LINK_LIBRARIES "${_oxr_loader_interface_libs}")
 endif()
