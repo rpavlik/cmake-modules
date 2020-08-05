@@ -198,7 +198,7 @@ macro(_launcher_process_args)
     endforeach()
 endmacro()
 
-#ok, we have gone very hackish on this function as the file(GENERATE) is very hard to work with as the cmake guys really dont
+#ok, we have gone very hackish on this function as the file(GENERATE) is very hard to work with as the cmake folks really don't
 #want you writing generator files yourself, yet the user file is not planning to ever be supported
 macro(_launcher_produce_vcproj_user)
     if(MSVC)
