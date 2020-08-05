@@ -1,4 +1,5 @@
 # Copyright 2019 Collabora, Ltd.
+# SPDX-License-Identifier: BSL-1.0
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -75,21 +76,18 @@ if(PC_LIBCHECK_FOUND AND "${PC_LIBCHECK_LIBRARIES}" MATCHES "subunit")
 endif()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Libcheck REQUIRED_VARS LIBCHECK_INCLUDE_DIR
-                                  LIBCHECK_LIBRARY THREADS_FOUND)
+find_package_handle_standard_args(
+    Libcheck REQUIRED_VARS LIBCHECK_INCLUDE_DIR LIBCHECK_LIBRARY THREADS_FOUND)
 if(LIBCHECK_FOUND)
     if(NOT TARGET libcheck::check)
         add_library(libcheck::check UNKNOWN IMPORTED)
 
         set_target_properties(
-            libcheck::check PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
-                                       "${LIBCHECK_INCLUDE_DIR}")
-        set_target_properties(
-            libcheck::check PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
-                                       IMPORTED_LOCATION ${LIBCHECK_LIBRARY})
-        set_property(
-            TARGET libcheck::check PROPERTY IMPORTED_LINK_INTERFACE_LIBRARIES
-                                            Threads::Threads)
+            libcheck::check
+            PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${LIBCHECK_INCLUDE_DIR}"
+                       IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+                       IMPORTED_LOCATION ${LIBCHECK_LIBRARY}
+                       IMPORTED_LINK_INTERFACE_LIBRARIES Threads::Threads)
 
         # if we found librt or libm, link them.
         if(LIBCHECK_LIBRT)
