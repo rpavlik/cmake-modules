@@ -10,6 +10,7 @@
 #    [ENVIRONMENT <VAR=value> [<VAR=value>...]])
 #
 #  create_target_launcher(<targetname>
+#    [COMMAND <target command>]
 #    [ARGS <args...>]
 #    [FORWARD_ARGS]
 #    [RUNTIME_LIBRARY_DIRS <dir...>]
@@ -17,6 +18,7 @@
 #    [ENVIRONMENT <VAR=value> [<VAR=value>...]])
 #
 #  create_generic_launcher(<launchername>
+#    [COMMAND <target command>]
 #    [RUNTIME_LIBRARY_DIRS <dir...>]
 #    [WORKING_DIRECTORY <dir>]
 #    [ENVIRONMENT <VAR=value> [<VAR=value>...]])
@@ -109,8 +111,8 @@ endmacro()
 macro(_launcher_process_args)
     set(_nowhere)
     set(_curdest _nowhere)
-    set(_val_args ARGS RUNTIME_LIBRARY_DIRS WORKING_DIRECTORY ENVIRONMENT
-                  TARGET_PLATFORM)
+    set(_val_args ARGS COMMAND RUNTIME_LIBRARY_DIRS WORKING_DIRECTORY
+                  ENVIRONMENT TARGET_PLATFORM)
     set(_bool_args FORWARD_ARGS)
     foreach(_arg ${_val_args} ${_bool_args})
         set(${_arg})
@@ -148,6 +150,10 @@ macro(_launcher_process_args)
         set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     endif()
 
+    if(NOT COMMAND)
+        set(COMMAND "$<TARGET_FILE:${_targetname}>")
+    endif()
+
     if(FORWARD_ARGS)
         if(WIN32)
             set(FWD_ARGS %*)
@@ -163,6 +169,7 @@ macro(_launcher_process_args)
     endif()
 
     set(USERFILE_WORKING_DIRECTORY "${WORKING_DIRECTORY}")
+    set(USERFILE_COMMAND "${COMMAND}")
     set(USERFILE_COMMAND_ARGUMENTS "${ARGS}")
     set(LAUNCHERSCRIPT_COMMAND_ARGUMENTS "${ARGS} ${FWD_ARGS}")
 
@@ -221,7 +228,6 @@ macro(_launcher_produce_vcproj_user)
 
         set(USERFILE_CONFIGSECTIONS)
         foreach(USERFILE_CONFIGNAME ${config_types})
-            set(USERFILE_COMMAND "$<TARGET_FILE:${_targetname}>")
             string(CONFIGURE "${_perconfig}" _temp @ONLY ESCAPE_QUOTES)
 
             #we are building the per config info with genertator expressions so that when generating the files only the config currently generated is being correctly filled in
@@ -317,8 +323,8 @@ function(create_default_target_launcher _targetname)
     _launcher_process_args(${ARGN})
 
     set(VCPROJNAME "${CMAKE_BINARY_DIR}/ALL_BUILD")
-    _launcher_produce_vcproj_user()
 
+    _launcher_produce_vcproj_user()
     _launcher_create_target_launcher()
 endfunction()
 
@@ -327,8 +333,8 @@ function(create_target_launcher _targetname)
     _launcher_process_args(${ARGN})
 
     set(VCPROJNAME "${CMAKE_CURRENT_BINARY_DIR}/${_targetname}")
-    _launcher_produce_vcproj_user()
 
+    _launcher_produce_vcproj_user()
     _launcher_create_target_launcher()
 endfunction()
 
@@ -355,10 +361,16 @@ function(create_generic_launcher _launchername)
             "Program terminated with signal")
     endif()
 
+    if(CMAKE_CONFIGURATION_TYPES)
+        set(_launcher_build_type "${CMAKE_BUILD_TYPE}")
+    else()
+        unset(_launcher_build_type)
+    endif()
+
     _launcher_configure_executable(
         "${_launchermoddir}/genericlauncher.${_suffix}.in"
         "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/genericlauncher.${_suffix}.in"
-        "${_launchername}")
+        "${_launchername}" ${_launcher_build_type})
 endfunction()
 
 function(guess_runtime_library_dirs _var)
