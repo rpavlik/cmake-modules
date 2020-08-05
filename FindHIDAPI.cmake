@@ -1,7 +1,7 @@
 #.rst:
 # FindHIDAPI
 # ----------
-# 
+#
 # Try to find HIDAPI library, from http://www.signal11.us/oss/hidapi/
 #
 # Cache Variables: (probably not for direct use in your scripts)
@@ -23,7 +23,7 @@
 #
 # IMPORTED Targets
 # ^^^^^^^^^^^^^^^^
-
+#
 # This module defines :prop_tgt:`IMPORTED` target ``HIDAPI::hidapi`` (in all cases or
 # if no components specified), ``HIDAPI::hidapi-libusb`` (if you requested the libusb component),
 # and ``HIDAPI::hidapi-hidraw`` (if you requested the hidraw component),
@@ -45,6 +45,7 @@
 #
 # Copyright Iowa State University 2009-2010.
 # Copyright Collabora, Ltd. 2019.
+# SPDX-License-Identifier: BSL-1.0
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -54,20 +55,20 @@ set(HIDAPI_ROOT_DIR
     CACHE PATH "Root to search for HIDAPI")
 
 # Clean up components
-if("${HIDAPI_FIND_COMPONENTS}")
+if(HIDAPI_FIND_COMPONENTS)
     if(WIN32 OR APPLE)
         # This makes no sense on Windows or Mac, which have native APIs
-        list(REMOVE "${HIDAPI_FIND_COMPONENTS}" libusb)
+        list(REMOVE HIDAPI_FIND_COMPONENTS libusb)
     endif()
 
     if(NOT ${CMAKE_SYSTEM} MATCHES "Linux")
         # hidraw is only on linux
-        list(REMOVE "${HIDAPI_FIND_COMPONENTS}" hidraw)
+        list(REMOVE HIDAPI_FIND_COMPONENTS hidraw)
     endif()
 endif()
-if(NOT "${HIDAPI_FIND_COMPONENTS}")
+if(NOT HIDAPI_FIND_COMPONENTS)
     # Default to any
-    set("${HIDAPI_FIND_COMPONENTS}" any)
+    set(HIDAPI_FIND_COMPONENTS any)
 endif()
 
 # Ask pkg-config for hints
@@ -150,7 +151,7 @@ set(_hidapi_component_required_vars)
 foreach(_comp IN LISTS HIDAPI_FIND_COMPONENTS)
     if("${_comp}" STREQUAL "any")
         list(APPEND _hidapi_component_required_vars HIDAPI_INCLUDE_DIR
-                    HIDAPI_LIBRARY)
+             HIDAPI_LIBRARY)
         if(HIDAPI_INCLUDE_DIR AND EXISTS "${HIDAPI_LIBRARY}")
             set(HIDAPI_any_FOUND TRUE)
             mark_as_advanced(HIDAPI_INCLUDE_DIR)
@@ -160,7 +161,7 @@ foreach(_comp IN LISTS HIDAPI_FIND_COMPONENTS)
 
     elseif("${_comp}" STREQUAL "libusb")
         list(APPEND _hidapi_component_required_vars HIDAPI_INCLUDE_DIR
-                    HIDAPI_LIBUSB_LIBRARY)
+             HIDAPI_LIBUSB_LIBRARY)
         if(HIDAPI_INCLUDE_DIR AND EXISTS "${HIDAPI_LIBUSB_LIBRARY}")
             set(HIDAPI_libusb_FOUND TRUE)
             mark_as_advanced(HIDAPI_INCLUDE_DIR HIDAPI_LIBUSB_LIBRARY)
@@ -170,7 +171,7 @@ foreach(_comp IN LISTS HIDAPI_FIND_COMPONENTS)
 
     elseif("${_comp}" STREQUAL "hidraw")
         list(APPEND _hidapi_component_required_vars HIDAPI_INCLUDE_DIR
-                    HIDAPI_HIDRAW_LIBRARY)
+             HIDAPI_HIDRAW_LIBRARY)
         if(HIDAPI_INCLUDE_DIR AND EXISTS "${HIDAPI_HIDRAW_LIBRARY}")
             set(HIDAPI_hidraw_FOUND TRUE)
             mark_as_advanced(HIDAPI_INCLUDE_DIR HIDAPI_HIDRAW_LIBRARY)
@@ -190,20 +191,20 @@ unset(_comp)
 ###
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
-    HIDAPI REQUIRED_VARS ${_hidapi_component_required_vars} THREADS_FOUND
+    HIDAPI
+    REQUIRED_VARS ${_hidapi_component_required_vars} THREADS_FOUND
     HANDLE_COMPONENTS)
-
 if(HIDAPI_FOUND)
     set(HIDAPI_LIBRARIES "${HIDAPI_LIBRARY}")
     set(HIDAPI_INCLUDE_DIRS "${HIDAPI_INCLUDE_DIR}")
     if(NOT TARGET HIDAPI::hidapi)
         add_library(HIDAPI::hidapi UNKNOWN IMPORTED)
         set_target_properties(
-            HIDAPI::hidapi PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
-                                      IMPORTED_LOCATION ${HIDAPI_LIBRARY})
-        set_property(
-            TARGET HIDAPI::hidapi PROPERTY IMPORTED_LINK_INTERFACE_LIBRARIES
-                                           Threads::Threads)
+            HIDAPI::hidapi
+            PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+                       IMPORTED_LOCATION "${HIDAPI_LIBRARY}"
+                       INTERFACE_INCLUDE_DIRECTORIES "${HIDAPI_INCLUDE_DIR}"
+                       IMPORTED_LINK_INTERFACE_LIBRARIES Threads::Threads)
     endif()
 endif()
 
@@ -211,18 +212,18 @@ if(HIDAPI_libusb_FOUND AND NOT TARGET HIDAPI::hidapi-libusb)
     add_library(HIDAPI::hidapi-libusb UNKNOWN IMPORTED)
     set_target_properties(
         HIDAPI::hidapi-libusb
-        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C" IMPORTED_LOCATION
-                   ${HIDAPI_LIBUSB_LIBRARY})
-    set_property(TARGET HIDAPI::hidapi-libusb
-                 PROPERTY IMPORTED_LINK_INTERFACE_LIBRARIES Threads::Threads)
+        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+                   IMPORTED_LOCATION "${HIDAPI_LIBUSB_LIBRARY}"
+                   INTERFACE_INCLUDE_DIRECTORIES "${HIDAPI_INCLUDE_DIR}"
+                   IMPORTED_LINK_INTERFACE_LIBRARIES Threads::Threads)
 endif()
 
 if(HIDAPI_hidraw_FOUND AND NOT TARGET HIDAPI::hidapi-hidraw)
     add_library(HIDAPI::hidapi-hidraw UNKNOWN IMPORTED)
     set_target_properties(
         HIDAPI::hidapi-hidraw
-        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C" IMPORTED_LOCATION
-                   ${HIDAPI_HIDRAW_LIBRARY})
-    set_property(TARGET HIDAPI::hidapi-hidraw
-                 PROPERTY IMPORTED_LINK_INTERFACE_LIBRARIES Threads::Threads)
+        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+                   IMPORTED_LOCATION "${HIDAPI_HIDRAW_LIBRARY}"
+                   INTERFACE_INCLUDE_DIRECTORIES "${HIDAPI_INCLUDE_DIR}"
+                   IMPORTED_LINK_INTERFACE_LIBRARIES Threads::Threads)
 endif()
