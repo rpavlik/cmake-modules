@@ -50,7 +50,7 @@ set(__get_git_revision_description YES)
 # to find the path to this module rather than the path to a calling list file
 get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 
-# Function find_closest_git_dir finds the next closest .git directory 
+# Function _git_find_closest_git_dir finds the next closest .git directory 
 # that is part of any directory in the path defined by _start_dir.
 # The result is returned in the parent scope variable whose name is passed 
 # as variable _git_dir_var. If no .git directory can be found, the 
@@ -60,7 +60,7 @@ get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 # neither foo nor bar contain a file/directory .git. This wil return 
 # C:/bla/.git
 #
-function(find_closest_git_dir _start_dir _git_dir_var)
+function(_git_find_closest_git_dir _start_dir _git_dir_var)
 	set(cur_dir "${_start_dir}")
 	set(git_dir "${_start_dir}/.git")
 	while(NOT EXISTS "${git_dir}")	# .git dir not found, search parent directories
@@ -77,7 +77,7 @@ function(find_closest_git_dir _start_dir _git_dir_var)
 endfunction()
 
 function(get_git_head_revision _refspecvar _hashvar)
-	find_closest_git_dir("${CMAKE_CURRENT_SOURCE_DIR}" GIT_DIR)
+	_git_find_closest_git_dir("${CMAKE_CURRENT_SOURCE_DIR}" GIT_DIR)
 
 	if(NOT "${GIT_DIR}" STREQUAL "")
 		file(RELATIVE_PATH _relative_to_source_dir "${CMAKE_SOURCE_DIR}" "${GIT_DIR}")
@@ -127,7 +127,7 @@ function(get_git_head_revision _refspecvar _hashvar)
 			#
 			string(REGEX REPLACE "gitdir: (.*)$" "\\1" git_worktree_dir ${worktree_ref})
 			string(STRIP ${git_worktree_dir} git_worktree_dir)
-			find_closest_git_dir("${git_worktree_dir}" GIT_DIR)
+			_git_find_closest_git_dir("${git_worktree_dir}" GIT_DIR)
 			set(HEAD_SOURCE_FILE "${git_worktree_dir}/HEAD")
 		endif()
 	else()
