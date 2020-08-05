@@ -63,6 +63,12 @@ else()
     set(OPENXR_STATIC OFF)
 endif()
 
+find_package(PkgConfig QUIET)
+
+if(PKG_CONFIG_FOUND)
+    pkg_check_modules(PC_OPENXR QUIET openxr)
+endif()
+
 ###
 # Assemble lists of places to look
 ###
@@ -88,6 +94,11 @@ macro(_oxr_handle_potential_root_build_dir _dir)
     list(APPEND _oxr_include_search_dirs "${_dir}/include")
     list(APPEND _oxr_loader_search_dirs "${_dir}/src/loader")
 endmacro()
+
+if(PC_OPENXR_FOUND)
+    list(APPEND _oxr_include_search_dirs ${PC_OPENXR_INCLUDE_DIRS})
+    list(APPEND _oxr_loader_search_dirs ${PC_OPENXR_LIBRARY_DIRS})
+endif()
 
 set(_oxr_build_tag)
 if(OPENXR_STATIC)
