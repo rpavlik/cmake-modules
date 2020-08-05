@@ -3,6 +3,7 @@
 #  include(CreateLaunchers) - to make these available
 #  guess_runtime_library_dirs(<outputvarname> [<extralibrary> ...])
 #  create_default_target_launcher(<targetname>
+#    [COMMAND <target command>]
 #    [ARGS <args...>]
 #    [FORWARD_ARGS]
 #    [RUNTIME_LIBRARY_DIRS <dir...>]
