@@ -30,11 +30,14 @@
 # Requires CMake 2.6 or newer (uses the 'function' command)
 #
 # Original Author:
-# 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+# 2009-2020 Ryan Pavlik <ryan.pavlik@gmail.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
-# Iowa State University HCI Graduate Program/VRAC
 #
-# Copyright Iowa State University 2009-2010.
+# Copyright 2009-2013, Iowa State University.
+# Copyright 2018-2019, caseymcc
+# Copyright 2020, Ryan Pavlik
+# Copyright 2014-2019, Contributors
+# SPDX-License-Identifier: BSL-1.0
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
