@@ -215,10 +215,9 @@ foreach(_comp IN LISTS OpenXR_FIND_COMPONENTS)
              OPENXR_PLATFORM_DEFINES_INCLUDE_DIR)
         if(EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr.h"
            AND EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr_platform.h"
+           AND EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr_reflection.h"
            AND EXISTS
                "${OPENXR_PLATFORM_DEFINES_INCLUDE_DIR}/openxr/openxr_platform_defines.h"
-           AND EXISTS
-               "${OPENXR_PLATFORM_DEFINES_INCLUDE_DIR}/openxr/openxr_reflection.h"
         )
             set(OpenXR_headers_FOUND TRUE)
             mark_as_advanced(OPENXR_OPENXR_INCLUDE_DIR
