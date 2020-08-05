@@ -39,6 +39,6 @@ foreach(_var ${_test})
 	if("${_bin}" STREQUAL "${_chopped}")
 		get_filename_component(_parent "${CMAKE_SOURCE_DIR}/.." ABSOLUTE)
 		message(FATAL_ERROR
-			"You must set a binary directory that is different from your source directory.  You might consider ${CMAKE_SOURCE_DIR}/build or ${_parent}/build-${CMAKE_PROJECT_NAME}")
+			"You must set a binary directory that is different from your source directory.  You might consider cmake options: -B${CMAKE_SOURCE_DIR}/build or -B${_parent}/build-${CMAKE_PROJECT_NAME}")
 	endif()
 endforeach()
