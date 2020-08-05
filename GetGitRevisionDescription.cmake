@@ -101,7 +101,8 @@ function(get_git_head_revision _refspecvar _hashvar)
 		if(NOT "${out}" STREQUAL "")
 			# If out is empty, GIT_DIR/CMAKE_CURRENT_SOURCE_DIR is in a submodule
 			file(READ ${GIT_DIR} submodule)
-			string(REGEX REPLACE "gitdir: (.*)\n$" "\\1" GIT_DIR_RELATIVE ${submodule})
+			string(REGEX REPLACE "gitdir: (.*)$" "\\1" GIT_DIR_RELATIVE ${submodule})
+			string(STRIP ${GIT_DIR_RELATIVE} GIT_DIR_RELATIVE)
 			get_filename_component(SUBMODULE_DIR ${GIT_DIR} PATH)
 			get_filename_component(GIT_DIR ${SUBMODULE_DIR}/${GIT_DIR_RELATIVE} ABSOLUTE)
 			set(HEAD_SOURCE_FILE "${GIT_DIR}/HEAD")
@@ -111,7 +112,8 @@ function(get_git_head_revision _refspecvar _hashvar)
 			# The .git directory contains a path to the worktree information directory 
 			# inside the parent git repo of the worktree.
 			#
-			string(REGEX REPLACE "gitdir: (.*)\n$" "\\1" git_worktree_dir ${worktree_ref})
+			string(REGEX REPLACE "gitdir: (.*)$" "\\1" git_worktree_dir ${worktree_ref})
+			string(STRIP ${git_worktree_dir} git_worktree_dir)
 			find_closest_git_dir("${git_worktree_dir}" GIT_DIR)
 			set(HEAD_SOURCE_FILE "${git_worktree_dir}/HEAD")
 		endif()
