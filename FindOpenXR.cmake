@@ -32,6 +32,14 @@
 #  Path to the root of the build directory corresponding to the ``openxr``, ``OpenXR-SDK``, or ``OpenXR-SDK-Source`` repo.
 #
 
+# Poll the environment
+if(NOT "$ENV{OPENXR_SDK_SRC_DIR}" STREQUAL "")
+    set(OPENXR_SDK_SRC_DIR $ENV{OPENXR_SDK_SRC_DIR} CACHE INTERNAL "Copied from environment variable")
+endif()
+if(NOT "$ENV{OPENXR_SDK_BUILD_DIR}" STREQUAL "")
+    set(OPENXR_SDK_BUILD_DIR $ENV{OPENXR_SDK_BUILD_DIR} CACHE INTERNAL "Copied from environment")
+endif()
+
 # Normalize paths
 foreach(PATHVAR OPENXR_SDK_SRC_DIR OPENXR_SDK_BUILD_DIR)
     if(${${PATHVAR}})
