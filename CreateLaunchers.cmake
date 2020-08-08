@@ -43,13 +43,13 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
-cmake_policy(PUSH)
-cmake_policy(SET CMP0053 NEW)
-
 if(__create_launchers)
     return()
 endif()
 set(__create_launchers YES)
+
+cmake_policy(PUSH)
+cmake_policy(SET CMP0053 NEW)
 
 include(CleanDirectoryList)
 
