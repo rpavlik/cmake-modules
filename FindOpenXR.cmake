@@ -131,8 +131,8 @@ endif()
 if(OPENXR_SDK_SRC_DIR)
     _oxr_handle_potential_root_src_dir(${OPENXR_SDK_SRC_DIR})
 endif()
-if(OPENXR_ROOT_BUILD_DIR)
-    _oxr_handle_potential_root_build_dir(${OPENXR_ROOT_BUILD_DIR})
+if(OPENXR_SDK_BUILD_DIR)
+    _oxr_handle_potential_root_build_dir(${OPENXR_SDK_BUILD_DIR})
 endif()
 
 # Guessed build dir based on src dir
