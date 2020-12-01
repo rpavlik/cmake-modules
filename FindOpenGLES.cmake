@@ -173,7 +173,9 @@ foreach(_comp IN LISTS OpenGLES_FIND_COMPONENTS)
         set(OpenGLES_${_comp}_FOUND FALSE)
     endif()
 endforeach()
-list(REMOVE_DUPLICATES _gles_required_vars)
+if(_gles_required_vars)
+    list(REMOVE_DUPLICATES _gles_required_vars)
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
