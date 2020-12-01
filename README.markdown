@@ -11,14 +11,17 @@ This is a collection of CMake modules that I've produced during the course
 of a variety of software development.  There are a number of find modules,
 especially for virtual reality and physical simulation packages, some utility
 modules of more general interest, and some patches or workarounds for
-CMake itself.
+(very old versions of) CMake itself.
 
 Each module is generally documented, and depending on how busy I was
 when I created it, the documentation can be fairly complete.
 
 By now, it also includes contributions both from open-source projects I work on,
 as well as friendly strangers on the Internet contributing their modules. I am
-very grateful for improvements/fixes/pull requests!
+very grateful for improvements/fixes/pull requests! As usual, contributions to
+files are assumed to be under the same license as they were offered to you
+(incoming == outgoing), and any new files must have proper copyright and SPDX
+license identifer headers.
 
 ## How to Integrate
 
@@ -128,7 +131,7 @@ file has correct licensing information.
 If you'd like to contribute, that would be great! Just make sure to include
 the license boilerplate in your module, and send a pull request.
 
-## Important License Note!
+## Important License Note
 
 If you find this file inside of another project, rather at the top-level
 directory, you're in a separate project that is making use of these modules.
