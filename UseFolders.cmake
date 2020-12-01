@@ -11,10 +11,11 @@
 # 2015 Ryan Pavlik <ryan@sensics.com> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 #
-# Copyright Sensics, Inc. 2015.
+# Copyright 2015, Sensics, Inc.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+# SPDX-License-Identifier: BSL-1.0
 
 function(use_folders)
     set(_option_name BUILD_WITH_PROJECT_FOLDERS)

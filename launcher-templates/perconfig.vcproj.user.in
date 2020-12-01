@@ -1,3 +1,8 @@
+<!--
+Copyright 2010, 2014, Iowa State University
+Copyright 2020, caseymcc
+SPDX-License-Identifier: BSL-1.0
+-->
 		<Configuration
 			Name="@USERFILE_CONFIGNAME@|@USERFILE_PLATFORM@"
 			>

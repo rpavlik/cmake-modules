@@ -10,6 +10,8 @@
 	Iowa State University Virtual Reality Applications Center
 	Human-Computer Interaction Graduate Program
 */
+// Copyright 2010, Iowa State University
+// SPDX-License-Identifier: BSL-1.0
 
 #pragma once
 

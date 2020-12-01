@@ -10,9 +10,9 @@
 #  GLUT_glut_LIBRARY = the full path to the glut library.
 
 #=============================================================================
-# Copyright 2001-2009 Kitware, Inc.
-# Copyright 2009-2010 Iowa State University
-#                     (Author: Ryan Pavlik <abiryan@ryand.net> )
+# Copyright 2001-2009, Kitware, Inc.
+# Copyright 2009-2010, Iowa State University
+#                      (Author: Ryan Pavlik <abiryan@ryand.net> )
 #
 # Distributed under the OSI-approved BSD License (the "License");
 # see below.
@@ -20,6 +20,8 @@
 # This software is distributed WITHOUT ANY WARRANTY; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the License for more information.
+#
+# SPDX-License-Identifier: BSD-3-Clause
 #=============================================================================
 # 
 # Redistribution and use in source and binary forms, with or without

@@ -1,4 +1,7 @@
 #!/bin/sh
+# Copyright 2010-2011, Iowa State University
+# SPDX-License-Identifier: BSL-1.0
+
 bindir=$(pwd)
 cd @USERFILE_WORKING_DIRECTORY@
 @USERFILE_ENV_COMMANDS@

@@ -29,11 +29,18 @@
 # and trigger an automatic re-run.
 #
 # Original Author:
-# 2009-2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
+# 2009-2012 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 # Updated for VR Juggler 3.0 by:
 # Brandon Newendorp <brandon@newendorp.com>
+#
+# Copyright 2009-2012, Iowa State University
+# Copyright 2010, Brandon Newendorp <brandon@newendorp.com>
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+# SPDX-License-Identifier: BSL-1.0
 
 
 set(_HUMAN "Sonix 1.4")

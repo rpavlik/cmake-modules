@@ -9,10 +9,11 @@
 # Original Author:
 # 2014 Ryan Pavlik <ryan@sensics.com> <abiryan@ryand.net>
 #
-# Copyright Sensics, Inc. 2014.
+# Copyright 2014, Sensics, Inc.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+# SPDX-License-Identifier: BSL-1.0
 
 
 get_filename_component(_getdefinestring_moddir "${CMAKE_CURRENT_LIST_FILE}" PATH)

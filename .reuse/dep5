@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: cmake-modules
+Upstream-Contact: Ryan Pavlik <abiryan@ryand.net>
+Source: https://github.com/rpavlik/cmake-modules
+
+Files: cmake-2.8.0-modules/osg/*
+Copyright: 2007-2009, Kitware, Inc.
+License: BSD-3-Clause

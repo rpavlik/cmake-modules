@@ -8,9 +8,11 @@
 # Author:
 #   Kevin M. Godby <kevin@godby.org>
 #
+# Copyright 2015, Kevin M. Godby <kevin@godby.org>
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+# SPDX-License-Identifier: BSL-1.0
 #
 
 function(_define_platform_macros_impl prefix platform_string variable_name)

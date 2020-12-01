@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
+<!--
+Copyright 2010, 2014, Iowa State University
+SPDX-License-Identifier: BSL-1.0
+-->
 <VisualStudioUserFile
 	ProjectType="Visual C++"
 	Version="@USERFILE_VC_VERSION@"

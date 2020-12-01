@@ -16,14 +16,15 @@
 # http://academic.cleardefinition.com
 # Iowa State University HCI Graduate Program/VRAC
 #
-# Copyright Iowa State University 2009-2010.
-# Copyright Anthony Pesch 2014
-# Copyright Stefan Eilemann 2014
-# Copyright Nicholas Brown 2015
-# Copyright Ryan Pavlik 2017
+# Copyright 2009-2010, Iowa State University
+# Copyright 2014, Anthony Pesch
+# Copyright 2014, Stefan Eilemann
+# Copyright 2015, Nicholas Brown
+# Copyright 2017, Ryan Pavlik
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+# SPDX-License-Identifier: BSL-1.0
 
 if(__add_cppcheck)
 	return()

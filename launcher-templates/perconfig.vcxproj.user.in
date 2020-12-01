@@ -1,3 +1,8 @@
+<!--
+Copyright 2011, 2014, Iowa State University
+Copyright 2020, caseymcc
+SPDX-License-Identifier: BSL-1.0
+-->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='@USERFILE_CONFIGNAME@|@USERFILE_PLATFORM@'">
     <LocalDebuggerEnvironment>@USERFILE_ENVIRONMENT@</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
