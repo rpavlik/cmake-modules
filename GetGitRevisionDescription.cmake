@@ -3,7 +3,7 @@
 # These functions force a re-configure on each git commit so that you can
 # trust the values of the variables in your build system.
 #
-#  get_git_head_revision(<refspecvar> <hashvar> [<additional arguments to git describe> ...])
+#  get_git_head_revision(<refspecvar> <hashvar> [ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR])
 #
 # Returns the refspec and sha hash of the current head revision
 #
@@ -86,10 +86,15 @@ endfunction()
 function(get_git_head_revision _refspecvar _hashvar)
     _git_find_closest_git_dir("${CMAKE_CURRENT_SOURCE_DIR}" GIT_DIR)
 
+    if(${ARGN} STREQUAL "ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR")
+        set(ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR TRUE)
+    else()
+        set(ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR FALSE)
+    endif()
     if(NOT "${GIT_DIR}" STREQUAL "")
         file(RELATIVE_PATH _relative_to_source_dir "${CMAKE_SOURCE_DIR}"
              "${GIT_DIR}")
-        if("${_relative_to_source_dir}" MATCHES "[.][.]")
+        if("${_relative_to_source_dir}" MATCHES "[.][.]" AND NOT ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR)
             # We've gone above the CMake root dir.
             set(GIT_DIR "")
         endif()
