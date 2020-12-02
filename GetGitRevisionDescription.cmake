@@ -86,7 +86,7 @@ endfunction()
 function(get_git_head_revision _refspecvar _hashvar)
     _git_find_closest_git_dir("${CMAKE_CURRENT_SOURCE_DIR}" GIT_DIR)
 
-    if(${ARGN} STREQUAL "ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR")
+    if("${ARGN}" STREQUAL "ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR")
         set(ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR TRUE)
     else()
         set(ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR FALSE)
