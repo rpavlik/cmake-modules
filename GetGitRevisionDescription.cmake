@@ -12,6 +12,12 @@
 # Returns the results of git describe on the source tree, and adjusting
 # the output so that it tests false if an error occurs.
 #
+# git_committime(<var> [<additional arguments to git log> ...])
+#
+# Extracts the timestamp of the last commmit in ISO 8601 format.
+# By passing an extra "--date=format:.." the time formating can be tweaked.
+# See the manpage of git-log for details.
+#
 #  git_describe_working_tree(<var> [<additional arguments to git describe> ...])
 #
 # Returns the results of git describe on the working tree (--dirty option),
