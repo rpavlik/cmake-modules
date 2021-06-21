@@ -1,11 +1,11 @@
-# Copyright 2019-2020 Collabora, Ltd.
+# Copyright 2019-2021 Collabora, Ltd.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 # SPDX-License-Identifier: BSL-1.0
 #
 # Original Author:
-# 2019-2020 Ryan Pavlik <ryan.pavlik@collabora.com>
+# 2019-2021 Ryan Pavlik <ryan.pavlik@collabora.com>
 
 #.rst:
 # FindOpenXR
@@ -18,6 +18,20 @@
 #
 # This module respects several COMPONENTS: ``headers``, ``loader``, ``registry``, ``specscripts``, and
 # ``sdkscripts``. If no components are specified, ``headers`` and ``loader`` are assumed.
+#
+# Targets
+# ^^^^^^^
+# If the corresponding files are available and components are specified, the following imported targets
+# are created:
+#
+# ``OpenXR::openxr_loader``
+#  Link against to get the loader and headers. (Deprecated alias is ``OpenXR::Loader``)
+#
+# ``OpenXR::headers``
+#  Link against to get only the headers. (Deprecated alias is ``OpenXR::Headers``)
+#
+# ``OpenXR::headers_no_prototypes``
+#  Link against to get only the headers, plus the define to disable the prototypes. (Deprecated alias is ``OpenXR::HeadersNoPrototypes``)
 #
 # Cache variables
 # ^^^^^^^^^^^^^^^
@@ -79,12 +93,16 @@ set(_oxr_specscripts_search_dirs)
 set(_oxr_sdkscripts_search_dirs)
 set(_oxr_registry_search_dirs)
 
+find_package(OpenXR CONFIG)
+if(OpenXR_INCLUDE_DIR)
+    list(APPEND _oxr_include_search_dirs ${OpenXR_INCLUDE_DIR})
+endif()
 # These are macros to avoid a new variable scope.
 
 # Macro to extend search locations given a source dir.
 macro(_oxr_handle_potential_root_src_dir _dir)
     list(APPEND _oxr_include_search_dirs "${_dir}/include"
-         "${_dir}/specification/out/${OPENXR_OUT_DIR}")
+                "${_dir}/specification/out/${OPENXR_OUT_DIR}")
     list(APPEND _oxr_registry_search_dirs "${_dir}/specification/registry/")
     list(APPEND _oxr_specscripts_search_dirs "${_dir}/specification/scripts/")
     list(APPEND _oxr_sdkscripts_search_dirs "${_dir}/src/scripts/")
@@ -101,30 +119,29 @@ if(PC_OPENXR_FOUND)
     list(APPEND _oxr_loader_search_dirs ${PC_OPENXR_LIBRARY_DIRS})
 endif()
 
-set(_oxr_build_tag)
-if(OPENXR_STATIC)
-    set(_oxr_build_type static)
-else()
-    set(_oxr_build_type dynamic)
-endif()
-if(MSVC_VERSION GREATER 1919)
-    # Can use 2019
-    set(_oxr_build_tag msvs2019_${_oxr_build_type})
-endif()
-
 set(_oxr_lib_path_suffixes)
 if(WIN32)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        list(APPEND _oxr_lib_path_suffixes lib)
-        if(_oxr_build_tag)
-            list(APPEND _oxr_lib_path_suffixes ${_oxr_build_tag}/lib)
+    unset(_UWP_SUFFIX)
+    if(CMAKE_SYSTEM_NAME STREQUAL "WindowsStore")
+        set(_UWP_SUFFIX _uwp)
+    endif()
+    if(CMAKE_GENERATOR_PLATFORM_UPPER MATCHES "ARM.*")
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            set(_PLATFORM ARM64)
+        else()
+            set(_PLATFORM ARM)
         endif()
     else()
-        list(APPEND _oxr_lib_path_suffixes lib32)
-        if(_oxr_build_tag)
-            list(APPEND _oxr_lib_path_suffixes ${_oxr_build_tag}/lib32)
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            set(_PLATFORM x64)
+        else()
+            set(_PLATFORM Win32)
         endif()
-        list(APPEND _oxr_lib_path_suffixes lib)
+    endif()
+    list(APPEND _oxr_lib_path_suffixes ${_PLATFORM}${_UWP_SUFFIX}/lib)
+    # old builds
+    if(MSVC_VERSION GREATER 1919)
+        list(APPEND _oxr_lib_path_suffixes msvs2019_static/lib)
     endif()
 endif()
 
@@ -142,10 +159,9 @@ if(OPENXR_SDK_SRC_DIR)
 endif()
 
 # Guesses of sibling directories by name - last resort.
-foreach(
-    _dir
-    "${CMAKE_SOURCE_DIR}/../OpenXR-SDK"
-    "${CMAKE_SOURCE_DIR}/../OpenXR-SDK-Source" "${CMAKE_SOURCE_DIR}/../openxr")
+foreach(_dir "${CMAKE_SOURCE_DIR}/../OpenXR-SDK"
+        "${CMAKE_SOURCE_DIR}/../OpenXR-SDK-Source"
+        "${CMAKE_SOURCE_DIR}/../openxr")
     _oxr_handle_potential_root_src_dir(${_dir})
     _oxr_handle_potential_root_build_dir(${_dir}/build)
 endforeach()
@@ -223,28 +239,42 @@ set(_oxr_component_required_vars)
 foreach(_comp IN LISTS OpenXR_FIND_COMPONENTS)
 
     if(${_comp} STREQUAL "headers")
-        list(APPEND _oxr_component_required_vars OPENXR_OPENXR_INCLUDE_DIR
-             OPENXR_PLATFORM_DEFINES_INCLUDE_DIR)
-        if(EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr.h"
-           AND EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr_platform.h"
-           AND EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr_reflection.h"
-           AND EXISTS
-               "${OPENXR_PLATFORM_DEFINES_INCLUDE_DIR}/openxr/openxr_platform_defines.h"
-        )
+        if(TARGET OpenXR::headers)
             set(OpenXR_headers_FOUND TRUE)
             mark_as_advanced(OPENXR_OPENXR_INCLUDE_DIR
                              OPENXR_PLATFORM_DEFINES_INCLUDE_DIR)
         else()
-            set(OpenXR_headers_FOUND FALSE)
+            list(APPEND _oxr_component_required_vars OPENXR_OPENXR_INCLUDE_DIR
+                        OPENXR_PLATFORM_DEFINES_INCLUDE_DIR)
+            if(EXISTS "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr.h"
+               AND EXISTS
+                   "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr_platform.h"
+               AND EXISTS
+                   "${OPENXR_OPENXR_INCLUDE_DIR}/openxr/openxr_reflection.h"
+               AND EXISTS
+                   "${OPENXR_PLATFORM_DEFINES_INCLUDE_DIR}/openxr/openxr_platform_defines.h"
+            )
+                set(OpenXR_headers_FOUND TRUE)
+                mark_as_advanced(OPENXR_OPENXR_INCLUDE_DIR
+                                 OPENXR_PLATFORM_DEFINES_INCLUDE_DIR)
+            else()
+                set(OpenXR_headers_FOUND FALSE)
+            endif()
         endif()
 
     elseif(${_comp} STREQUAL "loader")
-        list(APPEND _oxr_component_required_vars OPENXR_loader_LIBRARY)
-        if(EXISTS "${OPENXR_loader_LIBRARY}")
+        if(TARGET OpenXR::openxr_loader)
             set(OpenXR_loader_FOUND TRUE)
             mark_as_advanced(OPENXR_loader_LIBRARY)
+            set(OPENXR_loader_LIBRARY OpenXR::openxr_loader)
         else()
-            set(OpenXR_loader_FOUND FALSE)
+            list(APPEND _oxr_component_required_vars OPENXR_loader_LIBRARY)
+            if(EXISTS "${OPENXR_loader_LIBRARY}")
+                set(OpenXR_loader_FOUND TRUE)
+                mark_as_advanced(OPENXR_loader_LIBRARY)
+            else()
+                set(OpenXR_loader_FOUND FALSE)
+            endif()
         endif()
 
     elseif(${_comp} STREQUAL "registry")
@@ -290,10 +320,11 @@ unset(_comp)
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
     OpenXR
-    REQUIRED_VARS ${_oxr_component_required_vars}
+    REQUIRED_VARS
+    ${_oxr_component_required_vars}
     HANDLE_COMPONENTS
     FAIL_MESSAGE
-        "Could NOT find the requested OpenXR components, try setting OPENXR_SDK_SRC_DIR and/or OPENXR_SDK_BUILD_DIR"
+    "Could NOT find the requested OpenXR components, try setting OPENXR_SDK_SRC_DIR and/or OPENXR_SDK_BUILD_DIR"
 )
 
 ###
@@ -301,7 +332,7 @@ find_package_handle_standard_args(
 ###
 
 # Component: headers
-if(OpenXR_headers_FOUND)
+if(OpenXR_headers_FOUND AND NOT TARGET OpenXR::headers)
     set(OPENXR_INCLUDE_DIRS ${OPENXR_OPENXR_INCLUDE_DIR}
                             ${OPENXR_PLATFORM_DEFINES_INCLUDE_DIR})
     list(REMOVE_DUPLICATES OPENXR_INCLUDE_DIRS)
@@ -309,30 +340,44 @@ if(OpenXR_headers_FOUND)
     # This target just provides the headers with prototypes.
     # You may have linker errors if you try using this
     # without linking to the loader
-    if(NOT TARGET OpenXR::Headers)
-        add_library(OpenXR::Headers INTERFACE IMPORTED)
-    endif()
+    add_library(OpenXR::headers INTERFACE IMPORTED)
     # This is not duplication: interface system dirs just marks as system.
     set_target_properties(
-        OpenXR::Headers
-        PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${OPENXR_INCLUDE_DIRS}"
-                   INTERFACE_INCLUDE_DIRECTORIES "${OPENXR_INCLUDE_DIRS}")
+        OpenXR::headers
+        PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES
+                   "${OPENXR_INCLUDE_DIRS}" INTERFACE_INCLUDE_DIRECTORIES
+                   "${OPENXR_INCLUDE_DIRS}")
+endif()
 
-    # This target just provides the headers, without any prototypes.
-    # Finding and loading the loader at runtime is your problem.
-    if(NOT TARGET OpenXR::HeadersNoPrototypes)
-        add_library(OpenXR::HeadersNoPrototypes INTERFACE IMPORTED)
-    endif()
+# Back-compat
+if(TARGET OpenXR::headers AND NOT TARGET OpenXR::Headers)
+    add_library(OpenXR::Headers INTERFACE IMPORTED)
+    set_target_properties(OpenXR::Headers PROPERTIES INTERFACE_LINK_LIBRARIES
+                                                     "OpenXR::headers")
+endif()
+
+# This target just provides the headers, without any prototypes.
+# Finding and loading the loader at runtime is your problem.
+if(TARGET OpenXR::headers AND NOT TARGET OpenXR::headers_no_prototypes)
+    add_library(OpenXR::headers_no_prototypes INTERFACE IMPORTED)
+    set_target_properties(
+        OpenXR::headers_no_prototypes
+        PROPERTIES INTERFACE_COMPILE_DEFINITIONS "XR_NO_PROTOTYPES"
+                   INTERFACE_LINK_LIBRARIES "OpenXR::headers")
+endif()
+if(TARGET OpenXR::headers AND NOT TARGET OpenXR::HeadersNoPrototypes)
+    add_library(OpenXR::HeadersNoPrototypes INTERFACE IMPORTED)
     set_target_properties(
         OpenXR::HeadersNoPrototypes
         PROPERTIES INTERFACE_COMPILE_DEFINITIONS "XR_NO_PROTOTYPES"
-                   INTERFACE_LINK_LIBRARIES "OpenXR::Headers")
-
+                   INTERFACE_LINK_LIBRARIES "OpenXR::headers")
 endif()
 
 # Component: loader
-if(OpenXR_loader_FOUND AND OpenXR_headers_FOUND)
-    set(_oxr_loader_interface_libs OpenXR::Headers)
+if(OpenXR_loader_FOUND
+   AND OpenXR_headers_FOUND
+   AND NOT TARGET OpenXR::openxr_loader)
+    set(_oxr_loader_interface_libs OpenXR::headers)
     # include dl library for statically-linked loader
     get_filename_component(_oxr_loader_ext ${OPENXR_loader_LIBRARY} EXT)
     if(_oxr_loader_ext STREQUAL CMAKE_STATIC_LIBRARY_SUFFIX)
@@ -342,12 +387,18 @@ if(OpenXR_loader_FOUND AND OpenXR_headers_FOUND)
         set(_oxr_loader_lib_type SHARED)
     endif()
 
-    if(NOT TARGET OpenXR::Loader)
-        add_library(OpenXR::Loader UNKNOWN IMPORTED)
-    endif()
+    add_library(OpenXR::openxr_loader UNKNOWN IMPORTED)
     set_target_properties(
-        OpenXR::Loader
-        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C"
-                   IMPORTED_LOCATION "${OPENXR_loader_LIBRARY}"
-                   INTERFACE_LINK_LIBRARIES "${_oxr_loader_interface_libs}")
+        OpenXR::openxr_loader
+        PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES "C" IMPORTED_LOCATION
+                   "${OPENXR_loader_LIBRARY}" INTERFACE_LINK_LIBRARIES
+                   "${_oxr_loader_interface_libs}")
+
+endif()
+
+# Back-compat
+if(TARGET OpenXR::openxr_loader AND NOT TARGET OpenXR::Loader)
+    add_library(OpenXR::Loader INTERFACE IMPORTED)
+    set_target_properties(OpenXR::Loader PROPERTIES INTERFACE_LINK_LIBRARIES
+                                                    "OpenXR::openxr_loader")
 endif()
