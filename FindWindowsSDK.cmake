@@ -77,6 +77,8 @@ endmacro()
 # although version numbers listed on that page don't necessarily match the directory
 # used by the installer.
 set(_winsdk_win10vers
+   	10.0.20348.0 # Win10 2104 "21H1"
+	10.0.19041.0 # Win10 2004 "20H1"
 	10.0.18362.0 # Win10 1903 "19H1"
 	10.0.17763.0 # Win10 1809 "October 2018 Update"
 	10.0.17134.0 # Redstone 4 aka Win10 1803 "April 2018 Update"
@@ -110,7 +112,7 @@ function(_winsdk_conditional_append _vername _build _path)
 		# Path already in list - do not add
 		return()
 	endif()
-	_winsdk_announce( " - ${_vername}, Build ${_build} @ ${_path}")
+	_winsdk_announce(" - ${_vername}, Build ${_build} @ ${_path}")
 	# Not yet in the list, so we'll add it
 	list(APPEND _win_sdk_dirs "${_path}")
 	set(_win_sdk_dirs "${_win_sdk_dirs}" CACHE INTERNAL "" FORCE)
@@ -297,29 +299,6 @@ endif()
 ###
 if(_winsdk_msvc_greater_1310) # Newer than VS .NET/VS Toolkit 2003
 	###
-	# Look for "preferred" SDKs
-	###
-
-	# Environment variable for SDK dir
-	if(EXISTS "$ENV{WindowsSDKDir}" AND (NOT "$ENV{WindowsSDKDir}" STREQUAL ""))
-		_winsdk_conditional_append_preferred("WindowsSDKDir environment variable" "$ENV{WindowsSDKDir}")
-	endif()
-
-	if(_winsdk_msvc_less_1600)
-		# Per-user current Windows SDK for VS2005/2008
-		get_filename_component(_sdkdir
-			"[HKEY_CURRENT_USER\\Software\\Microsoft\\Microsoft SDKs\\Windows;CurrentInstallFolder]"
-			ABSOLUTE)
-		_winsdk_conditional_append_preferred("Per-user current Windows SDK" "${_sdkdir}")
-
-		# System-wide current Windows SDK for VS2005/2008
-		get_filename_component(_sdkdir
-			"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows;CurrentInstallFolder]"
-			ABSOLUTE)
-		_winsdk_conditional_append_preferred("System-wide current Windows SDK" "${_sdkdir}")
-	endif()
-
-	###
 	# Begin the massive list of SDK searching!
 	###
 	if(_winsdk_vistaonly_ok AND _winsdk_msvc_not_less_1800)
@@ -398,12 +377,11 @@ if(_winsdk_msvc_greater_1200)
 	_winsdk_check_platformsdk_registry("Microsoft Platform SDK for Windows Server 2003 R2" "5.2.3790.2075.51" "D2FF9F89-8AA2-4373-8A31-C838BF4DBBE1")
 	_winsdk_check_platformsdk_registry("Microsoft Platform SDK for Windows Server 2003 SP1" "5.2.3790.1830.15" "8F9E5EF3-A9A5-491B-A889-C58EFFECE8B3")
 endif()
+
 ###
 # Finally, look for "preferred" SDKs
 ###
 if(_winsdk_msvc_greater_1310) # Newer than VS .NET/VS Toolkit 2003
-
-
 	# Environment variable for SDK dir
 	if(EXISTS "$ENV{WindowsSDKDir}" AND (NOT "$ENV{WindowsSDKDir}" STREQUAL ""))
 		_winsdk_conditional_append_preferred("WindowsSDKDir environment variable" "$ENV{WindowsSDKDir}")
