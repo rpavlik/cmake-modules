@@ -50,7 +50,12 @@ set(__get_git_revision_description YES)
 
 # We must run the following at "include" time, not at function call time,
 # to find the path to this module rather than the path to a calling list file
-get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
+IF(${CMAKE_VERSION} VERSION_LESS "3.4.0")
+    get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
+ELSE()
+    get_filename_component(_REAL_CMAKE_CURRENT_LIST_FILE ${CMAKE_CURRENT_LIST_FILE} REALPATH)
+    get_filename_component(_gitdescmoddir ${_REAL_CMAKE_CURRENT_LIST_FILE} PATH)
+ENDIF()
 
 # Function _git_find_closest_git_dir finds the next closest .git directory
 # that is part of any directory in the path defined by _start_dir.
@@ -84,7 +89,12 @@ function(_git_find_closest_git_dir _start_dir _git_dir_var)
 endfunction()
 
 function(get_git_head_revision _refspecvar _hashvar)
-    _git_find_closest_git_dir("${CMAKE_CURRENT_SOURCE_DIR}" GIT_DIR)
+    IF(${CMAKE_VERSION} VERSION_LESS "3.4.0")
+        set(CURR_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+    ELSE()
+        get_filename_component(CURR_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR} REALPATH)
+    ENDIF()
+    _git_find_closest_git_dir("${CURR_SRC_DIR}" GIT_DIR)
 
     if("${ARGN}" STREQUAL "ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR")
         set(ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR TRUE)
