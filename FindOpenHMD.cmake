@@ -1,11 +1,13 @@
-# Copyright 2019 Collabora, Ltd.
+# Copyright 2019-2021 Collabora, Ltd.
+#
 # SPDX-License-Identifier: BSL-1.0
+#
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 # Original Author:
-# 2019 Ryan Pavlik <ryan.pavlik@collabora.com>
+# 2019-2021 Ryan Pavlik <ryan.pavlik@collabora.com> <abiryan@ryand.net>
 
 #.rst:
 # FindOpenHMD
@@ -34,16 +36,18 @@ set(OPENHMD_ROOT_DIR
     "${OPENHMD_ROOT_DIR}"
     CACHE PATH "Root to search for OpenHMD")
 
-find_package(PkgConfig QUIET)
-if(PKG_CONFIG_FOUND)
-    set(_old_prefix_path "${CMAKE_PREFIX_PATH}")
-    # So pkg-config uses OPENHMD_ROOT_DIR too.
-    if(OPENHMD_ROOT_DIR)
-        list(APPEND CMAKE_PREFIX_PATH ${OPENHMD_ROOT_DIR})
+if(NOT ANDROID)
+	find_package(PkgConfig QUIET)
+    if(PKG_CONFIG_FOUND)
+        set(_old_prefix_path "${CMAKE_PREFIX_PATH}")
+        # So pkg-config uses OPENHMD_ROOT_DIR too.
+        if(OPENHMD_ROOT_DIR)
+            list(APPEND CMAKE_PREFIX_PATH ${OPENHMD_ROOT_DIR})
+        endif()
+        pkg_check_modules(PC_OPENHMD QUIET openhmd)
+        # Restore
+        set(CMAKE_PREFIX_PATH "${_old_prefix_path}")
     endif()
-    pkg_check_modules(PC_OPENHMD QUIET openhmd)
-    # Restore
-    set(CMAKE_PREFIX_PATH "${_old_prefix_path}")
 endif()
 
 find_path(

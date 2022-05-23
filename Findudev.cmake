@@ -13,8 +13,13 @@
 # Requires these CMake modules:
 #  FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
 #
-# Original Author:
-# Copyright 2014 Kevin M. Godby <kevin@godby.org>
+# Original Authors:
+# 2014, Kevin M. Godby <kevin@godby.org>
+# 2021, Ryan Pavlik <ryan.pavlik@collabora.com> <abiryan@ryand.net>
+#
+# Copyright 2014, Kevin M. Godby <kevin@godby.org>
+# Copyright 2021, Collabora, Ltd.
+#
 # SPDX-License-Identifier: BSL-1.0
 #
 # Distributed under the Boost Software License, Version 1.0.
@@ -27,9 +32,11 @@ set(UDEV_ROOT_DIR
 	PATH
     "Directory to search for udev")
 
-find_package(PkgConfig QUIET)
-if(PKG_CONFIG_FOUND)
-	pkg_check_modules(PC_LIBUDEV libudev)
+if(NOT ANDROID)
+	find_package(PkgConfig QUIET)
+	if(PKG_CONFIG_FOUND)
+		pkg_check_modules(PC_LIBUDEV QUIET libudev)
+	endif()
 endif()
 
 find_library(UDEV_LIBRARY
