@@ -175,5 +175,5 @@ set(EGL_VERSION_STRING ${EGL_VERSION})
 include(FeatureSummary)
 set_package_properties(EGL PROPERTIES
     URL "https://www.khronos.org/egl/"
-    DESCRIPTION "A platform-agnostic mechanism for creating rendering surfaces for use with other graphics libraries, such as OpenGL|ES and OpenVG."
+    DESCRIPTION "A platform-independent mechanism for creating rendering surfaces for use with other graphics libraries, such as OpenGL|ES and OpenVG."
 )

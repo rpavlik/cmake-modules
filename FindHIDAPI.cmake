@@ -40,11 +40,11 @@
 # ``HIDAPI_LIBRARIES``
 #
 # Original Author:
-# 2009-2010, 2019 Ryan Pavlik <ryan.pavlik@collabora.com> <abiryan@ryand.net>
+# 2009-2021 Ryan Pavlik <ryan.pavlik@collabora.com> <abiryan@ryand.net>
 # http://academic.cleardefinition.com
 #
 # Copyright 2009-2010, Iowa State University
-# Copyright 2019, Collabora, Ltd.
+# Copyright 2019-2021, Collabora, Ltd.
 # SPDX-License-Identifier: BSL-1.0
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
@@ -72,17 +72,19 @@ if(NOT HIDAPI_FIND_COMPONENTS)
 endif()
 
 # Ask pkg-config for hints
-find_package(PkgConfig QUIET)
-if(PKG_CONFIG_FOUND)
-    set(_old_prefix_path "${CMAKE_PREFIX_PATH}")
-    # So pkg-config uses HIDAPI_ROOT_DIR too.
-    if(HIDAPI_ROOT_DIR)
-        list(APPEND CMAKE_PREFIX_PATH ${HIDAPI_ROOT_DIR})
+if(NOT ANDROID)
+    find_package(PkgConfig QUIET)
+    if(PKG_CONFIG_FOUND)
+        set(_old_prefix_path "${CMAKE_PREFIX_PATH}")
+        # So pkg-config uses HIDAPI_ROOT_DIR too.
+        if(HIDAPI_ROOT_DIR)
+            list(APPEND CMAKE_PREFIX_PATH ${HIDAPI_ROOT_DIR})
+        endif()
+        pkg_check_modules(PC_HIDAPI_LIBUSB QUIET hidapi-libusb)
+        pkg_check_modules(PC_HIDAPI_HIDRAW QUIET hidapi-hidraw)
+        # Restore
+        set(CMAKE_PREFIX_PATH "${_old_prefix_path}")
     endif()
-    pkg_check_modules(PC_HIDAPI_LIBUSB QUIET hidapi-libusb)
-    pkg_check_modules(PC_HIDAPI_HIDRAW QUIET hidapi-hidraw)
-    # Restore
-    set(CMAKE_PREFIX_PATH "${_old_prefix_path}")
 endif()
 
 # Actually search
