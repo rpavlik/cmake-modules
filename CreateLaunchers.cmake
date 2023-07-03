@@ -218,8 +218,9 @@ macro(_launcher_produce_vcproj_user)
         file(READ "${_launchermoddir}/perconfig.${VCPROJ_TYPE}.user.in"
              _perconfig)
 
-        #generator expressions do not play well with ">"
+        #generator expressions do not play well with ">" and ","
         string(REPLACE ">" "$<ANGLE-R>" _perconfig ${_perconfig})
+        string(REPLACE "," "$<COMMA>" _perconfig ${_perconfig})
 
         set(config_types)
         if(CMAKE_CONFIGURATION_TYPES)
