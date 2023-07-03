@@ -31,11 +31,12 @@ The following functions are provided by this module:
 
   Generates a layer manifest at install time and installs it where desired::
 
-    generate_vulkan_api_layer_manifest_buildtree(
+    generate_vulkan_api_layer_manifest_at_install(
         MANIFEST_TEMPLATE <template>       # The template for your manifest file
         LAYER_TARGET <target>              # Name of your layer target
         DESTINATION <dest>                 # The install-prefix-relative path to install the manifest to.
         RELATIVE_LAYER_DIR <dir>           # The install-prefix-relative path that the layer library is installed to.
+        [COMPONENT <comp>]                 # If present, the component to place the manifest in.
         [ABSOLUTE_LAYER_PATH|              # If present, path in generated manifest is absolute
          LAYER_DIR_RELATIVE_TO_MANIFEST <dir>]
                                            # If present (and ABSOLUTE_LAYER_PATH not present), specifies the
@@ -108,6 +109,9 @@ function(generate_vulkan_api_layer_manifest_at_install)
     if(_genmanifest_LAYER_DIR_RELATIVE_TO_MANIFEST)
         list(APPEND _genmanifest_fwdargs TARGET_DIR_RELATIVE_TO_MANIFEST
              "${_genmanifest_LAYER_DIR_RELATIVE_TO_MANIFEST}")
+    endif()
+    if(_genmanifest_COMPONENT)
+        list(APPEND _genmanifest_fwdargs COMPONENT "${_genmanifest_COMPONENT}")
     endif()
 
     generate_khr_manifest_at_install(
