@@ -1,9 +1,9 @@
-# Copyright 2019-2022, Collabora, Ltd.
+# Copyright 2019-2023, Collabora, Ltd.
 #
 # SPDX-License-Identifier: BSL-1.0
 #
 # Maintained by:
-# 2019-2022 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
+# 2019-2023 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
 
 #[[.rst:
 GenerateVulkanApiLayerManifest
@@ -78,7 +78,7 @@ endfunction()
 
 function(generate_vulkan_api_layer_manifest_at_install)
     set(options ABSOLUTE_LAYER_PATH)
-    set(oneValueArgs MANIFEST_TEMPLATE LAYER_TARGET DESTINATION OUT_FILENAME
+    set(oneValueArgs MANIFEST_TEMPLATE DESTINATION OUT_FILENAME COMPONENT LAYER_TARGET
                      LAYER_DIR_RELATIVE_TO_MANIFEST RELATIVE_LAYER_DIR)
     set(multiValueArgs)
     cmake_parse_arguments(_genmanifest "${options}" "${oneValueArgs}"

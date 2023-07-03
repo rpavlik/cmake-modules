@@ -1,9 +1,9 @@
-# Copyright 2019-2022, Collabora, Ltd.
+# Copyright 2019-2023, Collabora, Ltd.
 #
 # SPDX-License-Identifier: BSL-1.0
 #
 # Maintained by:
-# 2019-2022 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
+# 2019-2023 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
 
 #[[.rst:
 GenerateOpenXRRuntimeManifest
@@ -35,6 +35,7 @@ The following functions are provided by this module:
         RUNTIME_TARGET <target>            # Name of your runtime target
         DESTINATION <dest>                 # The install-prefix-relative path to install the manifest to.
         RELATIVE_RUNTIME_DIR <dir>         # The install-prefix-relative path that the runtime library is installed to.
+        [COMPONENT <comp>]                 # If present, the component to place the manifest in.
         [ABSOLUTE_RUNTIME_PATH|            # If present, path in generated manifest is absolute
          RUNTIME_DIR_RELATIVE_TO_MANIFEST <dir>]
                                            # If present (and ABSOLUTE_RUNTIME_PATH not present), specifies the
@@ -55,19 +56,19 @@ set(_OXR_MANIFEST_TEMPLATE
 
 function(generate_openxr_runtime_manifest_buildtree)
     set(options)
-    set(oneValueArgs RUNTIME_TARGET OUT_FILE MANIFEST_TEMPLATE)
+    set(oneValueArgs MANIFEST_TEMPLATE RUNTIME_TARGET OUT_FILE)
     set(multiValueArgs)
     cmake_parse_arguments(_genmanifest "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})
 
+    if(NOT _genmanifest_MANIFEST_TEMPLATE)
+        set(_genmanifest_MANIFEST_TEMPLATE "${_OXR_MANIFEST_TEMPLATE}")
+    endif()
     if(NOT _genmanifest_RUNTIME_TARGET)
         message(FATAL_ERROR "Need RUNTIME_TARGET specified!")
     endif()
     if(NOT _genmanifest_OUT_FILE)
         message(FATAL_ERROR "Need OUT_FILE specified!")
-    endif()
-    if(NOT _genmanifest_MANIFEST_TEMPLATE)
-        set(_genmanifest_MANIFEST_TEMPLATE "${_OXR_MANIFEST_TEMPLATE}")
     endif()
 
     generate_khr_manifest_buildtree(
@@ -85,12 +86,15 @@ endfunction()
 function(generate_openxr_runtime_manifest_at_install)
     set(options ABSOLUTE_RUNTIME_PATH)
     set(oneValueArgs
-        RUNTIME_TARGET DESTINATION OUT_FILENAME
-        RUNTIME_DIR_RELATIVE_TO_MANIFEST RELATIVE_RUNTIME_DIR MANIFEST_TEMPLATE)
+        MANIFEST_TEMPLATE DESTINATION OUT_FILENAME COMPONENT RUNTIME_TARGET
+        RUNTIME_DIR_RELATIVE_TO_MANIFEST RELATIVE_RUNTIME_DIR )
     set(multiValueArgs)
     cmake_parse_arguments(_genmanifest "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})
 
+    if(NOT _genmanifest_MANIFEST_TEMPLATE)
+        set(_genmanifest_MANIFEST_TEMPLATE "${_OXR_MANIFEST_TEMPLATE}")
+    endif()
     if(NOT _genmanifest_RUNTIME_TARGET)
         message(FATAL_ERROR "Need RUNTIME_TARGET specified!")
     endif()
@@ -103,9 +107,6 @@ function(generate_openxr_runtime_manifest_at_install)
     if(NOT _genmanifest_OUT_FILENAME)
         set(_genmanifest_OUT_FILENAME "${_genmanifest_RUNTIME_TARGET}.json")
     endif()
-    if(NOT _genmanifest_MANIFEST_TEMPLATE)
-        set(_genmanifest_MANIFEST_TEMPLATE "${_OXR_MANIFEST_TEMPLATE}")
-    endif()
 
     set(_genmanifest_fwdargs)
 
@@ -116,6 +117,9 @@ function(generate_openxr_runtime_manifest_at_install)
     if(_genmanifest_RUNTIME_DIR_RELATIVE_TO_MANIFEST)
         list(APPEND _genmanifest_fwdargs TARGET_DIR_RELATIVE_TO_MANIFEST
              "${_genmanifest_RUNTIME_DIR_RELATIVE_TO_MANIFEST}")
+    endif()
+    if(_genmanifest_COMPONENT)
+        list(APPEND _genmanifest_fwdargs COMPONENT "${_genmanifest_COMPONENT}")
     endif()
 
     generate_khr_manifest_at_install(
