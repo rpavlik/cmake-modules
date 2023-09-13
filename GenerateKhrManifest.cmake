@@ -37,12 +37,13 @@ The following functions are provided by this module:
 
   Generates a manifest at install time and installs it where desired::
 
-    generate_khr_manifest_buildtree(
+    generate_khr_manifest_at_install(
         MANIFEST_TEMPLATE <template>    # The template for your manifest file
         TARGET <target>                 # Name of your target (layer, runtime, etc)
         DESTINATION <dest>              # The install-prefix-relative path to install the manifest to.
         RELATIVE_TARGET_DIR <dir>       # The install-prefix-relative path that the target library is installed to.
         MANIFEST_DESCRIPTION "<desc>"   # A brief description of the thing we're generating (e.g. "Vulkan API layer manifest")
+        [COMPONENT <comp>]              # If present, the component to place the manifest in.
         [ABSOLUTE_TARGET_PATH|          # If present, path in generated manifest is absolute
          TARGET_DIR_RELATIVE_TO_MANIFEST <dir>]
                                         # If present (and ABSOLUTE_TARGET_PATH not present), specifies the
@@ -108,7 +109,8 @@ function(generate_khr_manifest_at_install)
         OUT_FILENAME
         TARGET_DIR_RELATIVE_TO_MANIFEST
         RELATIVE_TARGET_DIR
-        MANIFEST_DESCRIPTION)
+        MANIFEST_DESCRIPTION
+        COMPONENT)
     set(multiValueArgs)
     cmake_parse_arguments(_genmanifest "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})
@@ -128,6 +130,9 @@ function(generate_khr_manifest_at_install)
     if(NOT _genmanifest_OUT_FILENAME)
         set(_genmanifest_OUT_FILENAME "${_genmanifest_TARGET}.json")
     endif()
+    if(NOT _genmanifest_COMPONENT)
+        set(_genmanifest_COMPONENT Unspecified)
+    endif()
     set(_genmanifest_INTERMEDIATE_MANIFEST
         "${CMAKE_CURRENT_BINARY_DIR}/${_genmanifest_OUT_FILENAME}")
     set(_genmanifest_IS_INSTALL ON)
@@ -139,5 +144,5 @@ function(generate_khr_manifest_at_install)
     set(_script
         ${CMAKE_CURRENT_BINARY_DIR}/make_manifest_${_genmanifest_TARGET}.cmake)
     configure_file("${_KHR_MANIFEST_SCRIPT}" "${_script}" @ONLY)
-    install(SCRIPT "${_script}")
+    install(SCRIPT "${_script}" COMPONENT ${_genmanifest_COMPONENT})
 endfunction()

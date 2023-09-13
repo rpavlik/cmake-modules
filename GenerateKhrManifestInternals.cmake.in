@@ -12,7 +12,7 @@ set(DESTINATION @_genmanifest_DESTINATION@)
 set(OUT_FILENAME @_genmanifest_OUT_FILENAME@)
 set(CONFIGURE_OUTPUT_FILE @_genmanifest_INTERMEDIATE_MANIFEST@)
 set(IS_INSTALL @_genmanifest_IS_INSTALL@)
-set(MANIFEST_DESCRIPTION @_genmanifest_MANIFEST_DESCRIPTION@)
+set(MANIFEST_DESCRIPTION "@_genmanifest_MANIFEST_DESCRIPTION@")
 set(TARGET @_genmanifest_TARGET@)
 # Target install dir relative to install prefix
 set(RELATIVE_TARGET_DIR @_genmanifest_RELATIVE_TARGET_DIR@)
@@ -62,13 +62,9 @@ set(target_path ${TARGET_PATH})
 configure_file("${MANIFEST_TEMPLATE}" "${CONFIGURE_OUTPUT_FILE}")
 
 if(IS_INSTALL)
-    if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx"
-       OR NOT CMAKE_INSTALL_COMPONENT)
-
-        # Install it
-        file(
-            INSTALL
-            DESTINATION "${CMAKE_INSTALL_PREFIX}/${DESTINATION}"
-            TYPE FILE FILES "${CONFIGURE_OUTPUT_FILE}")
-    endif()
+    # Install it
+    file(
+        INSTALL
+        DESTINATION "${CMAKE_INSTALL_PREFIX}/${DESTINATION}"
+        TYPE FILE FILES "${CONFIGURE_OUTPUT_FILE}")
 endif()
