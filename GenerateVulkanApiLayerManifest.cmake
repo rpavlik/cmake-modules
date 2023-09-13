@@ -44,6 +44,9 @@ The following functions are provided by this module:
         [OUT_FILENAME <outfilename>        # Optional: Alternate name of the manifest file to generate
         )
 #]]
+
+# This module is mostly just argument parsing, the guts are in GenerateKhrManifest
+
 get_filename_component(_VK_MANIFEST_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 include("${_VK_MANIFEST_CMAKE_DIR}/GenerateKhrManifest.cmake")
 
@@ -78,8 +81,14 @@ endfunction()
 
 function(generate_vulkan_api_layer_manifest_at_install)
     set(options ABSOLUTE_LAYER_PATH)
-    set(oneValueArgs MANIFEST_TEMPLATE DESTINATION OUT_FILENAME COMPONENT LAYER_TARGET
-                     LAYER_DIR_RELATIVE_TO_MANIFEST RELATIVE_LAYER_DIR)
+    set(oneValueArgs
+        MANIFEST_TEMPLATE
+        DESTINATION
+        OUT_FILENAME
+        COMPONENT
+        LAYER_TARGET
+        LAYER_DIR_RELATIVE_TO_MANIFEST
+        RELATIVE_LAYER_DIR)
     set(multiValueArgs)
     cmake_parse_arguments(_genmanifest "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})

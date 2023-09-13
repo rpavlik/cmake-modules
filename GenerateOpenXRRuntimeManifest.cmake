@@ -47,7 +47,8 @@ The following functions are provided by this module:
 
 # This module is mostly just argument parsing, the guts are in GenerateKhrManifest
 
-get_filename_component(_OXR_MANIFEST_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_OXR_MANIFEST_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}"
+                       PATH)
 include("${_OXR_MANIFEST_CMAKE_DIR}/GenerateKhrManifest.cmake")
 
 set(_OXR_MANIFEST_TEMPLATE
@@ -86,8 +87,13 @@ endfunction()
 function(generate_openxr_runtime_manifest_at_install)
     set(options ABSOLUTE_RUNTIME_PATH)
     set(oneValueArgs
-        MANIFEST_TEMPLATE DESTINATION OUT_FILENAME COMPONENT RUNTIME_TARGET
-        RUNTIME_DIR_RELATIVE_TO_MANIFEST RELATIVE_RUNTIME_DIR )
+        MANIFEST_TEMPLATE
+        DESTINATION
+        OUT_FILENAME
+        COMPONENT
+        RUNTIME_TARGET
+        RUNTIME_DIR_RELATIVE_TO_MANIFEST
+        RELATIVE_RUNTIME_DIR)
     set(multiValueArgs)
     cmake_parse_arguments(_genmanifest "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})
