@@ -94,7 +94,8 @@ function(get_git_head_revision _refspecvar _hashvar)
     if(NOT "${GIT_DIR}" STREQUAL "")
         file(RELATIVE_PATH _relative_to_source_dir "${CMAKE_SOURCE_DIR}"
              "${GIT_DIR}")
-        if("${_relative_to_source_dir}" MATCHES "[.][.]" AND NOT ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR)
+        if("${_relative_to_source_dir}" MATCHES "[.][.]"
+           AND NOT ALLOW_LOOKING_ABOVE_CMAKE_SOURCE_DIR)
             # We've gone above the CMake root dir.
             set(GIT_DIR "")
         endif()
