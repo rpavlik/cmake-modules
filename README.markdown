@@ -145,4 +145,4 @@ If you find this file inside of another project, rather at the top-level
 directory, you're in a separate project that is making use of these modules.
 That separate project can (and probably does) have its own license specifics.
 
-[1]: https://github.com/git/git/tree/master/contrib/subtree  "Git Subtree upstream"
+[1]: https://github.com/git/git/tree/main/contrib/subtree  "Git Subtree upstream"
