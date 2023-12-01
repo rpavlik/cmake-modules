@@ -15,8 +15,8 @@
 #  no additional modules required
 #
 # Original Author:
-# 2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2010 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 # Iowa State University HCI Graduate Program/VRAC
 #
 # Copyright 2009-2010, Iowa State University
@@ -33,7 +33,7 @@
 # Copyright 2007      Mike Jackson
 # Copyright 2008      Andreas Pakulat <apaku@gmx.de>
 # Copyright 2008-2009 Philip Lowman <philip@yhbt.com>
-# Copyright 2010      Iowa State University (Ryan Pavlik <abiryan@ryand.net>)
+# Copyright 2010      Iowa State University (Rylie Pavlik <rylie@ryliepavlik.com>)
 #
 # Distributed under the OSI-approved BSD License (the "License");
 # see accompanying file Copyright.txt for details.

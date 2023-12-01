@@ -7,7 +7,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 # Original Author:
-# 2021-2022 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
+# 2021-2022 Rylie Pavlik <rylie.pavlik@collabora.com> <rylie@ryliepavlik.com>
 
 #[[.rst:
 FindPercetto

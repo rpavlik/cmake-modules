@@ -6,7 +6,7 @@
 #  GLM_FOUND - True if GLM was found.
 #
 # Original Author:
-# 2019, 2021 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
+# 2019, 2021 Rylie Pavlik <rylie.pavlik@collabora.com> <rylie@ryliepavlik.com>
 #
 # Copyright 2019, 2021, Collabora, Ltd.
 #

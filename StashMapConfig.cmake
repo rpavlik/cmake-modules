@@ -15,8 +15,8 @@
 # defaults based on the platform.
 #
 # Original Author:
-# 2015, 2017 Ryan Pavlik <ryan@sensics.com> <abiryan@ryand.net>
-# http://ryanpavlik.com
+# 2015, 2017 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 #
 # Copyright 2015, 2017, Sensics, Inc.
 # Distributed under the Boost Software License, Version 1.0.

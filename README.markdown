@@ -1,16 +1,17 @@
-# Ryan's CMake Modules Collection
+# Rylie's CMake Modules Collection
 
-Ryan A. Pavlik, Ph.D.
+Rylie Pavlik, Ph.D.
 
-<ryan.pavlik@gmail.com> <abiryan@ryand.net>
-<http://academic.cleardefinition.com>
+<rylie@ryliepavlik.com>
+
+<https://ryliepavlik.com/>
 
 <!--
 Copyright 2009-2014, Iowa State University
 Copyright 2014-2017, Sensics, Inc.
-Copyright 2018-2020, Collabora, Ltd.
-Copyright 2009-2020, Ryan A. Pavlik
 Copyright 2011-2020, Contributors
+Copyright 2018-2023, Collabora, Ltd.
+Copyright 2009-2023, Rylie Pavlik
 
 SPDX-License-Identifier: BSL-1.0
 -->
@@ -124,7 +125,7 @@ The modules that I wrote myself are all subject to this license:
 > Copyright 2009-2014, Iowa State University.
 > or Copyright 2014-2017, Sensics, Inc.,
 > or Copyright 2018-2020, Collabora, Ltd.,
-> or Copyright 2009-2020, Ryan A. Pavlik
+> or Copyright 2009-2020, Rylie Pavlik
 >
 > Distributed under the Boost Software License, Version 1.0.
 >

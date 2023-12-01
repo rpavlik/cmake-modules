@@ -5,7 +5,7 @@
 #  RANGEV3_FOUND - True if range-v3 was found.
 #
 # Original Author:
-# 2018 Ryan Pavlik <ryan.pavlik@gmail.com> <abiryan@ryand.net>
+# 2018 Rylie Pavlik <rylie@ryliepavlik.com>
 #
 # Copyright 2018, Collabora, Ltd.
 # Distributed under the Boost Software License, Version 1.0.

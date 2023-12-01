@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: BSL-1.0
 #
 # Original Author:
-# 2019-2021 Ryan Pavlik <ryan.pavlik@collabora.com>
+# 2019-2021 Rylie Pavlik <rylie.pavlik@collabora.com>
 
 #.rst:
 # FindOpenXR

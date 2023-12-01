@@ -10,8 +10,8 @@
 # Initially in VRPN - Distributed under the Boost Software License, Version 1.0.
 #
 # Almost entirely re-written by:
-# 2012 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2012 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 # Iowa State University HCI Graduate Program/VRAC
 #
 # Copyright 2012, Iowa State University

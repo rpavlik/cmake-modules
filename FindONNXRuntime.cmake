@@ -8,7 +8,7 @@
 #
 # Original Author:
 # 2021 Moses Turner <moses@collabora.com>
-# 2021 Ryan Pavlik <ryan.pavlik@collabora.com>
+# 2021 Rylie Pavlik <rylie.pavlik@collabora.com>
 
 #.rst:
 # FindONNXRuntime

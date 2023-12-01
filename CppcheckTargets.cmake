@@ -12,15 +12,15 @@
 # Requires CMake 2.8 or newer (uses VERSION_LESS)
 #
 # Original Author:
-# 2009-2010 Ryan Pavlik <ryan.pavlik@gmail.com> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2009-2010 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 # Iowa State University HCI Graduate Program/VRAC
 #
 # Copyright 2009-2010, Iowa State University
 # Copyright 2014, Anthony Pesch
 # Copyright 2014, Stefan Eilemann
 # Copyright 2015, Nicholas Brown
-# Copyright 2017, Ryan Pavlik
+# Copyright 2017, Rylie Pavlik
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)

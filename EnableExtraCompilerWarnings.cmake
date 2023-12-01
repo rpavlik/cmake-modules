@@ -6,8 +6,8 @@
 #
 #
 # Original Author:
-# 2010 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2010 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 # Iowa State University - HCI Graduate Program/VRAC
 #
 # Additional Author:

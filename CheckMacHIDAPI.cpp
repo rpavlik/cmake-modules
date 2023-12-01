@@ -3,9 +3,9 @@
  * \brief C++ source file used by CMake module CheckMacHIDAPI.cmake
  *
  * \author
- * Ryan Pavlik, 2009-2010
- * <rpavlik@iastate.edu>
- * http://academic.cleardefinition.com/
+ * Rylie Pavlik, 2009-2010
+ * <rylie@ryliepavlik.com>
+ * https://ryliepavlik.com/
  *
  * \author
  * Based on code extracted from VRPN 07.22 for use as a minimal test case

@@ -30,7 +30,7 @@
 # The variable is not modified if not building with MSVC.
 
 #=============================================================================
-# Copyright 2015 Ryan Pavlik <ryan.pavlik@gmail.com>
+# Copyright 2015 Rylie Pavlik <rylie@ryliepavlik.com>
 #
 # Distributed under the OSI-approved BSD License (the "License");
 # see below.

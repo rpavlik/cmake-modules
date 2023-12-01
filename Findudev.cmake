@@ -15,7 +15,7 @@
 #
 # Original Authors:
 # 2014, Kevin M. Godby <kevin@godby.org>
-# 2021, Ryan Pavlik <ryan.pavlik@collabora.com> <abiryan@ryand.net>
+# 2021, Rylie Pavlik <rylie.pavlik@collabora.com> <rylie@ryliepavlik.com>
 #
 # Copyright 2014, Kevin M. Godby <kevin@godby.org>
 # Copyright 2021, Collabora, Ltd.

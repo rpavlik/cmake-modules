@@ -14,11 +14,11 @@
 #  FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
 #
 # Original Author:
-# 2009-2021 Ryan Pavlik <ryanpavlik@gmail.com> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2009-2021 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 #
 # Copyright 2009-2010, Iowa State University
-# Copyright 2021, Collabora, Ltd
+# Copyright 2021, Collabora, Ltd.
 #
 # SPDX-License-Identifier: BSL-1.0
 #

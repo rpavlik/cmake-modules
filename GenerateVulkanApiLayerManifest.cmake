@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: BSL-1.0
 #
 # Maintained by:
-# 2019-2023 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
+# 2019-2023 Rylie Pavlik <rylie.pavlik@collabora.com> <rylie@ryliepavlik.com>
 
 #[[.rst:
 GenerateVulkanApiLayerManifest

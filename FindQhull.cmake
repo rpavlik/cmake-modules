@@ -13,7 +13,7 @@
 #  QHULL_FOUND - True if Qhull was found.
 #
 # Original Author:
-# 2019 Ryan Pavlik <ryan.pavlik@collabora.com> <ryan.pavlik@gmail.com>
+# 2019 Rylie Pavlik <rylie.pavlik@collabora.com> <rylie@ryliepavlik.com>
 #
 # Copyright 2019, Collabora, Ltd.
 # Distributed under the Boost Software License, Version 1.0.

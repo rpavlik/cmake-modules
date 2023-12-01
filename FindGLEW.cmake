@@ -23,7 +23,7 @@
 
 #=============================================================================
 # Copyright 2012 Benjamin Eikel
-# Copyright 2016 Ryan Pavlik
+# Copyright 2016 Rylie Pavlik
 #
 # Distributed under the OSI-approved BSD License (the "License");
 # see below.

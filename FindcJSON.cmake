@@ -7,7 +7,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 # Original Author:
-# 2019-2022 Ryan Pavlik <ryan.pavlik@collabora.com>
+# 2019-2022 Rylie Pavlik <rylie.pavlik@collabora.com> <rylie@ryliepavlik.com>
 
 #.rst:
 # FindcJSON

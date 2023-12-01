@@ -7,7 +7,7 @@
 #  SDL2_DYNAMIC - If we found a DLL version of SDL (meaning you might want to copy a DLL from SDL2::SDL2)
 #
 # Original Author:
-# 2015 Ryan Pavlik <ryan.pavlik@gmail.com> <abiryan@ryand.net>
+# 2015 Rylie Pavlik <rylie@ryliepavlik.com>
 #
 # Copyright 2015, Sensics, Inc.
 # Distributed under the Boost Software License, Version 1.0.

@@ -8,8 +8,8 @@
 #    cannot be used in some older MSVC Express Editions, so it's explicit opt-in there.
 #
 # Original Author:
-# 2015 Ryan Pavlik <ryan@sensics.com> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2015 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 #
 # Copyright 2015, Sensics, Inc.
 # Distributed under the Boost Software License, Version 1.0.

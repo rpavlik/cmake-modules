@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: cmake-modules
-Upstream-Contact: Ryan Pavlik <abiryan@ryand.net>
+Upstream-Contact: Rylie Pavlik <rylie@ryliepavlik.com>
 Source: https://github.com/rpavlik/cmake-modules
 
 Files: cmake-2.8.0-modules/osg/*

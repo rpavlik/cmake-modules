@@ -11,7 +11,7 @@
 #      [CXX_ABI])
 
 #=============================================================================
-# Copyright 2015 Sensics, Inc. <ryan@sensics.com>
+# Copyright 2015 Sensics, Inc. <rylie@ryliepavlik.com>
 # Copyright 2012 Alexander Neundorf <neundorf@kde.org>
 #
 # Distributed under the OSI-approved BSD License (the "License");

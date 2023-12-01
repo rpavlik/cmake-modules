@@ -27,8 +27,8 @@
 # 	CopyResourcesToBuildTree
 #
 # Original Author:
-# 2009-2021, Ryan Pavlik <ryan.pavlik@collabora.com> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2009-2021, Rylie Pavlik <rylie.pavlik@collabora.com> <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 #
 # Copyright 2021, Collabora, Ltd.
 # Copyright 2009-2010, Iowa State University

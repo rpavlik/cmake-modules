@@ -31,12 +31,12 @@
 # Requires CMake 2.6 or newer (uses the 'function' command)
 #
 # Original Author:
-# 2009-2020 Ryan Pavlik <ryan.pavlik@gmail.edu> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2009-2020 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 #
 # Copyright 2009-2013, Iowa State University.
 # Copyright 2018-2019, caseymcc
-# Copyright 2020, Ryan Pavlik
+# Copyright 2020, Rylie Pavlik
 # Copyright 2014-2019, Contributors
 # SPDX-License-Identifier: BSL-1.0
 # Distributed under the Boost Software License, Version 1.0.

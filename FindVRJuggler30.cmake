@@ -53,11 +53,11 @@
 # and trigger an automatic re-run.
 #
 # Original Author:
-# 2009-2013 Ryan Pavlik <rpavlik@iastate.edu> <abiryan@ryand.net>
-# http://academic.cleardefinition.com
+# 2009-2013 Rylie Pavlik <rylie@ryliepavlik.com>
+# https://ryliepavlik.com/
 # Iowa State University HCI Graduate Program/VRAC
 # Updated for VR Juggler 3.0 by:
-# Brandon Newendorp <brandon@newendorp.com> and Ryan Pavlik
+# Brandon Newendorp <brandon@newendorp.com> and Rylie Pavlik
 #
 # Copyright 2009-2013, Iowa State University
 # Copyright 2010, Brandon Newendorp <brandon@newendorp.com>

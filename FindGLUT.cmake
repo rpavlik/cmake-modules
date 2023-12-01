@@ -12,7 +12,7 @@
 #=============================================================================
 # Copyright 2001-2009, Kitware, Inc.
 # Copyright 2009-2010, Iowa State University
-#                      (Author: Ryan Pavlik <abiryan@ryand.net> )
+#                      (Author: Rylie Pavlik <rylie@ryliepavlik.com> )
 #
 # Distributed under the OSI-approved BSD License (the "License");
 # see below.
