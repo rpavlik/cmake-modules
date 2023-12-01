@@ -1,6 +1,7 @@
 {
     "file_format_version": "1.0.0",
     "runtime": {
-        "library_path": "@runtime_path@"
+        "name": "Monado",
+        "library_path": "@target_path@"
     }
 }
