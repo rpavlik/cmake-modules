@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2023, Collabora, Ltd.
+
+# Use with `git config --local blame.ignoreRevsFile .git-blame-ignore-revs`
+
+# Name and email update
+e54b06bc4ff41edffa5014115b8e26fb5adbe79a
+
+# License/copyright cleanup
+d46ee8a5a757f2d282e4041da5e221f9940f3eee
+
+# Earlier license and copyright cleanup
+5cd4f63c4a4cff7892c06e2be707a7d128335ca0
+03c05efae7e496ad01945295a94c8d9d444402b5
+1ff28323197d4249101c066b8bc8f2a1f329389a
+
+# formatting
+d32e6c19d08acabb240fba96058476d8bc3053d2
