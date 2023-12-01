@@ -20,9 +20,11 @@
 # Iowa State University HCI Graduate Program/VRAC
 #
 # Copyright 2009-2010, Iowa State University
+#
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+#
 # SPDX-License-Identifier: BSL-1.0
 #
 # Some functions based on cmake-2.8.0 modules FindBoost.cmake and CTest.cmake
@@ -36,11 +38,13 @@
 # Copyright 2010      Iowa State University (Rylie Pavlik <rylie@ryliepavlik.com>)
 #
 # Distributed under the OSI-approved BSD License (the "License");
-# see accompanying file Copyright.txt for details.
+# see below.
 #
 # This software is distributed WITHOUT ANY WARRANTY; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the License for more information.
+#
+# SPDX-License-Identifier: BSD-3-Clause
 #=============================================================================
 # CMake - Cross Platform Makefile Generator
 # Copyright 2000-2009 Kitware, Inc., Insight Software Consortium

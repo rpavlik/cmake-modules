@@ -34,14 +34,16 @@
 # 2009-2020 Rylie Pavlik <rylie@ryliepavlik.com>
 # https://ryliepavlik.com/
 #
-# Copyright 2009-2013, Iowa State University.
-# Copyright 2018-2019, caseymcc
 # Copyright 2020, Rylie Pavlik
 # Copyright 2014-2019, Contributors
-# SPDX-License-Identifier: BSL-1.0
+# Copyright 2018-2019, caseymcc
+# Copyright 2009-2013, Iowa State University.
+#
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+#
+# SPDX-License-Identifier: BSL-1.0
 
 if(__create_launchers)
     return()

@@ -124,8 +124,8 @@ The modules that I wrote myself are all subject to this license:
 
 > Copyright 2009-2014, Iowa State University.
 > or Copyright 2014-2017, Sensics, Inc.,
-> or Copyright 2018-2020, Collabora, Ltd.,
-> or Copyright 2009-2020, Rylie Pavlik
+> or Copyright 2018-2023, Collabora, Ltd.,
+> or Copyright 2009-2023, Rylie Pavlik
 >
 > Distributed under the Boost Software License, Version 1.0.
 >
