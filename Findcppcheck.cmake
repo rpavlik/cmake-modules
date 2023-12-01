@@ -28,6 +28,7 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
+#
 # SPDX-License-Identifier: BSL-1.0
 
 file(TO_CMAKE_PATH "${CPPCHECK_ROOT_DIR}" CPPCHECK_ROOT_DIR)
@@ -65,10 +66,10 @@ set(CMAKE_FIND_APPBUNDLE ${_oldappbundlesetting})
 
 # Find out where our test file is
 get_filename_component(_cppcheckmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
-set(_cppcheckdummyfile "${_cppcheckmoddir}/Findcppcheck.cpp")
-if(NOT EXISTS "${_cppcheckdummyfile}")
+set(_cppchecktestfile "${_cppcheckmoddir}/Findcppcheck.cpp")
+if(NOT EXISTS "${_cppchecktestfile}")
 	message(FATAL_ERROR
-		"Missing file ${_cppcheckdummyfile} - should be alongside Findcppcheck.cmake, can be found at https://github.com/rpavlik/cmake-modules")
+		"Missing file ${_cppchecktestfile} - should be alongside Findcppcheck.cmake, can be found at https://github.com/rpavlik/cmake-modules")
 endif()
 
 function(_cppcheck_test_arg _resultvar _arg)
@@ -80,7 +81,7 @@ function(_cppcheck_test_arg _resultvar _arg)
 		"${CPPCHECK_EXECUTABLE}"
 		"${_arg}"
 		"--quiet"
-		"${_cppcheckdummyfile}"
+		"${_cppchecktestfile}"
 		RESULT_VARIABLE
 		_cppcheck_result
 		OUTPUT_QUIET

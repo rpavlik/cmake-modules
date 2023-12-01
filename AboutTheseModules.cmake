@@ -1,4 +1,4 @@
-# - Dummy module containing information about these modules for the HELP file
+# - Stub module containing information about these modules for the HELP file
 # This file documents a snapshot of the cmake-modules available from
 # http://github.com/rpavlik/cmake-modules/
 # The latest version of these modules can always be found there.

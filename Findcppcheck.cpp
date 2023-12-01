@@ -1,6 +1,6 @@
 /**
  * \file Findcppcheck.cpp
- * \brief Dummy C++ source file used by CMake module Findcppcheck.cmake
+ * \brief Test C++ source file used by CMake module Findcppcheck.cmake
  *
  * \author
  * Ryan Pavlik, 2009-2010
