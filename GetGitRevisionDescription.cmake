@@ -127,7 +127,7 @@ function(get_git_head_revision _refspecvar _hashvar)
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             OUTPUT_VARIABLE out
             ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-        if(NOT "${out}" STREQUAL "")
+        if("${out}" STREQUAL "")
             # If out is empty, GIT_DIR/CMAKE_CURRENT_SOURCE_DIR is in a submodule
             file(READ ${GIT_DIR} submodule)
             string(REGEX REPLACE "gitdir: (.*)$" "\\1" GIT_DIR_RELATIVE
