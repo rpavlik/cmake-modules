@@ -79,6 +79,8 @@ endmacro()
 # although version numbers listed on that page don't necessarily match the directory
 # used by the installer.
 set(_winsdk_win10vers
+	10.0.26100.0
+	10.0.22621.0
 	10.0.22000.0
 	10.0.20348.0
 	10.0.19041.0
